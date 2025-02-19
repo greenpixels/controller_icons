@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfl4bcwkdw8sg"]
+
+[ext_resource type="Script" path="res://main_scenes/overworld/overworld.gd" id="1_7ofc1"]
+[ext_resource type="PackedScene" uid="uid://u6xem3wjbv44" path="res://object_scenes/blocks/_all/dirt/block_dirt.tscn" id="2_bvvr6"]
+[ext_resource type="PackedScene" uid="uid://dm51ehd5000uo" path="res://object_scenes/blocks/_all/dead_tree/block_dead_tree.tscn" id="3_we805"]
+[ext_resource type="PackedScene" uid="uid://b0okb3nogutij" path="res://object_scenes/item_pickup/item_pickup.tscn" id="4_811jv"]
+[ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="5_e22fv"]
+
+[node name="Overworld" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_7ofc1")
+
+[node name="OreBase" parent="." instance=ExtResource("2_bvvr6")]
+position = Vector2(-35, 53)
+collision_mask = 1
+
+[node name="OreBase2" parent="." instance=ExtResource("2_bvvr6")]
+position = Vector2(-35, 21)
+collision_mask = 1
+
+[node name="OreBase3" parent="." instance=ExtResource("2_bvvr6")]
+position = Vector2(-3, 53)
+collision_mask = 1
+
+[node name="Block" parent="." instance=ExtResource("3_we805")]
+position = Vector2(-3, 21)
+minimal_pickaxe_power = -1
+loot_table = null
+
+[node name="ItemPickup2" parent="." instance=ExtResource("4_811jv")]
+position = Vector2(152, 100)
+
+[node name="ItemPickup" parent="." instance=ExtResource("4_811jv")]
+position = Vector2(76, 50)
+item = ExtResource("5_e22fv")

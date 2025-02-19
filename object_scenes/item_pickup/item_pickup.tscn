@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0okb3nogutij"]
+
+[ext_resource type="Script" path="res://object_scenes/item_pickup/item_pickup.gd" id="1_7d5ai"]
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="2_hc402"]
+[ext_resource type="Resource" uid="uid://cdrp6aj8mx0gg" path="res://resources/items/weapons/tools/_all/wooden_pickaxe.tres" id="2_yp67g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_adbgq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auun4"]
+atlas = ExtResource("2_hc402")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6d12r"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_right = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o1a0y"]
+blend_mode = 1
+
+[node name="ItemPickup" type="Area2D"]
+script = ExtResource("1_7d5ai")
+item = ExtResource("2_yp67g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_adbgq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_auun4")
+
+[node name="Control" type="Control" parent="Sprite2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -16.0
+offset_bottom = -16.0
+scale = Vector2(0.328863, 0.328863)
+
+[node name="PanelContainer" type="PanelContainer" parent="Sprite2D/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -11.5
+offset_right = 16.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_6d12r")
+
+[node name="CenterContainer" type="CenterContainer" parent="Sprite2D/Control/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="Sprite2D/Control/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Item Label"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Line2D" type="Line2D" parent="."]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_o1a0y")
+position = Vector2(0, 3)
+points = PackedVector2Array(0, 1, 0, -52)
+width = 9.0
+joint_mode = 2
+begin_cap_mode = 2
+round_precision = 16
+antialiased = true

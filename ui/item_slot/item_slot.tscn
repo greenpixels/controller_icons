@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciov7ijprulpc"]
+
+[ext_resource type="Script" path="res://ui/item_slot/item_slot.gd" id="1_04shm"]
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="1_thtbk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yfyq"]
+atlas = ExtResource("1_thtbk")
+region = Rect2(0, 0, 16, 16)
+
+[node name="ItemSlot" type="Button" groups=["tooltip_trigger"]]
+custom_minimum_size = Vector2(96, 96)
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_04shm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_0yfyq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StackCountContainer" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 57.0
+offset_top = 61.0
+offset_right = 97.0
+offset_bottom = 101.0
+
+[node name="HSplitContainer" type="HBoxContainer" parent="StackCountContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="StackSize" type="RichTextLabel" parent="StackCountContainer/HSplitContainer"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "99"
+fit_content = true
+autowrap_mode = 0
+
+[node name="StackSymbol" type="RichTextLabel" parent="StackCountContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "x"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

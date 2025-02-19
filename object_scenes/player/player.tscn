@@ -1,0 +1,156 @@
+[gd_scene load_steps=25 format=3 uid="uid://bplmsqiwv1wkx"]
+
+[ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_sqov3"]
+[ext_resource type="Texture2D" uid="uid://bbb18bci8jvmx" path="res://object_scenes/player/_assets/spr_little_mage_idle.png" id="1_vg26f"]
+[ext_resource type="Texture2D" uid="uid://bqo3kxcoy0qjl" path="res://object_scenes/player/_assets/spr_little_mage_run.png" id="2_rnlrc"]
+[ext_resource type="Shader" path="res://object_scenes/player/hueshift.gdshader" id="2_w8six"]
+[ext_resource type="PackedScene" uid="uid://nncdcpu4q1wl" path="res://object_scenes/input_controller/input_controller.tscn" id="4_fj13i"]
+[ext_resource type="PackedScene" uid="uid://bh3oegyqhcdj6" path="res://object_scenes/player/held_item/held_item.tscn" id="5_0pnm5"]
+[ext_resource type="PackedScene" uid="uid://ble70sdbknfug" path="res://object_scenes/storage/storage.tscn" id="6_6syob"]
+[ext_resource type="PackedScene" uid="uid://bdd83dyudffo1" path="res://ui/player_inventory/player_inventory.tscn" id="8_q6xyg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mr84h"]
+resource_local_to_scene = true
+shader = ExtResource("2_w8six")
+shader_parameter/hue_shift = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wkr3"]
+atlas = ExtResource("1_vg26f")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdgn5"]
+atlas = ExtResource("1_vg26f")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o78m8"]
+atlas = ExtResource("1_vg26f")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1smu"]
+atlas = ExtResource("1_vg26f")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adix2"]
+atlas = ExtResource("1_vg26f")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdfmk"]
+atlas = ExtResource("1_vg26f")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25ogx"]
+atlas = ExtResource("2_rnlrc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcn65"]
+atlas = ExtResource("2_rnlrc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n64a5"]
+atlas = ExtResource("2_rnlrc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmwwt"]
+atlas = ExtResource("2_rnlrc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7clk"]
+atlas = ExtResource("2_rnlrc")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wqmax"]
+atlas = ExtResource("2_rnlrc")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tjeal"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wkr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdgn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o78m8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1smu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adix2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdfmk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25ogx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcn65")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n64a5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmwwt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7clk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wqmax")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcyah"]
+radius = 5.0
+height = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bnyon"]
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 4
+motion_mode = 1
+script = ExtResource("1_sqov3")
+
+[node name="AnimatedPlayerSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_mr84h")
+sprite_frames = SubResource("SpriteFrames_tjeal")
+animation = &"run"
+autoplay = "idle"
+frame_progress = 0.44863
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_jcyah")
+
+[node name="Item" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_0pnm5")]
+player = NodePath("..")
+
+[node name="InputController" parent="." instance=ExtResource("4_fj13i")]
+
+[node name="Inventory" parent="." instance=ExtResource("6_6syob")]
+storage_view = ExtResource("8_q6xyg")
+
+[node name="InteractRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRadius"]
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_bnyon")
+debug_color = Color(0.454902, 0.596078, 0, 0)
+
+[connection signal="attack_pressed" from="InputController" to="Item" method="_on_input_controller_attack_pressed"]
+[connection signal="interact_pressed" from="InputController" to="." method="_on_input_controller_interact_pressed"]
+[connection signal="inventory_opened" from="InputController" to="." method="_on_input_controller_inventory_opened"]
+[connection signal="look_at_changed" from="InputController" to="." method="_on_input_controller_look_at_changed"]
+[connection signal="toolbar_offset_changed" from="InputController" to="." method="_on_input_controller_toolbar_offset_changed"]
+[connection signal="items_changed" from="Inventory" to="." method="_on_inventory_items_changed"]

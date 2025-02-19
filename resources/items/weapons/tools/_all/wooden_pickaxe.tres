@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=7 format=3 uid="uid://cdrp6aj8mx0gg"]
+
+[ext_resource type="PackedScene" uid="uid://byptmxjt78a4v" path="res://object_scenes/projectile/_all/slice/projectile_slice.tscn" id="1_nbhkp"]
+[ext_resource type="Script" path="res://resources/items/weapons/tools/tool.gd" id="1_qb052"]
+[ext_resource type="Script" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_xgnx5"]
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="2_tcgbv"]
+
+[sub_resource type="Resource" id="Resource_lpjjx"]
+script = ExtResource("1_xgnx5")
+projectile_speed = 0.0
+lifetime = 0.15
+should_follow_origin_node = true
+should_face_direction = true
+projectile_spawn_offset = 20.0
+scale_animation_to_lifetime = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0mip"]
+atlas = ExtResource("2_tcgbv")
+region = Rect2(0, 0, 16, 16)
+
+[resource]
+script = ExtResource("1_qb052")
+pickaxe_power = 25
+axe_power = 0
+hammer_power = 0
+min_damage = 1
+max_damage = 3
+crit_chance = 0.0
+projectile_scene = ExtResource("1_nbhkp")
+projectile_configuration = SubResource("Resource_lpjjx")
+texture = SubResource("AtlasTexture_y0mip")
+key = "WOODEN_PICKAXE"
+cooldown = 0.75
+rarity = 0
+max_stacks = 1

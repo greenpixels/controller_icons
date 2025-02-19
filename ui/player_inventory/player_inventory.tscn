@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdd83dyudffo1"]
+
+[ext_resource type="PackedScene" uid="uid://e6wshg1xfak2" path="res://ui/storage_view/storage_view.tscn" id="1_ou0sg"]
+[ext_resource type="Script" path="res://ui/player_inventory/player_inventory.gd" id="1_uruap"]
+[ext_resource type="PackedScene" uid="uid://ciov7ijprulpc" path="res://ui/item_slot/item_slot.tscn" id="3_kf8a3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37mtt"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gcc3s"]
+blend_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewtxx"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.569929, 0.487579, 3.85046e-07, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="PlayerInventory" type="Panel" groups=["time_blocking"]]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_37mtt")
+script = ExtResource("1_uruap")
+
+[node name="Inventory" parent="." instance=ExtResource("1_ou0sg")]
+layout_mode = 1
+offset_left = -439.0
+offset_top = -200.0
+offset_right = -3.0
+offset_bottom = 198.0
+
+[node name="Control" type="Control" parent="Inventory/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="QuickSlotIndicator" type="Panel" parent="Inventory/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/Control"]
+z_index = 1
+material = SubResource("CanvasItemMaterial_gcc3s")
+layout_mode = 2
+offset_right = 296.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ewtxx")
+
+[node name="Equipment" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 701.0
+offset_top = 160.0
+offset_right = 1093.0
+offset_bottom = 558.0
+
+[node name="HelmetSlot" parent="Equipment" instance=ExtResource("3_kf8a3")]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 35.0
+offset_right = 242.0
+offset_bottom = 131.0
+
+[node name="BodySlot" parent="Equipment" instance=ExtResource("3_kf8a3")]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 144.0
+offset_right = 242.0
+offset_bottom = 240.0
+
+[node name="PantsSlot" parent="Equipment" instance=ExtResource("3_kf8a3")]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 254.0
+offset_right = 242.0
+offset_bottom = 350.0
+
+[node name="RightRing" parent="Equipment" instance=ExtResource("3_kf8a3")]
+layout_mode = 0
+offset_left = 258.0
+offset_top = 160.0
+offset_right = 354.0
+offset_bottom = 256.0
+
+[node name="LeftRing" parent="Equipment" instance=ExtResource("3_kf8a3")]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 160.0
+offset_right = 132.0
+offset_bottom = 256.0
+
+[connection signal="back_button_pressed" from="Inventory" to="." method="_on_inventory_back_button_pressed"]
+
+[editable path="Inventory"]

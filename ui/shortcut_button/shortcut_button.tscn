@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://566wfnl0ax2o"]
+
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="1_fuqvk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u13b2"]
+atlas = ExtResource("1_fuqvk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5sssi"]
+atlas = SubResource("AtlasTexture_u13b2")
+
+[node name="ShortcutButton" type="Button"]
+text = "Accept"
+icon = SubResource("AtlasTexture_5sssi")

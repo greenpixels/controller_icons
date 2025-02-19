@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://byby26tergt6i"]
+
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_gtxxu"]
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="2_pp7dh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hi268"]
+atlas = ExtResource("2_pp7dh")
+region = Rect2(16, 48, 16, 16)
+
+[resource]
+script = ExtResource("1_gtxxu")
+texture = SubResource("AtlasTexture_hi268")
+key = "DRY_WOOD"
+cooldown = 0.0
+rarity = 1
+max_stacks = 99
