@@ -8,9 +8,9 @@ name: "Export"
 
 env:
   GODOT_VERSION: 4.3
-  EXPORT_NAME: Dungeon Mage 2
+  EXPORT_NAME: Project Magus
   PROJECT_PATH: .
-  ITCH_GAME_NAME: dungeon-mage-2
+  ITCH_GAME_NAME: project-magus
   ITCH_USER: greenpixels
 
 jobs:
