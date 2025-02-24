@@ -1,29 +1,29 @@
-[gd_scene load_steps=9 format=3 uid="uid://u6xem3wjbv44"]
+[gd_scene load_steps=9 format=3 uid="uid://b6l43j4dtjauv"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_ebwms"]
 [ext_resource type="Script" path="res://data_classes/loot_table.gd" id="2_74c3t"]
-[ext_resource type="Texture2D" uid="uid://ea76v70cw3ik" path="res://object_scenes/blocks/blocks.png" id="2_r11uj"]
+[ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_p2klo"]
 [ext_resource type="Script" path="res://data_classes/loot_table_entry.gd" id="3_01nu8"]
 [ext_resource type="Resource" uid="uid://diyxj2nmfpwq2" path="res://resources/items/_all/dirt.tres" id="4_gpohm"]
 
-[sub_resource type="Resource" id="Resource_bcuf4"]
+[sub_resource type="Resource" id="Resource_wt24w"]
 script = ExtResource("3_01nu8")
 weight = 1
 object = ExtResource("4_gpohm")
-min_amount = 1
-max_amount = 1
+min_amount = 2
+max_amount = 4
 
-[sub_resource type="Resource" id="Resource_ueu3l"]
+[sub_resource type="Resource" id="Resource_mor58"]
 script = ExtResource("2_74c3t")
-table = Array[ExtResource("3_01nu8")]([SubResource("Resource_bcuf4")])
+table = Array[ExtResource("3_01nu8")]([SubResource("Resource_wt24w")])
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ydlj"]
-atlas = ExtResource("2_r11uj")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfcie"]
+atlas = ExtResource("2_p2klo")
+region = Rect2(6, 6, 192, 192)
 
 [node name="Block" instance=ExtResource("1_ebwms")]
 minimal_pickaxe_power = 0
-loot_table = SubResource("Resource_ueu3l")
+loot_table = SubResource("Resource_mor58")
 
 [node name="Sprite2D" parent="." index="0"]
-texture = SubResource("AtlasTexture_2ydlj")
+texture = SubResource("AtlasTexture_xfcie")

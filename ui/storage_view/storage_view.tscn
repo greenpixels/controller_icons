@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://ui/storage_view/storage_view.gd" id="1_jns3h"]
 [ext_resource type="PackedScene" uid="uid://ciov7ijprulpc" path="res://ui/item_slot/item_slot.tscn" id="2_11a16"]
 
-[node name="PanelContainer" type="PanelContainer" groups=["time_blocking"]]
+[node name="PanelContainer" type="PanelContainer" groups=["popup", "time_blocking"]]
 process_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -49,8 +49,8 @@ size_flags_horizontal = 3
 
 [node name="BackButton" parent="VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer" instance=ExtResource("1_56pdg")]
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Back"
+label_text = "BACK"
+shortcut_actions = ["ui_cancel"]
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -60,7 +60,7 @@ alignment = 2
 [node name="SortButton" parent="VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer2" instance=ExtResource("1_56pdg")]
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Sort"
+label_text = "SORT"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

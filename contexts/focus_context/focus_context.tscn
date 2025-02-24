@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0jp24h4f06cm"]
+
+[ext_resource type="Script" path="res://contexts/focus_context/focus_context.gd" id="1_1k8rc"]
+
+[node name="FocusContext" type="Node"]
+script = ExtResource("1_1k8rc")

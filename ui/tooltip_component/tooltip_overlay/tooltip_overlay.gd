@@ -27,10 +27,6 @@ func _ready():
 						already_connected = true
 				if not already_connected:
 					node.focus_exited.connect(conceal)
-					# I also want to simplify focus. Hover is now focus
-					node.mouse_exited.connect(node.release_focus)
-					if node.focus_mode != Control.FOCUS_NONE:
-						node.mouse_entered.connect(node.grab_focus)	
 	)
 
 ## Hides the tooltip with an animated transition.

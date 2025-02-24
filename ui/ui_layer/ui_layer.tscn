@@ -1,3 +1,7 @@
 [gd_scene format=3 uid="uid://qg31t6pko8b7"]
 
 [node name="UiLayer" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

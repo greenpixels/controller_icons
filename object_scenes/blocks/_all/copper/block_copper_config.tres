@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BlockSpawnConfiguration" load_steps=3 format=3 uid="uid://c2whomwhpwikm"]
+
+[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="1_5vlk7"]
+[ext_resource type="PackedScene" uid="uid://cthf3hh6ue6y5" path="res://object_scenes/blocks/_all/copper/block_copper.tscn" id="1_dkxqy"]
+
+[resource]
+script = ExtResource("1_5vlk7")
+scene = ExtResource("1_dkxqy")
+weight = 10.0
+min_distance = 7.0
+max_distance = 1000.0

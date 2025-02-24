@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://32eivtfpf6wa"]
+
+[ext_resource type="Script" path="res://contexts/options_context/options_context.gd" id="1_i83me"]
+
+[node name="OptionsContext" type="Node"]
+process_mode = 3
+script = ExtResource("1_i83me")

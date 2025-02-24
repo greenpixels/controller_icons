@@ -1,10 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://bplmsqiwv1wkx"]
+[gd_scene load_steps=24 format=3 uid="uid://bplmsqiwv1wkx"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_sqov3"]
 [ext_resource type="Texture2D" uid="uid://bbb18bci8jvmx" path="res://object_scenes/player/_assets/spr_little_mage_idle.png" id="1_vg26f"]
 [ext_resource type="Texture2D" uid="uid://bqo3kxcoy0qjl" path="res://object_scenes/player/_assets/spr_little_mage_run.png" id="2_rnlrc"]
 [ext_resource type="Shader" path="res://object_scenes/player/hueshift.gdshader" id="2_w8six"]
-[ext_resource type="PackedScene" uid="uid://nncdcpu4q1wl" path="res://object_scenes/input_controller/input_controller.tscn" id="4_fj13i"]
 [ext_resource type="PackedScene" uid="uid://bh3oegyqhcdj6" path="res://object_scenes/player/held_item/held_item.tscn" id="5_0pnm5"]
 [ext_resource type="PackedScene" uid="uid://ble70sdbknfug" path="res://object_scenes/storage/storage.tscn" id="6_6syob"]
 [ext_resource type="PackedScene" uid="uid://bdd83dyudffo1" path="res://ui/player_inventory/player_inventory.tscn" id="8_q6xyg"]
@@ -112,10 +111,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jcyah"]
-radius = 5.0
-height = 10.0
+radius = 18.0
+height = 68.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bnyon"]
+radius = 58.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -124,33 +124,31 @@ script = ExtResource("1_sqov3")
 
 [node name="AnimatedPlayerSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_mr84h")
+position = Vector2(0, -25)
+scale = Vector2(6, 6)
 sprite_frames = SubResource("SpriteFrames_tjeal")
 animation = &"run"
 autoplay = "idle"
 frame_progress = 0.44863
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(0, 15)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_jcyah")
 
 [node name="Item" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_0pnm5")]
+position = Vector2(0, -5)
 player = NodePath("..")
-
-[node name="InputController" parent="." instance=ExtResource("4_fj13i")]
 
 [node name="Inventory" parent="." instance=ExtResource("6_6syob")]
 storage_view = ExtResource("8_q6xyg")
 
 [node name="InteractRadius" type="Area2D" parent="."]
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRadius"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_bnyon")
 debug_color = Color(0.454902, 0.596078, 0, 0)
 
-[connection signal="attack_pressed" from="InputController" to="Item" method="_on_input_controller_attack_pressed"]
-[connection signal="interact_pressed" from="InputController" to="." method="_on_input_controller_interact_pressed"]
-[connection signal="inventory_opened" from="InputController" to="." method="_on_input_controller_inventory_opened"]
-[connection signal="look_at_changed" from="InputController" to="." method="_on_input_controller_look_at_changed"]
-[connection signal="toolbar_offset_changed" from="InputController" to="." method="_on_input_controller_toolbar_offset_changed"]
 [connection signal="items_changed" from="Inventory" to="." method="_on_inventory_items_changed"]

@@ -3,32 +3,36 @@ class_name ItemSlot
 
 @onready var texture_rect := $MarginContainer/TextureRect
 @export var show_stack_size := true
-@export var stack_size := 0 : 
+var storage : Storage
+var index_in_storage : int
+var is_drag_source := false :
 	set(value):
-		stack_size = value
-		handle_stack_size_change(stack_size)
-@export var item : Item = null :
-	set(value):
-		item = value
-		handle_item_change(item)
-					
-func handle_item_change(new_item: Item):
-	if item == null:
-			texture_rect.texture = null
-			disabled = true
-	else:
-		texture_rect.texture = item.texture
-		disabled = false
+		is_drag_source = value
+		texture_rect.modulate.a = 0.33 if is_drag_source else 1.
 
 func _ready() -> void:
-	handle_item_change(item)
-	handle_stack_size_change(stack_size)
+	handle_storage_update()
+	if storage:
+		storage.items_changed.connect(handle_storage_update)
 
-func handle_stack_size_change(size: int):
-	%StackCountContainer.visible = size > 1 or (item != null and item.max_stacks > 1)
-	%StackSize.text = str(size)
-		
+func handle_storage_update():
+	var item = get_item()
+	var stack_size = get_stack_size()
+	if item == null:
+		texture_rect.texture = null
+	else:
+		texture_rect.texture = item.texture
+	%StackCountContainer.visible = stack_size > 1 or (item != null and item.max_stacks > 1)
+	%StackSize.text = str(stack_size)
+
+func get_item() -> Item:
+	if not storage or index_in_storage >= storage.items.size(): return null
+	return storage.items[index_in_storage]
+
+func get_stack_size() -> int:
+	if not storage or index_in_storage >= storage.quantities.size(): return 0
+	return storage.quantities[index_in_storage]
 
 func _on_focus_entered() -> void:
-	if item:
-		TooltipOverlay.describe(self, item.key)
+	if get_item():
+		TooltipOverlay.describe(self, get_item().key)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BlockSpawnConfiguration" load_steps=3 format=3 uid="uid://ctsj0qbite1sa"]
+
+[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="1_3vjf5"]
+[ext_resource type="PackedScene" uid="uid://b6l43j4dtjauv" path="res://object_scenes/blocks/_all/dirt/block_dirt.tscn" id="1_ku2oi"]
+
+[resource]
+script = ExtResource("1_3vjf5")
+scene = ExtResource("1_ku2oi")
+weight = 100.0
+min_distance = 0.0
+max_distance = 1000.0

@@ -11,13 +11,15 @@ class_name Block
 @export var loot_table : LootTable
 
 var impact_intensity := 0.
-const SHAKE_FACTOR := 2.
+const SHAKE_FACTOR := 16.
 
 var current_health : int
 func _ready() -> void:
 	if loot_table:
 		loot_table.create_entries()
 	current_health = maximum_health
+	%Shadow.texture = $Sprite2D.texture
+
 
 func _process(delta: float) -> void:
 	sprite.position = Vector2(randf_range(-impact_intensity, impact_intensity), randf_range(-impact_intensity, impact_intensity)) * SHAKE_FACTOR

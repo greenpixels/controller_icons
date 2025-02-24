@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4uynto77yham"]
+
+[ext_resource type="Script" path="res://contexts/dnd_context/dnd_context.gd" id="1_7oe58"]
+
+[node name="DndContext" type="CanvasLayer"]
+process_mode = 3
+layer = 2
+script = ExtResource("1_7oe58")
+
+[node name="DraggedItemTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(96, 96)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 21)
+mouse_filter = 2

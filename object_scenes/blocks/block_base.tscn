@@ -1,21 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://db1jxewxygxwt"]
+[gd_scene load_steps=7 format=3 uid="uid://db1jxewxygxwt"]
 
 [ext_resource type="Script" path="res://object_scenes/blocks/block_base.gd" id="1_x0ioi"]
-[ext_resource type="Texture2D" uid="uid://ea76v70cw3ik" path="res://object_scenes/blocks/blocks.png" id="2_dyvyd"]
+[ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_yb2ek"]
+[ext_resource type="Shader" path="res://object_scenes/blocks/overlay.gdshader" id="3_yh7ba"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y3ui8"]
-atlas = ExtResource("2_dyvyd")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_inoac"]
+atlas = ExtResource("2_yb2ek")
+region = Rect2(402, 6, 192, 192)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jned0"]
+shader = ExtResource("3_yh7ba")
+shader_parameter/contrast = 1.424
+shader_parameter/opacity = 0.708
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoo6i"]
-size = Vector2(32, 32)
+size = Vector2(192, 144)
 
 [node name="Block" type="StaticBody2D"]
 collision_mask = 6
 script = ExtResource("1_x0ioi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_y3ui8")
+texture = SubResource("AtlasTexture_inoac")
+
+[node name="Shadow" type="Sprite2D" parent="Sprite2D"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 0.439216)
+show_behind_parent = true
+z_index = -5
+z_as_relative = false
+material = SubResource("ShaderMaterial_jned0")
+position = Vector2(0, 82.5525)
+scale = Vector2(1, 0.521868)
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 25)
 shape = SubResource("RectangleShape2D_uoo6i")

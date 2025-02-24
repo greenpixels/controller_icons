@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckbxfww17hihs"]
+
+[ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_loty4"]
+[ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_fojnj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peel7"]
+atlas = ExtResource("2_fojnj")
+region = Rect2(402, 204, 192, 192)
+
+[node name="Block" instance=ExtResource("1_loty4")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_peel7")

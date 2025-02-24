@@ -5,12 +5,9 @@ class_name StorageView
 @onready var grid := %Grid
 @export var storage : Storage :
 	set(value):
-		if storage:
-				storage.items_changed.disconnect(render_items)
 		storage = value
 		if storage != null:
 			render_items()
-			storage.items_changed.connect(render_items)
 
 signal back_button_pressed
 	
@@ -21,10 +18,12 @@ func render_items():
 	var index = 0
 	for item in storage.items:
 		var slot : ItemSlot = item_slot_scene.instantiate()
+		
+		slot.storage = storage
+		slot.index_in_storage = index
 		grid.add_child(slot)
-		slot.item = item
-		slot.stack_size = storage.stacks[index]
 		index += 1
+		slot.handle_storage_update()
 
 
 func _on_back_button_pressed() -> void:

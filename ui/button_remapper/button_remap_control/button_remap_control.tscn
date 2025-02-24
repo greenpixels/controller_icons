@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://x5sfavc31b85"]
+
+[ext_resource type="Script" path="res://ui/button_remapper/button_remap_control/button_remap_control.gd" id="1_pch82"]
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="2_88in8"]
+
+[node name="ButtonRemapControl" type="HBoxContainer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pch82")
+
+[node name="ActionName" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ACTION_NAME"
+alignment = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MouseButton" type="TextureRect" parent="CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_88in8")
+expand_mode = 1
+
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="KeyboardButton" type="TextureRect" parent="CenterContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_88in8")
+expand_mode = 1
+
+[node name="CenterContainer3" type="CenterContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoypadButton" type="TextureRect" parent="CenterContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("2_88in8")
+expand_mode = 1
+
+[connection signal="button_down" from="ActionName" to="." method="_on_action_name_button_down"]
+[connection signal="button_up" from="ActionName" to="." method="_on_action_name_button_up"]

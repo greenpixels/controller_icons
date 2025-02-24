@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BlockSpawnConfiguration" load_steps=3 format=3 uid="uid://ofnyovo5bt3e"]
+
+[ext_resource type="PackedScene" uid="uid://ckbxfww17hihs" path="res://object_scenes/blocks/_all/gold/block_gold.tscn" id="1_ibbin"]
+[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="1_to1e0"]
+
+[resource]
+script = ExtResource("1_to1e0")
+scene = ExtResource("1_ibbin")
+weight = 8.0
+min_distance = 32.0
+max_distance = 1000.0
