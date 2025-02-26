@@ -25,10 +25,13 @@ func for_each_in_directory(directory: String, callback: Callable):
 		
 		while file_name != "":
 			var file_path = directory + "/" + file_name
-			
+			var resource_path = file_path.replace(".remap", "")
+			print(resource_path)
 			if dir.current_is_dir():
 				for_each_in_directory(file_path, callback)
-			elif file_name.ends_with(".tres") or file_name.ends_with(".res"):
-				callback.call(load(file_path))
+			elif resource_path.ends_with(".tres") or resource_path.ends_with(".res"):
+				var res_path = resource_path
+				var resource = ResourceLoader.load(res_path)
+				callback.call(resource)
 			
 			file_name = dir.get_next()

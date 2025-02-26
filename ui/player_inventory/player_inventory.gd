@@ -15,6 +15,7 @@ enum ArmorSlotPositions {
 @onready var inventory := $Inventory
 @onready var equipment_slots : Array[ItemSlot] =  [%HelmetSlot, %BodySlot, %ShoesSlot, %RightRing, %LeftRing]
 @onready var crafting_entry_scene := preload("res://ui/crafting_entry/crafting_entry.tscn")
+@onready var crafting_list := %CraftingList
 var crafting_entries : Array = []
 
 func _input(event: InputEvent) -> void:
@@ -74,13 +75,14 @@ func _ready() -> void:
 			slot.index_in_storage = index
 			slot.setup()
 			index += 1
-			
+	print(ItemContext.craftable_items[0].key)
 	for item in ItemContext.craftable_items:
 		var entry = crafting_entry_scene.instantiate()
 		entry.item = item
 		crafting_entries.push_back(entry)
 		entry.craft_item_pressed.connect(on_craft_item_pressed)
-		%CraftingList.add_child(entry)
+		crafting_list.add_child(entry)
+		print("Added child entry")
 	update_crafting_entries()
 
 func update_crafting_entries():
