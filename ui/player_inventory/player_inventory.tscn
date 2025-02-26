@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdd83dyudffo1"]
+[gd_scene load_steps=10 format=3 uid="uid://bdd83dyudffo1"]
 
 [ext_resource type="PackedScene" uid="uid://e6wshg1xfak2" path="res://ui/storage_view/storage_view.tscn" id="1_ou0sg"]
 [ext_resource type="Script" path="res://ui/player_inventory/player_inventory.gd" id="1_uruap"]
 [ext_resource type="PackedScene" uid="uid://ciov7ijprulpc" path="res://ui/item_slot/item_slot.tscn" id="3_kf8a3"]
+[ext_resource type="Script" path="res://ui/player_inventory/crafting_panel.gd" id="4_ijqh3"]
+[ext_resource type="PackedScene" uid="uid://bm2v03n8v0i18" path="res://ui/tab_container_navigator/tab_container_navigator.tscn" id="4_teb1e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37mtt"]
 
@@ -20,6 +22,8 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t7kbs"]
 
 [node name="PlayerInventory" type="Panel" groups=["popup", "time_blocking"]]
 process_mode = 3
@@ -51,47 +55,78 @@ offset_bottom = 96.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ewtxx")
 
-[node name="Equipment" type="Panel" parent="."]
+[node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 0
-offset_left = 701.0
-offset_top = 160.0
-offset_right = 1093.0
-offset_bottom = 558.0
+offset_left = 706.0
+offset_top = 159.0
+offset_right = 1138.0
+offset_bottom = 557.0
+current_tab = 0
+tab_focus_mode = 0
 
-[node name="HelmetSlot" parent="Equipment" instance=ExtResource("3_kf8a3")]
+[node name="Equipment" type="Panel" parent="TabContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_t7kbs")
+metadata/_tab_index = 0
+metadata/_edit_group_ = true
+
+[node name="HelmetSlot" parent="TabContainer/Equipment" instance=ExtResource("3_kf8a3")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 146.0
 offset_top = 35.0
 offset_right = 242.0
 offset_bottom = 131.0
 
-[node name="BodySlot" parent="Equipment" instance=ExtResource("3_kf8a3")]
+[node name="BodySlot" parent="TabContainer/Equipment" instance=ExtResource("3_kf8a3")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 146.0
 offset_top = 144.0
 offset_right = 242.0
 offset_bottom = 240.0
 
-[node name="PantsSlot" parent="Equipment" instance=ExtResource("3_kf8a3")]
+[node name="ShoesSlot" parent="TabContainer/Equipment" instance=ExtResource("3_kf8a3")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 146.0
 offset_top = 254.0
 offset_right = 242.0
 offset_bottom = 350.0
 
-[node name="RightRing" parent="Equipment" instance=ExtResource("3_kf8a3")]
+[node name="RightRing" parent="TabContainer/Equipment" instance=ExtResource("3_kf8a3")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 258.0
 offset_top = 160.0
 offset_right = 354.0
 offset_bottom = 256.0
 
-[node name="LeftRing" parent="Equipment" instance=ExtResource("3_kf8a3")]
+[node name="LeftRing" parent="TabContainer/Equipment" instance=ExtResource("3_kf8a3")]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 36.0
 offset_top = 160.0
 offset_right = 132.0
 offset_bottom = 256.0
+
+[node name="Crafting" type="PanelContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("4_ijqh3")
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Crafting"]
+layout_mode = 2
+
+[node name="CraftingList" type="VBoxContainer" parent="TabContainer/Crafting/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TabContainerNavigator" parent="." node_paths=PackedStringArray("tab_containers") instance=ExtResource("4_teb1e")]
+tab_containers = [NodePath("../TabContainer")]
 
 [connection signal="back_button_pressed" from="Inventory" to="." method="_on_inventory_back_button_pressed"]
 

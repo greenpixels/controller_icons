@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://566wfnl0ax2o"]
 
-[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/items.png" id="1_fuqvk"]
+[ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/_assets/items.png" id="1_fuqvk"]
 [ext_resource type="Script" path="res://ui/shortcut_button/shortcut_button.gd" id="2_cd5v1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u4jth"]

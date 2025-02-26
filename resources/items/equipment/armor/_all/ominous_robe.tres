@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Armor" load_steps=4 format=3 uid="uid://6ab1m8w6v30s"]
+
+[ext_resource type="Texture2D" uid="uid://ge70qicfftvq" path="res://resources/items/equipment/armor/_assets/default_mage.png" id="1_u36b6"]
+[ext_resource type="Script" path="res://resources/items/equipment/armor/armor.gd" id="2_r8max"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ci1cs"]
+atlas = ExtResource("1_u36b6")
+region = Rect2(57, 77, 71, 59)
+
+[resource]
+script = ExtResource("2_r8max")
+armor_set = ExtResource("1_u36b6")
+slot = 1
+texture = SubResource("AtlasTexture_ci1cs")
+key = "ITEM_OMINOUS_ROBE"
+cooldown = 0.0
+rarity = 2
+max_stacks = 1

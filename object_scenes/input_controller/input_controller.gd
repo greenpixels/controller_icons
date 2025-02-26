@@ -6,7 +6,10 @@ var movement_input := Vector2(0., 0.)
 var look_at_input := Vector2.ZERO
 var deadzone_treshhold := 0.1
 var previos_mouse_position := Vector2.ZERO
-var use_keyboard = false
+var use_keyboard = false :
+	set(value):
+		use_keyboard = value
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) if not use_keyboard else Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 var toolbar_offset = 0 :
 	set(value):
 		if value < 0: value = 2
@@ -48,6 +51,9 @@ func _input(event: InputEvent) -> void:
 func handle_movement_input():
 	movement_input.x = Input.get_axis(input_map.get_mapped_action("move_left"), input_map.get_mapped_action("move_right"))
 	movement_input.y = Input.get_axis(input_map.get_mapped_action("move_up"), input_map.get_mapped_action("move_down"))
+	if movement_input.length() > 1:
+		movement_input = movement_input.normalized()
+		
 	
 func handle_look_at_input():
 	var previous_look_at := look_at_input

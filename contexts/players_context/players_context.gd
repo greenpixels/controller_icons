@@ -38,8 +38,6 @@ func add_new_player(player_index : int):
 		return
 	var player : Player = player_scene.instantiate()
 	player.player_index = player_index
-	if player_index == 0:
-		player.add_child(camera_scene.instantiate())
 	player.controller = InputContext.input_controllers[player_index]	
 	
 	# Add player to the same parent as the main player
@@ -53,11 +51,14 @@ func add_new_player(player_index : int):
 	players_changed.emit()
 	
 func spawn_players_at(node: Node, position: Vector2 = Vector2.ZERO):
+	node.add_child(camera_scene.instantiate())
 	for player in players:
 		node.add_child(player)
 		player.position = position
 
 func withdraw_players_from_scene():
 	for player in players:
+		
+		
 		var parent = player.get_parent()
 		parent.remove_child(player)

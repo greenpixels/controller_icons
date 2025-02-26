@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://diueotb0c585i"
-path="res://.godot/imported/blocks_normals_scaled.png-51d32138efd82e93cb54479250ab3de1.ctex"
+uid="uid://bau33k2shs4yb"
+path="res://.godot/imported/default_person.png-62d378ca57bafd7731a54bb8e372ff0e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://object_scenes/blocks/blocks_normals_scaled.png"
-dest_files=["res://.godot/imported/blocks_normals_scaled.png-51d32138efd82e93cb54479250ab3de1.ctex"]
+source_file="res://resources/items/equipment/armor/_assets/default_person.png"
+dest_files=["res://.godot/imported/default_person.png-62d378ca57bafd7731a54bb8e372ff0e.ctex"]
 
 [params]
 

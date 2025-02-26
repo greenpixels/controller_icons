@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkh1oc8kpadq1"]
+
+[ext_resource type="Script" path="res://contexts/item_context/item_context.gd" id="1_vmibx"]
+
+[node name="CraftingContext" type="Node"]
+script = ExtResource("1_vmibx")

@@ -1,24 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://vshf74l4lxru"]
+[gd_scene load_steps=3 format=3 uid="uid://vshf74l4lxru"]
 
 [ext_resource type="Texture2D" uid="uid://dq6papflcawm8" path="res://floor.png" id="1_ioqqj"]
+[ext_resource type="Script" path="res://object_scenes/main_camera/main_camera.gd" id="1_xarvd"]
 
-[node name="MainCamera" type="Camera2D"]
-zoom = Vector2(0.5, 0.5)
+[node name="CameraAdjuster" type="Node2D"]
+script = ExtResource("1_xarvd")
+
+[node name="MainCamera" type="Camera2D" parent="."]
+zoom = Vector2(0.6, 0.6)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="MainCamera"]
 follow_viewport_enabled = true
 scroll_ignore_camera_zoom = true
 
-[node name="Parallax2D" type="Parallax2D" parent="ParallaxBackground"]
+[node name="Parallax2D" type="Parallax2D" parent="MainCamera/ParallaxBackground"]
 z_index = -100
 z_as_relative = false
 repeat_size = Vector2(192, 192)
 repeat_times = 20
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Parallax2D"]
+[node name="Sprite2D" type="Sprite2D" parent="MainCamera/ParallaxBackground/Parallax2D"]
 texture = ExtResource("1_ioqqj")
 centered = false
 offset = Vector2(472.63, 186.74)

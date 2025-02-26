@@ -8,6 +8,13 @@ class_name ItemPickup
 @export var item : Item
 @export var amount := 1
 var original_position : Vector2
+var pull_to : Player = null :
+	set(value):
+		if pull_to != value:
+			pull_delay = 0.66
+		pull_to = value
+		 
+var pull_delay := 0.
 
 func _ready() -> void:
 	sprite.texture = item.texture
@@ -29,6 +36,21 @@ func _ready() -> void:
 	pulse_tween.tween_property(sprite, "position", original_position  + Vector2(0, -3), 1).set_trans(Tween.TRANS_CIRC)
 	pulse_tween.tween_property(sprite, "position", original_position, 1).set_trans(Tween.TRANS_CIRC)
 	
+func _process(delta: float) -> void:
+	
+	if pull_to != null and not pull_delay > 0:
+		var distance = global_position.distance_to(pull_to.global_position)
+		if distance > 400:
+			pull_to = null
+			return
+		var speed = clamp(150. / distance, .25, 200.)
+		global_position = global_position.move_toward(pull_to.global_position, speed)
+		
+		if distance < 5:
+			on_interact(pull_to)
+	elif pull_delay > 0:
+		pull_delay -= delta
+
 func on_interact(player: Player):
 	var remaining = player.inventory.store_item(item, amount)
 	amount = remaining

@@ -29,29 +29,6 @@ func _notification(what: int) -> void:
 func _process(delta: float) -> void:
 	if tab_cycle_cooldown > 0: tab_cycle_cooldown -= delta
 
-func _input(_event: InputEvent) -> void:
-	if tab_cycle_cooldown > 0: return
-	if FocusContext.current_focus and FocusContext.current_focus is Slider: return
-	if Input.is_action_just_pressed("ui_left"):
-		tab_cycle_cooldown = TAB_CYCLE_COOLDOWN_MAX
-		if not FocusContext.current_focus or not FocusContext.current_focus.find_valid_focus_neighbor(SIDE_LEFT):
-			if controller_tab_container.is_visible_in_tree():
-				var previous_current_tab = controller_tab_container.current_tab
-				controller_tab_container.current_tab-=1
-				if previous_current_tab == controller_tab_container.current_tab:
-					main_tab_container.current_tab-=1
-			else:
-				main_tab_container.current_tab-=1
-	if Input.is_action_just_pressed("ui_right"):
-		tab_cycle_cooldown = TAB_CYCLE_COOLDOWN_MAX
-		if not FocusContext.current_focus or not FocusContext.current_focus.find_valid_focus_neighbor(SIDE_RIGHT):
-			if controller_tab_container.is_visible_in_tree():
-				var previous_current_tab = controller_tab_container.current_tab
-				controller_tab_container.current_tab+=1
-				if previous_current_tab == controller_tab_container.current_tab:
-					main_tab_container.current_tab+=1
-			else:
-				main_tab_container.current_tab+=1
 
 func _on_player_toggle_2_pressed() -> void:
 	if not PlayersContext.check_player_exists(1):

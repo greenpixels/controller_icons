@@ -33,8 +33,6 @@ func _on_node_added(node: Node) -> void:
 			node.button_up.connect(func():
 				_drop()
 			)
-			node.grab_focus()
-			node.mouse_entered.connect(node.grab_focus)
 			node.mouse_exited.connect(node.release_focus)
 
 ## Called when a node is removed from the scene tree.
@@ -80,7 +78,7 @@ func _drop() -> void:
 	if not drag_source or not drop_target:
 		_cancel_drag()
 		return
-	drag_source.storage.transfer_item(
+	drag_source.storage.transfer_item_to(
 		drag_source.index_in_storage, drop_target.storage, drop_target.index_in_storage
 	)
 	_cancel_drag()

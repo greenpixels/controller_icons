@@ -25,5 +25,5 @@ region = Rect2(6, 6, 192, 192)
 minimal_pickaxe_power = 0
 loot_table = SubResource("Resource_mor58")
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_xfcie")

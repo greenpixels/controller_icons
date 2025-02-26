@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="Tool" load_steps=7 format=3 uid="uid://cdrp6aj8mx0gg"]
+[gd_resource type="Resource" script_class="Tool" load_steps=12 format=3 uid="uid://cdrp6aj8mx0gg"]
 
 [ext_resource type="PackedScene" uid="uid://byptmxjt78a4v" path="res://object_scenes/projectile/_all/slice/projectile_slice.tscn" id="1_nbhkp"]
 [ext_resource type="Script" path="res://resources/items/weapons/tools/tool.gd" id="1_qb052"]
 [ext_resource type="Script" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_xgnx5"]
-[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://resources/items/items_scaled.png" id="4_7ob2e"]
+[ext_resource type="Script" path="res://data_classes/crafting_ingredient.gd" id="3_8b7hn"]
+[ext_resource type="Script" path="res://data_classes/crafting_recipe.gd" id="4_3xpk1"]
+[ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="4_g6p3g"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://resources/items/_assets/items_scaled.png" id="7_bqw2l"]
 
 [sub_resource type="Resource" id="Resource_lpjjx"]
 script = ExtResource("1_xgnx5")
@@ -11,11 +14,20 @@ projectile_speed = 0.0
 lifetime = 0.15
 should_follow_origin_node = true
 should_face_direction = true
-projectile_spawn_offset = 132.0
+projectile_spawn_offset = 105.0
 scale_animation_to_lifetime = true
 
+[sub_resource type="Resource" id="Resource_w30fa"]
+script = ExtResource("3_8b7hn")
+item = ExtResource("4_g6p3g")
+amount = 5
+
+[sub_resource type="Resource" id="Resource_0d47v"]
+script = ExtResource("4_3xpk1")
+ingredients = Array[ExtResource("3_8b7hn")]([SubResource("Resource_w30fa")])
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_y0mip"]
-atlas = ExtResource("4_7ob2e")
+atlas = ExtResource("7_bqw2l")
 region = Rect2(6, 6, 96, 96)
 
 [resource]
@@ -33,3 +45,4 @@ key = "WOODEN_PICKAXE"
 cooldown = 0.75
 rarity = 0
 max_stacks = 1
+recipe = SubResource("Resource_0d47v")

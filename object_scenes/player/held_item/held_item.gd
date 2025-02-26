@@ -20,7 +20,7 @@ func handle_item_change(new_item: Item):
 
 func _process(delta: float) -> void:
 	if not item: return
-	scale.y = 1 if player.animated_sprite.flip_h == false else -1
+	scale.y = 1 if player.player_model.scale.x < 0 == false else -1
 	# item_sprite.scale.x = 1 if Vector2.from_angle(rotation).x > 0 else -1
 	if current_cooldown > 0:
 		current_cooldown -= delta
@@ -38,7 +38,7 @@ func trigger():
 			projectile.source_item = item
 			get_tree().current_scene.add_child(projectile)
 			projectile.animated_sprite.flip_v = scale.y < 0
-			projectile.global_position = global_position + Vector2.from_angle(rotation) * item.projectile_configuration.projectile_spawn_offset
+			projectile.global_position = player.global_position + Vector2.from_angle(rotation) * item.projectile_configuration.projectile_spawn_offset
 			
 
 func _on_input_controller_attack_pressed() -> void:

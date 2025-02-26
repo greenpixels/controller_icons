@@ -13,6 +13,7 @@ enum RARITY {
 @export var cooldown := 0.
 @export var rarity := RARITY.COMMON
 @export var max_stacks := 1
+@export var recipe : CraftingRecipe
 
 func get_rarity_color():
 	match rarity:
@@ -20,3 +21,13 @@ func get_rarity_color():
 		RARITY.COMMON: return Color.WHITE
 		RARITY.RARE: return Color.DEEP_SKY_BLUE
 		RARITY.VERY_RARE: return Color.ORANGE
+
+func check_craftable_from_item_dict(item_dict: Dictionary):
+	if not recipe: return false
+	for ingredient in recipe.ingredients:
+		if item_dict.has(ingredient.item.key):
+			var current_amount = item_dict[ingredient.item.key]
+			if current_amount < ingredient.amount:
+				return false
+		else: return false
+	return true

@@ -9,7 +9,7 @@ class_name DeviceInputMap
 var _action_map = {}
 var _device_index = 0
 var _device_overwrite = -1
-const DEFAULT_DEADZONE = 0.5
+const DEFAULT_DEADZONE = 0.15
 var deadzone := DEFAULT_DEADZONE
 static var original_actions : Array[StringName] = [
 	"move_left",
@@ -30,6 +30,7 @@ static var original_actions : Array[StringName] = [
 	"cycle_item_left",
 	"cycle_item_right"
 	]
+	
 ## Initializes a new input map for a specific device using its index.
 ## Copies all existing actions and appends the device index to their names, allowing unique mappings per device.
 func _init(device_index: int) -> void:
@@ -40,11 +41,13 @@ func _init(device_index: int) -> void:
 		var new_action_name : String = action_name + "_" + device_index_string
 		_action_map[action_name] = new_action_name
 		InputMap.add_action(new_action_name)
+		InputMap.action_set_deadzone(new_action_name, DEFAULT_DEADZONE)
 		for event in action_events:
 			var new_event = event.duplicate(true)
 			_map_action_to_current_device(new_event)
 			if new_event is not InputEventJoypadButton and new_event is not InputEventJoypadMotion and _device_index != 0: continue
 			InputMap.action_add_event(new_action_name, new_event)
+	
 	ControllerIcons.refresh()
 
 # Resets a single action by removing its device-specific mapping

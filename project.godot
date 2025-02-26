@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 
 InputContext="*res://contexts/input_context/input_context.tscn"
 FocusContext="*res://contexts/focus_context/focus_context.tscn"
+ItemContext="*res://contexts/item_context/item_context.tscn"
 DndContext="*res://contexts/dnd_context/dnd_context.tscn"
 TweenHelper="*res://utils/tween_helper/tween_helper.gd"
 TooltipOverlay="*res://ui/tooltip_component/tooltip_overlay/tooltip_overlay.tscn"
@@ -32,12 +33,21 @@ ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=2
 window/stretch/mode="canvas_items"
-window/vsync/vsync_mode=0
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/controller_icons/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://contexts/": "red",
+"res://data_classes/": "orange",
+"res://object_scenes/": "pink",
+"res://resources/": "green"
+}
 
 [global_group]
 
@@ -197,6 +207,29 @@ options={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":6,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+equip={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":true,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(174, 18),"global_position":Vector2(183, 64),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+cycle_menu_left={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":true,"script":null)
+]
+}
+cycle_menu_right={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":10,"pressure":0.0,"pressed":true,"script":null)
+]
+}
+drop_item={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":84,"key_label":0,"unicode":116,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":3,"pressure":0.0,"pressed":true,"script":null)
+]
+}
 
 [layer_names]
 
@@ -206,4 +239,4 @@ options={
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
+textures/canvas_textures/default_texture_filter=2

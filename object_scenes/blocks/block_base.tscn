@@ -4,14 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_yb2ek"]
 [ext_resource type="Shader" path="res://object_scenes/blocks/overlay.gdshader" id="3_yh7ba"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jned0"]
+shader = ExtResource("3_yh7ba")
+shader_parameter/contrast = 1.5
+shader_parameter/opacity = 0.7
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_inoac"]
 atlas = ExtResource("2_yb2ek")
 region = Rect2(402, 6, 192, 192)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jned0"]
-shader = ExtResource("3_yh7ba")
-shader_parameter/contrast = 1.424
-shader_parameter/opacity = 0.708
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoo6i"]
 size = Vector2(192, 144)
@@ -20,19 +20,19 @@ size = Vector2(192, 144)
 collision_mask = 6
 script = ExtResource("1_x0ioi")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_inoac")
-
-[node name="Shadow" type="Sprite2D" parent="Sprite2D"]
+[node name="Shadow" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 self_modulate = Color(0, 0, 0, 0.439216)
-show_behind_parent = true
 z_index = -5
 z_as_relative = false
 material = SubResource("ShaderMaterial_jned0")
 position = Vector2(0, 82.5525)
 scale = Vector2(1, 0.521868)
+flip_v = true
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_inoac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

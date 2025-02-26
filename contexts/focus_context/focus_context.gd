@@ -20,8 +20,15 @@ func _ready() -> void:
 					current_focus = null
 				check_for_focus()	
 			)
+			
+			
+			
+				
 			if node.focus_mode != Control.FOCUS_NONE:
 				node.add_to_group("focusable")
+				node.mouse_entered.connect(node.grab_focus)
+				if not current_focus :
+					node.grab_focus()
 	)
 
 
