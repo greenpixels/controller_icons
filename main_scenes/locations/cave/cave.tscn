@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://btf06qj10382s"]
+
+[ext_resource type="Script" path="res://main_scenes/locations/cave/cave.gd" id="1_7orta"]
+[ext_resource type="Script" path="res://main_scenes/locations/world_generation.gd" id="1_km3u3"]
+[ext_resource type="PackedScene" uid="uid://dmhb2sm6n4gh8" path="res://object_scenes/blocks/interactable_blocks/_all/cave_exit/block_cave_exit.tscn" id="3_8rjgm"]
+
+[node name="Cave" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_7orta")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("1_km3u3")
+spawn_point_empty_padding = Vector2(2, 3)
+noise_frequency = 0.8
+max_map_size_in_blocks = 6
+
+[node name="Block" parent="." instance=ExtResource("3_8rjgm")]
+position = Vector2(0, -59)

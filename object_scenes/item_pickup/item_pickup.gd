@@ -37,7 +37,6 @@ func _ready() -> void:
 	pulse_tween.tween_property(sprite, "position", original_position, 1).set_trans(Tween.TRANS_CIRC)
 	
 func _process(delta: float) -> void:
-	
 	if pull_to != null and not pull_delay > 0:
 		var distance = global_position.distance_to(pull_to.global_position)
 		if distance > 400:

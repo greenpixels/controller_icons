@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b15w68fe4cpnr"]
+
+[ext_resource type="Script" path="res://object_scenes/interact_area/interact_area.gd" id="1_j1bcw"]
+[ext_resource type="PackedScene" uid="uid://bt7kwe3sow14h" path="res://ui/interact_selection/interact_selection.tscn" id="2_oajcx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_amnf1"]
+size = Vector2(192, 193)
+
+[node name="InteractArea" type="Area2D"]
+script = ExtResource("1_j1bcw")
+
+[node name="InteractShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_amnf1")
+debug_color = Color(0, 0.639216, 0.360784, 0)
+
+[node name="InteractSelection" parent="." instance=ExtResource("2_oajcx")]
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 96.0
+offset_bottom = 97.0
+pivot_offset = Vector2(96, 96)

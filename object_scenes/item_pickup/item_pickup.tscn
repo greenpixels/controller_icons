@@ -4,8 +4,6 @@
 [ext_resource type="Resource" uid="uid://cdrp6aj8mx0gg" path="res://resources/items/weapons/tools/_all/wooden_pickaxe.tres" id="2_yp67g"]
 [ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://resources/items/_assets/items_scaled.png" id="3_sa8cl"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_adbgq"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_auun4"]
 atlas = ExtResource("3_sa8cl")
 region = Rect2(6, 6, 96, 96)
@@ -19,12 +17,12 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o1a0y"]
 blend_mode = 1
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_adbgq"]
+radius = 16.0312
+
 [node name="ItemPickup" type="Area2D"]
 script = ExtResource("1_7d5ai")
 item = ExtResource("2_yp67g")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_adbgq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
@@ -75,3 +73,7 @@ joint_mode = 2
 begin_cap_mode = 2
 round_precision = 16
 antialiased = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 12)
+shape = SubResource("CircleShape2D_adbgq")

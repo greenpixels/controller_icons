@@ -3,24 +3,19 @@ class_name WorldGenerator
 
 # The default block. For now, we use the default block for world building.
 var dirt_block := preload("res://object_scenes/blocks/_all/dirt/block_dirt.tscn")
-
+var boundary_block := preload("res://object_scenes/blocks/_all/boundary/block_boundary.tscn")
 # The spawn point (expressed in grid coordinates)
-@export var spawn_point := Vector2(0, 0)
-# Extra padding (in pixels) between blocks.
-@export var block_padding := Vector2(6, 6)
-# The pixel size of any block in the grid
-@export var block_size := Vector2(192, 156)
-# The padding around the spawn point (in grid units) in which – including the spawn point itself – no blocks are spawned
-@export var spawn_point_empty_padding := Vector2(2, 2)
-# The amount of blocks in a chunk (width, height in grid units)
-@export var chunk_size := Vector2(10, 10)
-
-# FastNoiseLite parameters for creating empty areas.
+var spawn_point := Vector2(0, 0)
+var block_padding := Vector2(6, 6)
+var block_size := Vector2(192, 156)
+var chunk_size := Vector2(15, 15)
+var CHUNK_OFFSET = Vector2(chunk_size) / 2.
 var noise: FastNoiseLite;
-@export var empty_area_threshold: float = -0.2  # Blocks are only placed if noise >= this value.
+@export var spawn_point_empty_padding := Vector2(2, 2)
+@export var empty_area_threshold: float = -0.08  # Blocks are only placed if noise >= this value.
 @export var noise_frequency: float = 0.1
-@export var noise_seed: int = 12345
-
+@export var max_map_size_in_blocks := 0
+@export var use_sub_seed := true
 # A loading trigger is a node with a position.
 # We check whether the position of any loading trigger should trigger a chunk update.
 @export var loading_triggers: Array[Node2D] = []
@@ -34,11 +29,11 @@ var noise: FastNoiseLite;
 var generated_chunks := {}
 
 func _ready() -> void:
-	seed(noise_seed)
+	seed(WorldContext.main_seed if not use_sub_seed else WorldContext.current_sub_seed)
 	noise = FastNoiseLite.new()
 	
 	# Initialize the noise generator.
-	noise.seed = noise_seed
+	noise.seed = WorldContext.main_seed if not use_sub_seed else WorldContext.current_sub_seed
 	noise.noise_type = FastNoiseLite.NoiseType.TYPE_PERLIN
 	noise.frequency = noise_frequency
 
@@ -67,18 +62,26 @@ func generate_chunk(chunk_coord: Vector2) -> void:
 	if generated_chunks.has(chunk_coord):
 		return
 	var sum_ab = chunk_coord.x + chunk_coord.y
-	seed(noise_seed + ((sum_ab * (sum_ab + 1)) / 2) + chunk_coord.y)
+	seed(WorldContext.main_seed if not use_sub_seed else WorldContext.current_sub_seed + ((sum_ab * (sum_ab + 1)) / 2) + chunk_coord.y)
 	var chunk_node = Node2D.new()
 	chunk_node.name = "Chunk_%d_%d" % [chunk_coord.x, chunk_coord.y]
 	chunk_node.y_sort_enabled = true
 	get_parent().add_child.call_deferred(chunk_node)
 	
+	
 	# Loop through every block position within the chunk.
+	var blocks_in_chunk = {}
 	for x in range(int(chunk_size.x)):
 		for y in range(int(chunk_size.y)):
 			# Compute the grid coordinate for this block.
-			var grid_pos = Vector2(chunk_coord.x * chunk_size.x + x, chunk_coord.y * chunk_size.y + y)
-			
+			var grid_pos = Vector2(chunk_coord.x * chunk_size.x + x, chunk_coord.y * chunk_size.y + y) - CHUNK_OFFSET
+			var block_distance = grid_pos.distance_to(spawn_point)
+			if max_map_size_in_blocks > 0 and block_distance > max_map_size_in_blocks:
+				var block_instance = boundary_block.instantiate()
+				chunk_node.add_child(block_instance)
+				var effective_size = block_size + block_padding
+				block_instance.position = grid_pos * effective_size
+				continue
 			# Check if the block falls within the spawn point empty padding.
 			# (Assumes spawn_point is in grid coordinates.)
 			if abs(grid_pos.x - spawn_point.x) < spawn_point_empty_padding.x and abs(grid_pos.y - spawn_point.y) < spawn_point_empty_padding.y:
@@ -93,9 +96,13 @@ func generate_chunk(chunk_coord: Vector2) -> void:
 			# If block_types is not empty, pick based on weight and distance; otherwise, use the default dirt_block.
 			var block_scene: PackedScene = dirt_block
 			if block_types.size() > 0:
-				var chosen_scene = choose_block(grid_pos)
+				var chosen_scene = choose_block(grid_pos, blocks_in_chunk)
 				if chosen_scene:
 					block_scene = chosen_scene
+					if blocks_in_chunk.has(block_scene.resource_path):
+						blocks_in_chunk[block_scene.resource_path] += 1
+					else: 
+						blocks_in_chunk[block_scene.resource_path] = 1
 			
 			var block_instance = block_scene.instantiate()
 			# Calculate effective size (block size + padding) for positioning.
@@ -107,7 +114,7 @@ func generate_chunk(chunk_coord: Vector2) -> void:
 	generated_chunks[chunk_coord] = chunk_node
 
 # Chooses a block type based on its weight and the distance from the spawn point.
-func choose_block(grid_pos: Vector2) -> PackedScene:
+func choose_block(grid_pos: Vector2, blocks_in_chunk: Dictionary) -> PackedScene:
 	# Calculate the distance (in blocks) from the spawn point.
 	var block_distance = grid_pos.distance_to(spawn_point)
 	var valid_blocks = []
@@ -117,10 +124,12 @@ func choose_block(grid_pos: Vector2) -> PackedScene:
 	# Each block_config is expected to be an instance of WorldGenBlockConfig (or BlockSpawnConfiguration).
 	for block_config in block_types:
 		# Check if the current block_distance is within the allowed range.
+		if block_config.maximum_per_chunk == 0: continue
 		if block_distance >= block_config.min_distance and block_distance <= block_config.max_distance:
-			valid_blocks.append(block_config)
-			total_weight += block_config.weight
-	
+			if block_config.maximum_per_chunk == -1 or not blocks_in_chunk.has(block_config.scene.resource_path) or blocks_in_chunk[block_config.scene.resource_path] < block_config.maximum_per_chunk:
+				valid_blocks.append(block_config)
+				total_weight += block_config.weight
+				
 	# If none meet the distance requirement, return null (which will cause the default to be used).
 	if valid_blocks.size() == 0:
 		return null

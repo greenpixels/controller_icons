@@ -13,8 +13,8 @@ shader_parameter/opacity = 0.7
 atlas = ExtResource("2_yb2ek")
 region = Rect2(402, 6, 192, 192)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uoo6i"]
-size = Vector2(192, 144)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bc6xl"]
+size = Vector2(192, 136)
 
 [node name="Block" type="StaticBody2D"]
 collision_mask = 6
@@ -35,5 +35,5 @@ metadata/_edit_group_ = true
 texture = SubResource("AtlasTexture_inoac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 25)
-shape = SubResource("RectangleShape2D_uoo6i")
+position = Vector2(0, 28)
+shape = SubResource("RectangleShape2D_bc6xl")

@@ -1,0 +1,37 @@
+[gd_scene load_steps=9 format=3 uid="uid://wtcjxfyt01xl"]
+
+[ext_resource type="PackedScene" uid="uid://btf06qj10382s" path="res://main_scenes/locations/cave/cave.tscn" id="1_qhq0u"]
+[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="2_hb8he"]
+[ext_resource type="PackedScene" uid="uid://dlr8hhaw3wwou" path="res://object_scenes/blocks/_all/stone/block_stone.tscn" id="3_8effu"]
+[ext_resource type="PackedScene" uid="uid://b6l43j4dtjauv" path="res://object_scenes/blocks/_all/dirt/block_dirt.tscn" id="4_7rvyu"]
+[ext_resource type="PackedScene" uid="uid://dr8n86upyp276" path="res://object_scenes/blocks/_all/iron/block_iron.tscn" id="5_jgk4e"]
+
+[sub_resource type="Resource" id="Resource_tuvux"]
+script = ExtResource("2_hb8he")
+scene = ExtResource("3_8effu")
+weight = 100.0
+min_distance = 0.0
+max_distance = 1000.0
+maximum_per_chunk = -1
+
+[sub_resource type="Resource" id="Resource_31jae"]
+script = ExtResource("2_hb8he")
+scene = ExtResource("4_7rvyu")
+weight = 50.0
+min_distance = 0.0
+max_distance = 1000.0
+maximum_per_chunk = -1
+
+[sub_resource type="Resource" id="Resource_tsenf"]
+script = ExtResource("2_hb8he")
+scene = ExtResource("5_jgk4e")
+weight = 25.0
+min_distance = 2.0
+max_distance = 1000.0
+maximum_per_chunk = -1
+
+[node name="Cave" instance=ExtResource("1_qhq0u")]
+
+[node name="Node" parent="." index="0"]
+noise_frequency = 2.1
+block_types = Array[ExtResource("2_hb8he")]([SubResource("Resource_tuvux"), SubResource("Resource_31jae"), SubResource("Resource_tsenf")])

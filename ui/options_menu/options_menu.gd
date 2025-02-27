@@ -16,7 +16,7 @@ func _ready() -> void:
 func handle_player_change():
 	var index = 0
 	for toggle in player_toggles as Array[Button]:
-		if PlayersContext.check_player_exists(index):
+		if PlayersContext.player_exists(index):
 			toggle.text = "REMOVE PLAYER " + str(index + 1)
 		else:
 			toggle.text = "ADD PLAYER " + str(index + 1)
@@ -31,21 +31,21 @@ func _process(delta: float) -> void:
 
 
 func _on_player_toggle_2_pressed() -> void:
-	if not PlayersContext.check_player_exists(1):
+	if not PlayersContext.player_exists(1):
 		PlayersContext.add_new_player(1)
 	else:
 		PlayersContext.remove_player(1)
 
 
 func _on_player_toggle_3_pressed() -> void:
-	if not PlayersContext.check_player_exists(2):
+	if not PlayersContext.player_exists(2):
 		PlayersContext.add_new_player(2)
 	else:
 		PlayersContext.remove_player(2)
 
 
 func _on_player_toggle_4_pressed() -> void:
-	if not PlayersContext.check_player_exists(3):
+	if not PlayersContext.player_exists(3):
 		PlayersContext.add_new_player(3)
 	else:
 		PlayersContext.remove_player(3)

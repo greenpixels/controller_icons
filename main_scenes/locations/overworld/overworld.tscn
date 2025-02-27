@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dfl4bcwkdw8sg"]
+[gd_scene load_steps=13 format=3 uid="uid://dfl4bcwkdw8sg"]
 
-[ext_resource type="Script" path="res://main_scenes/overworld/overworld.gd" id="1_7ofc1"]
-[ext_resource type="Script" path="res://main_scenes/overworld/world_generation.gd" id="2_rsqlo"]
+[ext_resource type="Script" path="res://main_scenes/locations/overworld/overworld.gd" id="1_7ofc1"]
+[ext_resource type="Script" path="res://main_scenes/locations/world_generation.gd" id="2_rsqlo"]
 [ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="4_n2u0d"]
 [ext_resource type="Resource" uid="uid://c2whomwhpwikm" path="res://object_scenes/blocks/_all/copper/block_copper_config.tres" id="4_vp7f8"]
 [ext_resource type="Resource" uid="uid://borubxpoo1xjf" path="res://object_scenes/blocks/_all/crystal/block_crystal_config.tres" id="5_846sg"]
@@ -10,6 +10,15 @@
 [ext_resource type="Resource" uid="uid://ofnyovo5bt3e" path="res://object_scenes/blocks/_all/gold/block_gold_config.tres" id="8_iuxym"]
 [ext_resource type="Resource" uid="uid://imk1imhb5gc2" path="res://object_scenes/blocks/_all/iron/block_iron_config.tres" id="9_7o1j5"]
 [ext_resource type="Resource" uid="uid://dm78dqjskhw4c" path="res://object_scenes/blocks/_all/stone/block_stone_config.tres" id="10_81nse"]
+[ext_resource type="PackedScene" uid="uid://jj43pc5vnnig" path="res://object_scenes/blocks/interactable_blocks/_all/cave_entrance/_all/iron_cave_entrance/block_iron_cave_entrance.tscn" id="11_f6wkt"]
+
+[sub_resource type="Resource" id="Resource_2nddo"]
+script = ExtResource("4_n2u0d")
+scene = ExtResource("11_f6wkt")
+weight = 8.0
+min_distance = 5.0
+max_distance = 1000.0
+maximum_per_chunk = 1
 
 [node name="Overworld" type="Node2D"]
 y_sort_enabled = true
@@ -17,4 +26,5 @@ script = ExtResource("1_7ofc1")
 
 [node name="WorlGenerator" type="Node" parent="."]
 script = ExtResource("2_rsqlo")
-block_types = Array[ExtResource("4_n2u0d")]([ExtResource("4_vp7f8"), ExtResource("5_846sg"), ExtResource("6_lua6l"), ExtResource("7_5ejne"), ExtResource("8_iuxym"), ExtResource("9_7o1j5"), ExtResource("10_81nse")])
+use_sub_seed = false
+block_types = Array[ExtResource("4_n2u0d")]([ExtResource("4_vp7f8"), ExtResource("5_846sg"), ExtResource("6_lua6l"), ExtResource("7_5ejne"), ExtResource("8_iuxym"), ExtResource("9_7o1j5"), ExtResource("10_81nse"), SubResource("Resource_2nddo")])

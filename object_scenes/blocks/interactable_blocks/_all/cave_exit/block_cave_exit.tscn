@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmhb2sm6n4gh8"]
+
+[ext_resource type="PackedScene" uid="uid://xa20ommqlb3m" path="res://object_scenes/blocks/interactable_blocks/block_interactable.tscn" id="1_milaq"]
+[ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_jmds8"]
+[ext_resource type="Script" path="res://object_scenes/blocks/interactable_blocks/_all/cave_exit/cave_exit_interact_handler.gd" id="3_cv77t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2yo0"]
+atlas = ExtResource("2_jmds8")
+region = Rect2(812, 420, 172, 160)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1vbcn"]
+radius = 38.0
+height = 108.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yoi5j"]
+size = Vector2(192, 193)
+
+[node name="Block" instance=ExtResource("1_milaq")]
+
+[node name="Shadow" parent="." index="0"]
+position = Vector2(0, 109)
+
+[node name="Sprite2D" parent="." index="1"]
+texture = SubResource("AtlasTexture_m2yo0")
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(-1, 45)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1vbcn")
+
+[node name="InteractShape" parent="InteractArea" index="0"]
+shape = SubResource("RectangleShape2D_yoi5j")
+
+[node name="CaveExitInteractHandler" type="Node" parent="." index="4"]
+script = ExtResource("3_cv77t")
+
+[connection signal="interacted" from="InteractArea" to="CaveExitInteractHandler" method="_on_interact_area_interacted"]
+
+[editable path="InteractArea"]

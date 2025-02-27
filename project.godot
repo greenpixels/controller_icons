@@ -12,13 +12,14 @@ config_version=5
 
 config/name="Project Magus"
 config/version="0.0.0"
-run/main_scene="res://main_scenes/overworld/overworld.tscn"
+run/main_scene="res://main_scenes/locations/cave/_all/iron_cave/iron_cave.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]
 
 InputContext="*res://contexts/input_context/input_context.tscn"
 FocusContext="*res://contexts/focus_context/focus_context.tscn"
+WorldContext="*res://contexts/world_context/world_context.tscn"
 ItemContext="*res://contexts/item_context/item_context.tscn"
 DndContext="*res://contexts/dnd_context/dnd_context.tscn"
 TweenHelper="*res://utils/tween_helper/tween_helper.gd"
@@ -46,7 +47,8 @@ folder_colors={
 "res://contexts/": "red",
 "res://data_classes/": "orange",
 "res://object_scenes/": "pink",
-"res://resources/": "green"
+"res://resources/": "green",
+"res://ui/": "gray"
 }
 
 [global_group]

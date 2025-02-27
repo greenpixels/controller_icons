@@ -1,7 +1,6 @@
 extends CharacterBody2D
 class_name Player
 
-
 @onready var controller : InputController
 @onready var held_item := %Item
 @onready var interact_radius := $InteractRadius
@@ -38,9 +37,6 @@ func _process(_delta: float) -> void:
 	if controller.look_at_input.length() <= 0.2:
 		held_item.rotation = -0.66 * PI if player_model.scale.x <  0 else -0.33 * PI
 	
-	
-	
-	
 func _physics_process(_delta: float) -> void:
 	previous_position = global_position
 	
@@ -69,14 +65,8 @@ func _on_input_controller_look_at_changed(new_look_at: Vector2) -> void:
 	queue_redraw()
 
 func _on_input_controller_interact_pressed() -> void:
-	pass
-	#var closest_area = null
-	#for area in interact_radius.get_overlapping_areas():
-		#if area is ItemPickup:
-			#if closest_area == null or area.global_position.distance_to(interact_radius.global_position) < closest_area.global_position.distance_to(interact_radius.global_position):
-				#closest_area = area
-	#if closest_area:
-		#closest_area.on_interact(self)
+	if PlayersContext.players_interact_focus[player_index] == null: return
+	PlayersContext.players_interact_focus[player_index]._handle_interact()
 	
 func _on_input_controller_inventory_opened() -> void:
 	inventory.open_view(func(inventory: PlayerInventory):
@@ -113,7 +103,19 @@ func _on_equipment_items_changed() -> void:
 	_render_armor_for_slot(PlayerInventory.ArmorSlotPositions.SHOES, "right_foot_sprite")
 
 
-func _on_interact_radius_area_entered(area: Area2D) -> void:
+func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:
 		if area.pull_to == null:
 			area.pull_to = self
+
+
+func _on_interact_radius_area_entered(area: Area2D) -> void:
+	if area is InteractArea:
+		PlayersContext.players_interact_focus[player_index] = area
+		PlayersContext.players_interact_focus_changed.emit()
+
+
+func _on_interact_radius_area_exited(area: Area2D) -> void:
+	if area is InteractArea and area == PlayersContext.players_interact_focus[player_index]:
+		PlayersContext.players_interact_focus[player_index] = null
+		PlayersContext.players_interact_focus_changed.emit()

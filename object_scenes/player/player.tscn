@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bplmsqiwv1wkx"]
+[gd_scene load_steps=13 format=3 uid="uid://bplmsqiwv1wkx"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_sqov3"]
 [ext_resource type="Shader" path="res://object_scenes/blocks/overlay.gdshader" id="2_rmxau"]
@@ -22,6 +22,9 @@ height = 68.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bnyon"]
 radius = 224.644
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_juv46"]
+radius = 69.2604
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -56,7 +59,7 @@ position = Vector2(200, 200)
 player = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 15)
+position = Vector2(0, 33)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_jcyah")
 
@@ -67,14 +70,23 @@ storage_view = ExtResource("8_q6xyg")
 script = ExtResource("7_jn0la")
 maximum_space = 5
 
-[node name="InteractRadius" type="Area2D" parent="."]
+[node name="PickupRadius" type="Area2D" parent="."]
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRadius"]
-position = Vector2(0, 3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
+position = Vector2(0, 33)
 shape = SubResource("CircleShape2D_bnyon")
 debug_color = Color(0.454902, 0.596078, 0, 0)
 
+[node name="InteractRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRadius"]
+position = Vector2(0, 33)
+shape = SubResource("CircleShape2D_juv46")
+debug_color = Color(0.976471, 0, 0.411765, 0)
+
 [connection signal="items_changed" from="Inventory" to="." method="_on_inventory_items_changed"]
 [connection signal="items_changed" from="Equipment" to="." method="_on_equipment_items_changed"]
+[connection signal="area_entered" from="PickupRadius" to="." method="_on_pickup_radius_area_entered"]
 [connection signal="area_entered" from="InteractRadius" to="." method="_on_interact_radius_area_entered"]
+[connection signal="area_exited" from="InteractRadius" to="." method="_on_interact_radius_area_exited"]

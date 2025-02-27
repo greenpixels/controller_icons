@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://xa20ommqlb3m"]
+
+[ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_v03de"]
+[ext_resource type="PackedScene" uid="uid://b15w68fe4cpnr" path="res://object_scenes/interact_area/interact_area.tscn" id="2_vmmei"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08umh"]
+size = Vector2(192, 133)
+
+[node name="Block" instance=ExtResource("1_v03de")]
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(0, 30.5)
+shape = SubResource("RectangleShape2D_08umh")
+
+[node name="InteractArea" parent="." index="3" instance=ExtResource("2_vmmei")]
+
+[editable path="InteractArea"]

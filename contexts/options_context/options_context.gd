@@ -5,7 +5,6 @@ var _menu : Control = null
 
 signal listening_for_button_remap_changed(state: bool)
 
-
 func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
 

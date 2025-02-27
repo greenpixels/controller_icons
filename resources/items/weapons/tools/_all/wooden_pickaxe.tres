@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://data_classes/crafting_ingredient.gd" id="3_8b7hn"]
 [ext_resource type="Script" path="res://data_classes/crafting_recipe.gd" id="4_3xpk1"]
 [ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="4_g6p3g"]
-[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://resources/items/_assets/items_scaled.png" id="7_bqw2l"]
+[ext_resource type="Texture2D" uid="uid://2s2d8rrbujak" path="res://resources/items/_assets/test_pickaxe.png" id="7_u3cg3"]
 
 [sub_resource type="Resource" id="Resource_lpjjx"]
 script = ExtResource("1_xgnx5")
@@ -27,8 +27,8 @@ script = ExtResource("4_3xpk1")
 ingredients = Array[ExtResource("3_8b7hn")]([SubResource("Resource_w30fa")])
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y0mip"]
-atlas = ExtResource("7_bqw2l")
-region = Rect2(6, 6, 96, 96)
+atlas = ExtResource("7_u3cg3")
+region = Rect2(3, 4, 104, 103)
 
 [resource]
 script = ExtResource("1_qb052")
