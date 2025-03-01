@@ -8,6 +8,7 @@ atlas = ExtResource("2_2v13t")
 region = Rect2(204, 204, 192, 192)
 
 [node name="Block" instance=ExtResource("1_jxj8v")]
+key = "BLOCK_IRON"
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_m2uy4")

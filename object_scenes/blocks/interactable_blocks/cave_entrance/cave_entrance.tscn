@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://xa20ommqlb3m" path="res://object_scenes/blocks/interactable_blocks/block_interactable.tscn" id="1_0ed2b"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_pxppf"]
-[ext_resource type="Script" path="res://object_scenes/blocks/interactable_blocks/_all/cave_entrance/cave_entrance_interact_handler.gd" id="3_gbcgm"]
+[ext_resource type="Script" path="res://object_scenes/blocks/interactable_blocks/cave_entrance/cave_entrance_interact_handler.gd" id="3_gbcgm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nd7xa"]
 atlas = ExtResource("2_pxppf")
@@ -16,6 +16,7 @@ height = 184.0
 size = Vector2(192, 193)
 
 [node name="Block" instance=ExtResource("1_0ed2b")]
+should_use_uuid = true
 
 [node name="Shadow" parent="." index="0"]
 visible = false

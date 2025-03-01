@@ -21,7 +21,7 @@ func _ready() -> void:
 		index += 1
 	%Button.shortcut = shortcut
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	shortcut_icon.size.y = 50
 
 func _on_button_pressed() -> void:

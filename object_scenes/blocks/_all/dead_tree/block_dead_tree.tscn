@@ -22,6 +22,7 @@ atlas = ExtResource("5_cvqbu")
 region = Rect2(204, 6, 192, 192)
 
 [node name="Block" instance=ExtResource("1_p6q80")]
+key = "BLOCK_DEAD_TREE"
 minimal_pickaxe_power = 0
 loot_table = SubResource("Resource_sx0aa")
 

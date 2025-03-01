@@ -8,6 +8,7 @@ atlas = ExtResource("2_fojnj")
 region = Rect2(402, 204, 192, 192)
 
 [node name="Block" instance=ExtResource("1_loty4")]
+key = "BLOCK_GOLD"
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_peel7")

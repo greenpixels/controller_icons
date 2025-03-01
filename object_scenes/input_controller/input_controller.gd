@@ -9,7 +9,7 @@ var previos_mouse_position := Vector2.ZERO
 var use_keyboard = false :
 	set(value):
 		use_keyboard = value
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) if not use_keyboard else Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN if not use_keyboard else Input.MOUSE_MODE_VISIBLE)
 var toolbar_offset = 0 :
 	set(value):
 		if value < 0: value = 2

@@ -31,6 +31,7 @@ max_distance = 1000.0
 maximum_per_chunk = -1
 
 [node name="Cave" instance=ExtResource("1_qhq0u")]
+key = "LOCATION_IRON_CAVE"
 
 [node name="Node" parent="." index="0"]
 noise_frequency = 2.1

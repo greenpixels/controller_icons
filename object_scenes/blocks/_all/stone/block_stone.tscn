@@ -8,8 +8,9 @@ atlas = ExtResource("2_7nssx")
 region = Rect2(402, 6, 192, 192)
 
 [node name="Block" instance=ExtResource("1_xxc5d")]
+key = "BLOCK_STONE"
 minimal_pickaxe_power = 0
 maximum_health = 200
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_26b11")

@@ -19,7 +19,7 @@ enum ArmorSlotPositions {
 var crafting_entries : Array = []
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("equip"):
+	if Input.is_action_just_pressed("equip") and InputMap.event_is_action(event, "equip"):
 		var slot = FocusContext.current_focus
 		if slot is ItemSlot:
 			if slot.get_item() == null or not slot.get_item() is Equipment: return
@@ -37,7 +37,7 @@ func _input(event: InputEvent) -> void:
 							slot.storage.transfer_item_to(slot.index_in_storage, equipment_storage, ArmorSlotPositions.RING_1)
 			elif slot.storage == equipment_storage:
 				slot.storage.transfer_item(slot.index_in_storage, storage)
-	if Input.is_action_just_pressed("drop_item"):
+	if Input.is_action_just_pressed("drop_item") and InputMap.event_is_action(event, "drop_item"):
 		var slot = FocusContext.current_focus
 		if slot is ItemSlot:
 			if slot.get_item() == null: return
@@ -59,7 +59,7 @@ func _ready() -> void:
 	if equipment_storage:
 		var index := 0
 		
-		equipment_storage.before_move_checks.push_back(func(item : Item, storage : Storage, slot: int):
+		equipment_storage.before_move_checks.push_back(func(item : Item, _storage : Storage, slot: int):
 			if item is not Equipment: return false
 			match item.slot:
 				Equipment.EquipmentSlot.HEAD: if slot != ArmorSlotPositions.HELMET: return false

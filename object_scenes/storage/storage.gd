@@ -23,7 +23,7 @@ signal items_changed
 ## -----------------------------
 ## UI / View
 ## -----------------------------
-func open_view(view_callback = func(view: Node): pass) -> void:
+func open_view(view_callback = func(_view: Node): pass) -> void:
 	if not storage_view or is_view_open:
 		return
 	var view = storage_view.instantiate()

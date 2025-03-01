@@ -16,6 +16,7 @@ height = 108.0
 size = Vector2(192, 193)
 
 [node name="Block" instance=ExtResource("1_milaq")]
+key = "BLOCK_CAVE_EXIT"
 
 [node name="Shadow" parent="." index="0"]
 position = Vector2(0, 109)

@@ -50,17 +50,23 @@ func add_new_player(player_index: int) -> void:
 	players_interact_focus_changed.emit()
 	players_changed.emit()
 
-func spawn_players_at(parent_node: Node, position: Vector2 = Vector2.ZERO) -> void:
-	parent_node.add_child(camera_scene.instantiate())
+func spawn_players_at(parent_node: Node, position: Vector2 = WorldContext.get_current_map().last_player_position) -> void:
+	
 	players_interact_focus= []
 	
 	for player in players:
 		players_interact_focus.push_back(null)
 		parent_node.add_child(player)
 		player.position = position
-		
+	var camera = camera_scene.instantiate()
+	camera.position = position
+	parent_node.add_child(camera)
 	players_interact_focus_changed.emit()
+	players_changed.emit()
 
 func withdraw_players_from_scene() -> void:
+	if PlayersContext.players.size() > 0:
+		WorldContext.get_current_map().last_player_position = PlayersContext.players[0].position
 	for player in players:
 		player.get_parent().remove_child(player)
+	players_changed.emit()

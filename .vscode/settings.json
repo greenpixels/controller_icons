@@ -1,0 +1,9 @@
+{
+    "search.exclude": {
+        "**/addons": true,
+        "**/exports": true
+    },
+    "files.exclude": {
+        "**/exports": true
+    }
+}

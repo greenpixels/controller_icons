@@ -22,6 +22,7 @@ atlas = ExtResource("2_p2klo")
 region = Rect2(6, 6, 192, 192)
 
 [node name="Block" instance=ExtResource("1_ebwms")]
+key = "BLOCK_DIRT"
 minimal_pickaxe_power = 0
 loot_table = SubResource("Resource_mor58")
 
