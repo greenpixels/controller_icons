@@ -57,10 +57,10 @@ func handle_movement_input():
 	
 func handle_look_at_input():
 	var previous_look_at := look_at_input
-	if Input.is_action_pressed(input_map.get_mapped_action("look_right")) or \
-	   Input.is_action_pressed(input_map.get_mapped_action("look_left")) or \
-	   Input.is_action_pressed(input_map.get_mapped_action("look_up")) or \
-	   Input.is_action_pressed(input_map.get_mapped_action("look_down")):
+	if Input.get_action_strength(input_map.get_mapped_action("look_right")) or \
+	   Input.get_action_strength(input_map.get_mapped_action("look_left")) or \
+	   Input.get_action_strength(input_map.get_mapped_action("look_up")) or \
+	   Input.get_action_strength(input_map.get_mapped_action("look_down")):
 		
 		look_at_input.x = Input.get_action_strength(input_map.get_mapped_action("look_right")) - \
 						  Input.get_action_strength(input_map.get_mapped_action("look_left"))
@@ -84,15 +84,15 @@ func handle_look_at_input():
 		look_at_changed.emit(look_at_input)
 
 func handle_button_input():
-	if Input.is_action_pressed(input_map.get_mapped_action("attack")):
+	if Input.get_action_strength(input_map.get_mapped_action("attack")):
 		attack_pressed.emit()
-	if Input.is_action_just_pressed(input_map.get_mapped_action("interact")):
+	if Input.get_action_strength(input_map.get_mapped_action("interact")):
 		interact_pressed.emit()
-	if Input.is_action_just_pressed(input_map.get_mapped_action("inventory")):
+	if Input.get_action_strength(input_map.get_mapped_action("inventory")):
 		inventory_opened.emit()
-	if Input.is_action_just_pressed(input_map.get_mapped_action("cycle_item_left")):
+	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_left")):
 		toolbar_offset -= 1
-	if Input.is_action_just_pressed(input_map.get_mapped_action("cycle_item_right")):
+	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_right")):
 		toolbar_offset += 1
 
 
