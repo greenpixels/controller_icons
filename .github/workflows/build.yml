@@ -15,7 +15,7 @@ env:
 
 jobs:
   delete-artifacts:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: kolpav/purge-artifacts-action@v1
         with:
@@ -24,7 +24,7 @@ jobs:
 
   get-version:
     name: Get Version
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     outputs:
       version: ${{ steps.set_version.outputs.value }}
     steps:
@@ -39,7 +39,7 @@ jobs:
 
   # tests:
   #   name: Run Tests
-  #   runs-on: ubuntu-20.04
+  #   runs-on: ubuntu-24.04
   #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v4
@@ -56,7 +56,7 @@ jobs:
 
   export-windows:
     name: Windows Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs:
       - get-version
     container:
@@ -89,7 +89,7 @@ jobs:
     needs:
       - get-version
     name: Linux Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:4.3
     steps:
@@ -118,7 +118,7 @@ jobs:
     needs:
       - get-version
     name: Web Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:4.3
     steps:
@@ -146,7 +146,7 @@ jobs:
 
 
   trigger-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - get-version
       - export-web
