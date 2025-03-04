@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://b6l43j4dtjauv"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_ebwms"]
-[ext_resource type="Script" path="res://data_classes/loot_table.gd" id="2_74c3t"]
+[ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_74c3t"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_p2klo"]
-[ext_resource type="Script" path="res://data_classes/loot_table_entry.gd" id="3_01nu8"]
+[ext_resource type="Script" uid="uid://b8h8wm2kenltp" path="res://data_classes/loot_table_entry.gd" id="3_01nu8"]
 [ext_resource type="Resource" uid="uid://diyxj2nmfpwq2" path="res://resources/items/_all/dirt.tres" id="4_gpohm"]
 
 [sub_resource type="Resource" id="Resource_wt24w"]

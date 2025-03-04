@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cieawynmc40kt"]
 
-[ext_resource type="Script" path="res://contexts/input_context/input_context.gd" id="1_38n7i"]
+[ext_resource type="Script" uid="uid://ccc3yjvt2ncy7" path="res://contexts/input_context/input_context.gd" id="1_38n7i"]
 [ext_resource type="PackedScene" uid="uid://nncdcpu4q1wl" path="res://object_scenes/input_controller/input_controller.tscn" id="2_8emoe"]
 
 [node name="InputContext" type="Node2D"]

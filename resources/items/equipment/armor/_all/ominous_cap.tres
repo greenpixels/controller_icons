@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="armor" load_steps=4 format=3 uid="uid://cmyjq5ekibsxk"]
+[gd_resource type="Resource" script_class="Armor" load_steps=4 format=3 uid="uid://cmyjq5ekibsxk"]
 
 [ext_resource type="Texture2D" uid="uid://ge70qicfftvq" path="res://resources/items/equipment/armor/_assets/default_mage.png" id="1_2wdmq"]
-[ext_resource type="Script" path="res://resources/items/equipment/armor/armor.gd" id="2_rkxi5"]
+[ext_resource type="Script" uid="uid://d3sngno1fmru4" path="res://resources/items/equipment/armor/armor.gd" id="2_rkxi5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5xirv"]
 atlas = ExtResource("1_2wdmq")

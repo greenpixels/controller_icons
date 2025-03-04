@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cvk4q47iay47k"]
 
 [ext_resource type="Texture2D" uid="uid://ge70qicfftvq" path="res://resources/items/equipment/armor/_assets/default_mage.png" id="1_8ci5l"]
-[ext_resource type="Script" path="res://object_scenes/player/player_model/player_model.gd" id="1_h1lsn"]
+[ext_resource type="Script" uid="uid://bdr3gaslj8tuv" path="res://object_scenes/player/player_model/player_model.gd" id="1_h1lsn"]
 [ext_resource type="Texture2D" uid="uid://bau33k2shs4yb" path="res://resources/items/equipment/armor/_assets/default_person.png" id="3_jkwak"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ei8el"]
@@ -246,9 +246,9 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tbgvu"]
 _data = {
-"RESET": SubResource("Animation_b25uh"),
-"idle": SubResource("Animation_13rlv"),
-"move": SubResource("Animation_5c1iu")
+&"RESET": SubResource("Animation_b25uh"),
+&"idle": SubResource("Animation_13rlv"),
+&"move": SubResource("Animation_5c1iu")
 }
 
 [node name="PlayerModel" type="Node2D"]

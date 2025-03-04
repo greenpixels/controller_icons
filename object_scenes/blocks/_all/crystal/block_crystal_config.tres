@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BlockSpawnConfiguration" load_steps=3 format=3 uid="uid://borubxpoo1xjf"]
 
-[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="1_2pxdc"]
+[ext_resource type="Script" uid="uid://dq8ohxuonbucf" path="res://data_classes/world_block_configuration.gd" id="1_2pxdc"]
 [ext_resource type="PackedScene" uid="uid://caplke86xeauq" path="res://object_scenes/blocks/_all/crystal/block_crystal.tscn" id="1_mq2ex"]
 
 [resource]
@@ -9,3 +9,4 @@ scene = ExtResource("1_mq2ex")
 weight = 2.0
 min_distance = 48.0
 max_distance = 1000.0
+maximum_per_chunk = -1

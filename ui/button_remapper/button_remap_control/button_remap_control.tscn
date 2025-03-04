@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://x5sfavc31b85"]
 
-[ext_resource type="Script" path="res://ui/button_remapper/button_remap_control/button_remap_control.gd" id="1_pch82"]
+[ext_resource type="Script" uid="uid://bwo6qahfr07oq" path="res://ui/button_remapper/button_remap_control/button_remap_control.gd" id="1_pch82"]
 [ext_resource type="Texture2D" uid="uid://bxogqg7h3dgcu" path="res://resources/items/_assets/items.png" id="2_88in8"]
 
 [node name="ButtonRemapControl" type="HBoxContainer"]

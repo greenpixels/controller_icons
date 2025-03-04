@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://nncdcpu4q1wl"]
 
-[ext_resource type="Script" path="res://object_scenes/input_controller/input_controller.gd" id="1_xt7cr"]
+[ext_resource type="Script" uid="uid://dvbjp0aheyjok" path="res://object_scenes/input_controller/input_controller.gd" id="1_xt7cr"]
 
 [node name="InputController" type="Node2D"]
 script = ExtResource("1_xt7cr")

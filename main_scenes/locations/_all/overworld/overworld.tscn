@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://dfl4bcwkdw8sg"]
 
-[ext_resource type="Script" path="res://main_scenes/locations/_all/overworld/overworld.gd" id="1_7ofc1"]
-[ext_resource type="Script" path="res://main_scenes/locations/map_generation.gd" id="2_rsqlo"]
-[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="4_n2u0d"]
+[ext_resource type="Script" uid="uid://b752yx6aahcls" path="res://main_scenes/locations/_all/overworld/overworld.gd" id="1_7ofc1"]
+[ext_resource type="Script" uid="uid://biu0q8b6oeyeg" path="res://main_scenes/locations/map_generation.gd" id="2_rsqlo"]
+[ext_resource type="Script" uid="uid://dq8ohxuonbucf" path="res://data_classes/world_block_configuration.gd" id="4_n2u0d"]
 [ext_resource type="Resource" uid="uid://c2whomwhpwikm" path="res://object_scenes/blocks/_all/copper/block_copper_config.tres" id="4_vp7f8"]
 [ext_resource type="Resource" uid="uid://borubxpoo1xjf" path="res://object_scenes/blocks/_all/crystal/block_crystal_config.tres" id="5_846sg"]
 [ext_resource type="Resource" uid="uid://br46tp2lbqyfh" path="res://object_scenes/blocks/_all/dead_tree/block_dead_tree_config.tres" id="6_lua6l"]

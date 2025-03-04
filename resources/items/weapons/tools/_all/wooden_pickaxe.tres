@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Tool" load_steps=12 format=3 uid="uid://cdrp6aj8mx0gg"]
 
 [ext_resource type="PackedScene" uid="uid://byptmxjt78a4v" path="res://object_scenes/projectile/_all/slice/projectile_slice.tscn" id="1_nbhkp"]
-[ext_resource type="Script" path="res://resources/items/weapons/tools/tool.gd" id="1_qb052"]
-[ext_resource type="Script" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_xgnx5"]
-[ext_resource type="Script" path="res://data_classes/crafting_ingredient.gd" id="3_8b7hn"]
-[ext_resource type="Script" path="res://data_classes/crafting_recipe.gd" id="4_3xpk1"]
+[ext_resource type="Script" uid="uid://bearovpqly3s8" path="res://resources/items/weapons/tools/tool.gd" id="1_qb052"]
+[ext_resource type="Script" uid="uid://ce5cb1n23qt4p" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_xgnx5"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="3_8b7hn"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_3xpk1"]
 [ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="4_g6p3g"]
 [ext_resource type="Texture2D" uid="uid://2s2d8rrbujak" path="res://resources/items/_assets/test_pickaxe.png" id="7_u3cg3"]
 

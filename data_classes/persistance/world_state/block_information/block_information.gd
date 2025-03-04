@@ -3,6 +3,7 @@ class_name PersistanceBlockInformation
 
 @export_storage var block_key : String
 # Only blocks with extra information need to be peristed (Dungeons, Cave, etc ...)
+# Other will have an empty UUID
 @export_storage var uuid : String = ""
 @export_storage var position_in_chunk_grid : Vector2i
 @export_storage var chunk_key : String

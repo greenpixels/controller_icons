@@ -45,7 +45,6 @@ func render():
 				print(event.device)
 			var icon = ControllerIconTexture.new()
 			icon.force_type = ControllerIconTexture.ForceType.CONTROLLER
-			icon.force_controller_icon_style = ControllerSettings.Devices.SWITCH
 			icon.path = action_name
 			icon.force_device = device_to_use
 			%JoypadButton.texture = icon

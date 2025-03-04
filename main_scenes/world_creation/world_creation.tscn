@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cs4u4p7jviyxj"]
 
-[ext_resource type="Script" path="res://main_scenes/world_creation/world_creation.gd" id="1_uag5k"]
+[ext_resource type="Script" uid="uid://c428judukt8oh" path="res://main_scenes/world_creation/world_creation.gd" id="1_uag5k"]
 [ext_resource type="PackedScene" uid="uid://bt0iwvnblvssu" path="res://addons/greenpixels-onscreen-keyboard/text_edit_with_on_screen_keyboard.tscn" id="2_61iyd"]
 
 [node name="WorldCreation" type="Control"]

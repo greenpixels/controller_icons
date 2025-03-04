@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://bdd83dyudffo1"]
 
 [ext_resource type="PackedScene" uid="uid://e6wshg1xfak2" path="res://ui/storage_view/storage_view.tscn" id="1_ou0sg"]
-[ext_resource type="Script" path="res://ui/player_inventory/player_inventory.gd" id="1_uruap"]
+[ext_resource type="Script" uid="uid://b2ocl8xrxnpy1" path="res://ui/player_inventory/player_inventory.gd" id="1_uruap"]
 [ext_resource type="PackedScene" uid="uid://ciov7ijprulpc" path="res://ui/item_slot/item_slot.tscn" id="3_kf8a3"]
-[ext_resource type="Script" path="res://ui/player_inventory/crafting_panel.gd" id="4_ijqh3"]
+[ext_resource type="Script" uid="uid://cioh6kcrrrlp4" path="res://ui/player_inventory/crafting_panel.gd" id="4_ijqh3"]
 [ext_resource type="PackedScene" uid="uid://bm2v03n8v0i18" path="res://ui/tab_container_navigator/tab_container_navigator.tscn" id="4_teb1e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37mtt"]

@@ -13,7 +13,7 @@ config_version=5
 config/name="Project Magus"
 config/version="0.0.0"
 run/main_scene="res://main_scenes/main_menu/main_menu.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [autoload]
 

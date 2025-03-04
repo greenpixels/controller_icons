@@ -2,11 +2,9 @@ extends Resource
 class_name PersistanceMapState
 
 @export_storage var uuid : String = UUID.v4()
-# "CHUNK_KEY" (COORDS) : PersistanceChunkInformation
-@export_storage var chunks : Dictionary = {}
-@export_storage var location_key : String = "main"
+@export_storage var chunks : Dictionary[String, PersistanceChunkInformation] = {}
+@export_storage var location_key : String = WorldContext.DEFAULT_OVERWORLD_MAP_UUID
 @export_storage var last_player_position : Vector2 = Vector2.ZERO
-# uuid: PersistanceItemPickupState
 
 func init(_uuid: String, _location : Location) -> void:
 	uuid = _uuid

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bm2v03n8v0i18"]
 
-[ext_resource type="Script" path="res://ui/tab_container_navigator/tab_container_navigator.gd" id="1_iw7r4"]
+[ext_resource type="Script" uid="uid://bwjcfqybyvpqe" path="res://ui/tab_container_navigator/tab_container_navigator.gd" id="1_iw7r4"]
 
 [node name="TabContainerNavigator" type="Node" groups=["freeze_during_button_remap"]]
 script = ExtResource("1_iw7r4")

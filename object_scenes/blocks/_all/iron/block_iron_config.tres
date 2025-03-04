@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BlockSpawnConfiguration" load_steps=3 format=3 uid="uid://imk1imhb5gc2"]
 
-[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="1_g8g3d"]
+[ext_resource type="Script" uid="uid://dq8ohxuonbucf" path="res://data_classes/world_block_configuration.gd" id="1_g8g3d"]
 [ext_resource type="PackedScene" uid="uid://dr8n86upyp276" path="res://object_scenes/blocks/_all/iron/block_iron.tscn" id="1_wrsp4"]
 
 [resource]
@@ -9,3 +9,4 @@ scene = ExtResource("1_wrsp4")
 weight = 10.0
 min_distance = 24.0
 max_distance = 1000.0
+maximum_per_chunk = -1

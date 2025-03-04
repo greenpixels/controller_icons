@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://s340hdsktruk"]
 
-[ext_resource type="Script" path="res://contexts/players_context/players_context.gd" id="1_mkyxm"]
+[ext_resource type="Script" uid="uid://cgpua554owxkm" path="res://contexts/players_context/players_context.gd" id="1_mkyxm"]
 
 [node name="PlayersContext" type="Node"]
 process_mode = 3

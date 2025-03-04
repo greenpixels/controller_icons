@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BlockSpawnConfiguration" load_steps=3 format=3 uid="uid://br46tp2lbqyfh"]
 
 [ext_resource type="PackedScene" uid="uid://bgw8mcf44yq48" path="res://object_scenes/blocks/_all/dead_tree/block_dead_tree.tscn" id="1_5r7vs"]
-[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="1_sqaat"]
+[ext_resource type="Script" uid="uid://dq8ohxuonbucf" path="res://data_classes/world_block_configuration.gd" id="1_sqaat"]
 
 [resource]
 script = ExtResource("1_sqaat")
@@ -9,3 +9,4 @@ scene = ExtResource("1_5r7vs")
 weight = 35.0
 min_distance = 0.0
 max_distance = 1000.0
+maximum_per_chunk = -1

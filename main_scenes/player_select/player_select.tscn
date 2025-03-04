@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d0ty3h6c6qi8d"]
 
-[ext_resource type="Script" path="res://main_scenes/player_select/player_select.gd" id="1_sybed"]
+[ext_resource type="Script" uid="uid://doura7ujvlmok" path="res://main_scenes/player_select/player_select.gd" id="1_sybed"]
 
 [node name="PlayerSelect" type="Control"]
 layout_mode = 3

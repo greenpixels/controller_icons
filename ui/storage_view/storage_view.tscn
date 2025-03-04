@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://e6wshg1xfak2"]
 
 [ext_resource type="PackedScene" uid="uid://566wfnl0ax2o" path="res://ui/shortcut_button/shortcut_button.tscn" id="1_56pdg"]
-[ext_resource type="Script" path="res://ui/storage_view/storage_view.gd" id="1_jns3h"]
+[ext_resource type="Script" uid="uid://4bcijpvdddnw" path="res://ui/storage_view/storage_view.gd" id="1_jns3h"]
 [ext_resource type="PackedScene" uid="uid://ciov7ijprulpc" path="res://ui/item_slot/item_slot.tscn" id="2_11a16"]
 
 [node name="PanelContainer" type="PanelContainer" groups=["popup", "time_blocking"]]

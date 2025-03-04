@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bt7kwe3sow14h"]
 
 [ext_resource type="Texture2D" uid="uid://clqwpw4p7uo0s" path="res://ui/interact_selection/_assets/interact_selection.png" id="1_7ycvu"]
-[ext_resource type="Script" path="res://ui/interact_selection/interact_selection.gd" id="2_hg8ku"]
+[ext_resource type="Script" uid="uid://c088hoy42fxsx" path="res://ui/interact_selection/interact_selection.gd" id="2_hg8ku"]
 
 [node name="InteractSelection" type="NinePatchRect"]
 anchors_preset = 8

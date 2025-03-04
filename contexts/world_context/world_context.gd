@@ -3,11 +3,16 @@ const BLOCK_PADDING := Vector2i(6, 6)
 const BLOCK_SIZE := Vector2i(192, 156)
 const CHUNK_SIZE := Vector2i(15, 15)
 const CHUNK_OFFSET := Vector2i(CHUNK_SIZE) / 2
+const DEFAULT_OVERWORLD_MAP_UUID := "main"
 var world_state : PersistanceWorldState
-var current_map_uuid_stack : Array[String] = ["main"]
+var current_map_uuid_stack : Array[String] = [DEFAULT_OVERWORLD_MAP_UUID]
 
 func _ready() -> void:
 	randomize()
+
+func reset():
+	world_state = null
+	current_map_uuid_stack = [DEFAULT_OVERWORLD_MAP_UUID]
 
 func calculate_base_chunk_coordinate(position: Vector2i) -> Vector2i:
 	var grid_pos = position / (BLOCK_SIZE + BLOCK_PADDING)
@@ -26,12 +31,10 @@ func enter_cave(block: Block, location_key: String):
 		printerr("Block UUID empty is not allowed to be empty")
 	var sum_ab = block.global_position.x + block.global_position.y
 	world_state.current_sub_seed = int(world_state.main_seed + int((sum_ab * (sum_ab + 1)) / 2.) + block.global_position.y)
-	
 	PlayersContext.withdraw_players_from_scene()
 	current_map_uuid_stack.push_back(block.uuid)
 	_change_location(location_key)
 	
-
 func leave_cave():
 	PlayersContext.withdraw_players_from_scene()
 	current_map_uuid_stack.pop_back()

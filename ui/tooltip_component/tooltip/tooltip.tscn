@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dbh6jrpcqwj76"]
 
-[ext_resource type="Script" path="res://ui/tooltip_component/tooltip/tooltip.gd" id="1_s0rwh"]
+[ext_resource type="Script" uid="uid://tx60lliyhk65" path="res://ui/tooltip_component/tooltip/tooltip.gd" id="1_s0rwh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i4kne"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://6hfxgildm5pi"]
 
-[ext_resource type="Script" path="res://ui/button_remapper/button_remapper.gd" id="1_u0xpf"]
+[ext_resource type="Script" uid="uid://c62ve8mabfxsk" path="res://ui/button_remapper/button_remapper.gd" id="1_u0xpf"]
 
 [node name="ButtonRemapper" type="Panel"]
 anchors_preset = 15

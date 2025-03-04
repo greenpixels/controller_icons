@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dbu7cb0h10jdt"]
 
 [ext_resource type="PackedScene" uid="uid://dbh6jrpcqwj76" path="res://ui/tooltip_component/tooltip/tooltip.tscn" id="1_2rq01"]
-[ext_resource type="Script" path="res://ui/tooltip_component/tooltip_overlay/tooltip_overlay.gd" id="1_15nst"]
+[ext_resource type="Script" uid="uid://bh3x3cyr2bknp" path="res://ui/tooltip_component/tooltip_overlay/tooltip_overlay.gd" id="1_15nst"]
 
 [node name="TooltipOverlay" type="CanvasLayer"]
 process_mode = 3

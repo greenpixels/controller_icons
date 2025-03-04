@@ -32,4 +32,5 @@ func _on_save_and_exit_button_pressed() -> void:
 	PlayersContext.players = []
 	WorldContext.world_state.save_to_disk()
 	OptionsContext._toggle_menu()
+	WorldContext.reset()
 	get_tree().change_scene_to_packed(load("res://main_scenes/main_menu/main_menu.tscn"))

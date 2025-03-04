@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://jvhpk2vu8r1g"]
 
 [ext_resource type="PackedScene" uid="uid://btf06qj10382s" path="res://main_scenes/locations/cave/cave.tscn" id="1_hljcy"]
-[ext_resource type="Script" path="res://data_classes/world_block_configuration.gd" id="2_348jm"]
+[ext_resource type="Script" uid="uid://dq8ohxuonbucf" path="res://data_classes/world_block_configuration.gd" id="2_348jm"]
 [ext_resource type="PackedScene" uid="uid://dlr8hhaw3wwou" path="res://object_scenes/blocks/_all/stone/block_stone.tscn" id="3_rwcp1"]
 [ext_resource type="PackedScene" uid="uid://b6l43j4dtjauv" path="res://object_scenes/blocks/_all/dirt/block_dirt.tscn" id="4_qldtl"]
 [ext_resource type="PackedScene" uid="uid://ckbxfww17hihs" path="res://object_scenes/blocks/_all/gold/block_gold.tscn" id="5_j7tp7"]

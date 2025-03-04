@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bgw8mcf44yq48"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_p6q80"]
-[ext_resource type="Script" path="res://data_classes/loot_table.gd" id="2_11u8p"]
-[ext_resource type="Script" path="res://data_classes/loot_table_entry.gd" id="3_ux4gm"]
+[ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_11u8p"]
+[ext_resource type="Script" uid="uid://b8h8wm2kenltp" path="res://data_classes/loot_table_entry.gd" id="3_ux4gm"]
 [ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="4_vyyfn"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="5_cvqbu"]
 
