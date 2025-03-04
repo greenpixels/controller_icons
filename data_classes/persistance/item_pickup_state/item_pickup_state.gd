@@ -6,3 +6,4 @@ class_name PersistanceItemPickupState
 @export_storage var item_key : String
 @export_storage var chunk_key : String
 @export_storage var amount : int
+@export_storage var remaining_time_sec := 5. * 60.

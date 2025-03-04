@@ -9,10 +9,11 @@ class_name ItemPickup
 @export var amount := 1
 @export_storage var persistance : PersistanceItemPickupState
 var original_position : Vector2
+const PULL_DELAY_MAX = 0.75
 var pull_to : Player = null :
 	set(value):
 		if pull_to != value:
-			pull_delay = 0.66
+			pull_delay = PULL_DELAY_MAX
 		pull_to = value
 		 
 var pull_delay := 0.
@@ -35,11 +36,15 @@ func _ready() -> void:
 	
 	var pulse_tween = TweenHelper.tween("hover_effect", self)
 	pulse_tween.set_loops(-1)
-	pulse_tween.tween_property(sprite, "position", original_position  + Vector2(0, -3), 1).set_trans(Tween.TRANS_CIRC)
-	pulse_tween.tween_property(sprite, "position", original_position, 1).set_trans(Tween.TRANS_CIRC)
+	
+	pulse_tween.tween_property(sprite, "position", original_position  + Vector2(0, -3), 1) \
+	.set_trans(Tween.TRANS_CIRC)
+	
+	pulse_tween.tween_property(sprite, "position", original_position, 1) \
+	.set_trans(Tween.TRANS_CIRC)
 	
 func _process(delta: float) -> void:
-	if pull_to != null and not pull_delay > 0:
+	if pull_to != null and pull_delay <= 0:
 		var distance = global_position.distance_to(pull_to.global_position)
 		if distance > 400:
 			pull_to = null
@@ -51,6 +56,10 @@ func _process(delta: float) -> void:
 			on_interact(pull_to)
 	elif pull_delay > 0:
 		pull_delay -= delta
+	persistance.remaining_time_sec -= delta
+	if persistance.remaining_time_sec <= 0:
+		WorldContext.get_current_map().remove_item_pickup(self)
+		queue_free()
 	
 
 func on_interact(player: Player):
@@ -59,4 +68,7 @@ func on_interact(player: Player):
 	if amount <= 0:
 		WorldContext.get_current_map().remove_item_pickup(self)
 		queue_free()
+	else:
+		pull_delay = PULL_DELAY_MAX
+		pull_to = null
 		
