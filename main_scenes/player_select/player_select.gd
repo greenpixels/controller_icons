@@ -38,7 +38,7 @@ func get_player_peristances() -> Array[PersistancePlayerState]:
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		if file_name.ends_with(".tres"):
+		if file_name.ends_with(GameSettings.RESOURCE_SAVE_FILE_EXTENSTION):
 			var player_persistance = load(PersistancePlayerState.PLAYER_SAVE_BASE_PATH + file_name)
 			if player_persistance is not PersistancePlayerState: continue
 			player_persistances.append(player_persistance)
@@ -56,5 +56,5 @@ func _on_player_delete(persistance: PersistancePlayerState):
 		else:
 			print("Failed to open directory")
 			return
-	dir.remove(persistance.uuid + ".tres")
+	dir.remove(persistance.uuid + GameSettings.RESOURCE_SAVE_FILE_EXTENSTION)
 	get_tree().reload_current_scene()

@@ -24,7 +24,7 @@ var parent_node: Node = null
 
 func _ready() -> void:
 	parent_node = get_parent()
-	uuid = WorldContext.world_state.current_map_uuid_stack.back()
+	uuid = WorldContext.current_map_uuid_stack.back()
 	map = WorldContext.world_state.get_map(uuid)
 	if map == null:
 		if not parent_node is Location: return
@@ -35,7 +35,6 @@ func _ready() -> void:
 	_initialize_noise()
 	_connect_players_to_chunk_updates()
 	update_chunks()
-	PlayersContext.players_changed.connect(update_chunks)
 
 func _initialize_noise() -> void:
 	seed(WorldContext.world_state.main_seed if not use_sub_seed else WorldContext.world_state.current_sub_seed)
@@ -47,7 +46,10 @@ func _initialize_noise() -> void:
 func _connect_players_to_chunk_updates() -> void:
 	for player in PlayersContext.players:
 		_connect_player_to_chunk_updates(player)
-	PlayersContext.players_changed.connect(_on_players_changed)
+	PlayersContext.players_spawned.connect(func():
+		update_chunks()
+		_on_players_changed()
+	)
 
 func _connect_player_to_chunk_updates(player: Node2D) -> void:
 	if not loading_triggers.has(player):
@@ -59,13 +61,10 @@ func _connect_player_to_chunk_updates(player: Node2D) -> void:
 func _on_players_changed() -> void:
 	for player in PlayersContext.players:
 		_connect_player_to_chunk_updates(player)
-	update_chunks()
 
 # Generates a chunk at the given chunk coordinate (each chunk is chunk_size blocks in width and height)
 func generate_chunk(chunk_coord: Vector2i) -> void:
 	var chunk_coord_string = str(chunk_coord)
-	if generated_chunks.has(chunk_coord_string):
-		return
 	var chunk_node = _create_chunk_node(chunk_coord)
 	_seed_chunk(chunk_coord)
 	generated_chunks[chunk_coord_string] = []
@@ -120,6 +119,7 @@ func _load_blocks_from_persisted_chunk(chunk_node: Node2D, chunk_coord_string) -
 	
 	for grid_pos_string in map_chunk_blocks.keys():
 		var block_info : PersistanceBlockInformation = map_chunk_blocks[grid_pos_string]
+		if blocks_in_chunk.has(grid_pos_string): continue
 		var block_scene = BlockMappings.block_key_to_block_resource_map[block_info.block_key]
 		var block : Block = block_scene.instantiate()
 		block.persistance = block_info
@@ -218,14 +218,21 @@ func _pick_block_based_on_weight(valid_blocks: Array, total_weight: float) -> Pa
 func update_chunks() -> void:
 	for trigger in loading_triggers:
 		var base_chunk_coord = WorldContext.calculate_base_chunk_coordinate(trigger.position)
+		if not trigger.is_visible_in_tree(): continue
 		_generate_surrounding_chunks(base_chunk_coord)
 
 
 
 func _generate_surrounding_chunks(base_chunk_coord: Vector2i) -> void:
 	var start_time = Time.get_ticks_msec()
+	var has_generated_chunks := false
 	for offset_x in range(-1, 2):
 		for offset_y in range(-1, 2):
 			var neighbour_chunk = base_chunk_coord + Vector2i(offset_x, offset_y)
+			var chunk_coord_string = str(neighbour_chunk)
+			if generated_chunks.has(chunk_coord_string):
+				continue
 			generate_chunk(neighbour_chunk)
-	print("Loading took " + str(Time.get_ticks_msec() - start_time))
+			has_generated_chunks = true
+	if has_generated_chunks:
+		print("Generating took " + str(Time.get_ticks_msec() - start_time))

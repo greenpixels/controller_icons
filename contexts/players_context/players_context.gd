@@ -6,6 +6,8 @@ var camera_scene := preload("res://object_scenes/main_camera/main_camera.tscn")
 var players: Array[Player] = []
 var players_interact_focus: Array[InteractArea] = []
 
+signal players_spawned
+signal players_despawned
 signal players_changed
 signal players_interact_focus_changed
 
@@ -60,11 +62,11 @@ func spawn_players_at(parent_node: Node, position: Vector2 = WorldContext.get_cu
 	camera.position = position
 	parent_node.add_child(camera)
 	players_interact_focus_changed.emit()
-	players_changed.emit()
+	players_spawned.emit()
 
 func withdraw_players_from_scene() -> void:
 	if PlayersContext.players.size() > 0:
 		WorldContext.get_current_map().last_player_position = PlayersContext.players[0].position
 	for player in players:
 		player.get_parent().remove_child(player)
-	players_changed.emit()
+	players_despawned.emit()

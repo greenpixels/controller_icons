@@ -30,7 +30,7 @@ func get_worlds_peristances():
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		if file_name.ends_with(".tres"):
+		if file_name.ends_with(GameSettings.RESOURCE_SAVE_FILE_EXTENSTION):
 			var world_persistance = load(PersistanceWorldState.WORLD_SAVE_BASE_PATH + file_name)
 			if world_persistance is not PersistanceWorldState: continue
 			world_persistances.append(world_persistance)
@@ -50,5 +50,5 @@ func _on_world_delete(persistance: PersistanceWorldState):
 		else:
 			print("Failed to open directory")
 			return
-	dir.remove(persistance.uuid + ".tres")
+	dir.remove(persistance.uuid + GameSettings.RESOURCE_SAVE_FILE_EXTENSTION)
 	get_tree().reload_current_scene()

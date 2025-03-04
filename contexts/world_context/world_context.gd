@@ -4,6 +4,7 @@ const BLOCK_SIZE := Vector2i(192, 156)
 const CHUNK_SIZE := Vector2i(15, 15)
 const CHUNK_OFFSET := Vector2i(CHUNK_SIZE) / 2
 var world_state : PersistanceWorldState
+var current_map_uuid_stack : Array[String] = ["main"]
 
 func _ready() -> void:
 	randomize()
@@ -18,7 +19,7 @@ func _enter_tree() -> void:
 		ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REUSE)
 
 func get_current_map() -> PersistanceMapState:
-	return world_state.get_map(world_state.current_map_uuid_stack.back())
+	return world_state.get_map(current_map_uuid_stack.back())
 
 func enter_cave(block: Block, location_key: String):
 	if block.uuid.is_empty():
@@ -27,13 +28,13 @@ func enter_cave(block: Block, location_key: String):
 	world_state.current_sub_seed = int(world_state.main_seed + int((sum_ab * (sum_ab + 1)) / 2.) + block.global_position.y)
 	
 	PlayersContext.withdraw_players_from_scene()
-	world_state.current_map_uuid_stack.push_back(block.uuid)
+	current_map_uuid_stack.push_back(block.uuid)
 	_change_location(location_key)
 	
 
 func leave_cave():
 	PlayersContext.withdraw_players_from_scene()
-	world_state.current_map_uuid_stack.pop_back()
+	current_map_uuid_stack.pop_back()
 	_change_location(get_current_map().location_key)
 	
 func _change_location(location_key: String):
@@ -42,4 +43,5 @@ func _change_location(location_key: String):
 	if location_scene:
 		get_tree().change_scene_to_packed(location_scene)
 	else:
+		push_error("Unable to find location scene")
 		get_tree().change_scene_to_packed(load(LocationMappings.location_key_to_location_path_map["LOCATION_OVERWORLD"]))

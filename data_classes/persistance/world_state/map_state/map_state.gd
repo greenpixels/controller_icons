@@ -17,10 +17,10 @@ func add_item_pickup(_pickup: ItemPickup):
 	if not _pickup.persistance:
 		var persistance := PersistanceItemPickupState.new()
 		_pickup.persistance = persistance
+		_pickup.persistance.uuid = UUID.v4()
 	_pickup.persistance.chunk_key = str(chunk_coord)
 	_pickup.persistance.item_key = _pickup.item.key
 	_pickup.persistance.position = _pickup.position
-	_pickup.persistance.uuid = UUID.v4()
 	_pickup.persistance.amount = _pickup.amount
 	if not chunks.has(_pickup.persistance.chunk_key): return
 	var chunk = chunks[_pickup.persistance.chunk_key]
