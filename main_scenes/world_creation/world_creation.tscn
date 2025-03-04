@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs4u4p7jviyxj"]
+
+[ext_resource type="Script" path="res://main_scenes/world_creation/world_creation.gd" id="1_uag5k"]
+[ext_resource type="PackedScene" uid="uid://bt0iwvnblvssu" path="res://addons/greenpixels-onscreen-keyboard/text_edit_with_on_screen_keyboard.tscn" id="2_61iyd"]
+
+[node name="WorldCreation" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uag5k")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CreateButton" type="Button" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -181.0
+offset_top = -121.0
+offset_right = 181.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+disabled = true
+text = "Create"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 71.0
+offset_right = 975.0
+offset_bottom = 460.0
+metadata/_edit_group_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+text = "Name:"
+fit_content = true
+autowrap_mode = 0
+
+[node name="NameInput" parent="VBoxContainer" instance=ExtResource("2_61iyd")]
+unique_name_in_owner = true
+layout_mode = 2
+text_placeholder = "Input name ..."
+show_cancel_button = false
+show_submit_button = false
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+text = "Seed:"
+fit_content = true
+autowrap_mode = 0
+
+[node name="SeedInput" parent="VBoxContainer" instance=ExtResource("2_61iyd")]
+unique_name_in_owner = true
+layout_mode = 2
+text_placeholder = "Input seed ..."
+show_cancel_button = false
+show_submit_button = false
+
+[connection signal="pressed" from="Panel/CreateButton" to="." method="_on_create_button_pressed"]

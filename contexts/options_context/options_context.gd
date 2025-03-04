@@ -31,5 +31,5 @@ func _toggle_menu() -> void:
 	UiLayer.add_child(_menu)
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("options") and not _menu:
+	if Input.is_action_just_pressed("options") and not _menu and get_tree().current_scene is Location:
 		_toggle_menu()

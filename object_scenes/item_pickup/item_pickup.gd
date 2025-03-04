@@ -7,6 +7,7 @@ class_name ItemPickup
 
 @export var item : Item
 @export var amount := 1
+@export_storage var persistance : PersistanceItemPickupState
 var original_position : Vector2
 var pull_to : Player = null :
 	set(value):
@@ -17,12 +18,13 @@ var pull_to : Player = null :
 var pull_delay := 0.
 
 func _ready() -> void:
+	WorldContext.get_current_map().add_item_pickup(self)
 	sprite.texture = item.texture
 	original_position = sprite.position
 	label.text = item.key
 	
 	# Genuinly fucked up that its not easier to make a gradient. Maybe I am missing something.
-	# Why would the default it with black and white
+	# Why would the default have black and white
 	# Why does clear_points not work
 	# Why is it not possible for a gradient do not have any points
 	line.gradient = Gradient.new()
@@ -49,9 +51,12 @@ func _process(delta: float) -> void:
 			on_interact(pull_to)
 	elif pull_delay > 0:
 		pull_delay -= delta
+	
 
 func on_interact(player: Player):
 	var remaining = player.inventory.store_item(item, amount)
 	amount = remaining
 	if amount <= 0:
+		WorldContext.get_current_map().remove_item_pickup(self)
 		queue_free()
+		

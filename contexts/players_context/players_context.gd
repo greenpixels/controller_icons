@@ -9,9 +9,6 @@ var players_interact_focus: Array[InteractArea] = []
 signal players_changed
 signal players_interact_focus_changed
 
-func _ready() -> void:
-	add_new_player(0)
-
 func get_player_by_index(player_index: int) -> Player:
 	for player in players:
 		if player.player_index == player_index:
@@ -32,7 +29,7 @@ func remove_player(player_index: int) -> void:
 	print("Removed player with index " + str(player_index))
 	players_changed.emit()
 
-func add_new_player(player_index: int) -> void:
+func add_new_player(player_index: int, persistance : PersistancePlayerState) -> void:
 	if player_exists(player_index):
 		push_error("Player " + str(player_index) + " already exists")
 		return
@@ -44,6 +41,7 @@ func add_new_player(player_index: int) -> void:
 		if main_player_parent:
 			main_player_parent.add_child(player)
 			player.position = players[0].position
+	player.persistance = persistance
 	print("Added a new player with device " + str(player_index) + "!")
 	players.push_back(player)
 	players_interact_focus.push_back(null)

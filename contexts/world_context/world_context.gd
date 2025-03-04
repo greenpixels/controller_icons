@@ -1,12 +1,23 @@
 extends Node
+const BLOCK_PADDING := Vector2i(6, 6)
+const BLOCK_SIZE := Vector2i(192, 156)
+const CHUNK_SIZE := Vector2i(15, 15)
+const CHUNK_OFFSET := Vector2i(CHUNK_SIZE) / 2
 var world_state : PersistanceWorldState
+
+func _ready() -> void:
+	randomize()
+
+func calculate_base_chunk_coordinate(position: Vector2i) -> Vector2i:
+	var grid_pos = position / (BLOCK_SIZE + BLOCK_PADDING)
+	return Vector2i(floor(grid_pos.x / CHUNK_SIZE.x), floor(grid_pos.y / CHUNK_SIZE.y))
 
 func _enter_tree() -> void:
 	world_state = PersistanceWorldState.new()
 	for path in BlockMappings.block_path_to_block_key:
 		ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REUSE)
 
-func get_current_map():
+func get_current_map() -> PersistanceMapState:
 	return world_state.get_map(world_state.current_map_uuid_stack.back())
 
 func enter_cave(block: Block, location_key: String):
@@ -26,7 +37,6 @@ func leave_cave():
 	_change_location(get_current_map().location_key)
 	
 func _change_location(location_key: String):
-	
 	var location_path = LocationMappings.location_key_to_location_path_map[location_key]
 	var location_scene = load(location_path)
 	if location_scene:

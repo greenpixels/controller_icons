@@ -53,39 +53,9 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer"]
+[node name="SaveAndExitButton" type="Button" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Local Multiplayer:"
-fit_content = true
-autowrap_mode = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PlayerToggle_1" type="Button" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-disabled = true
-text = "TOGGLE_PLAYER_1"
-
-[node name="PlayerToggle_2" type="Button" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "TOGGLE_PLAYER_2"
-
-[node name="PlayerToggle_3" type="Button" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "TOGGLE_PLAYER_3"
-
-[node name="PlayerToggle_4" type="Button" parent="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "TOGGLE_PLAYER_4"
+text = "Save and Exit"
 
 [node name="DISPLAY" type="PanelContainer" parent="VBoxContainer/TabContainer"]
 visible = false
@@ -138,8 +108,7 @@ shortcut_actions = ["ui_cancel"]
 TAB_CYCLE_COOLDOWN_MAX = 0.1
 tab_containers = [NodePath("../VBoxContainer/TabContainer"), NodePath("../VBoxContainer/TabContainer/CONTROLS/TabContainer")]
 
-[connection signal="pressed" from="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer/PlayerToggle_2" to="." method="_on_player_toggle_2_pressed"]
-[connection signal="pressed" from="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer/PlayerToggle_3" to="." method="_on_player_toggle_3_pressed"]
-[connection signal="pressed" from="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/HBoxContainer/PlayerToggle_4" to="." method="_on_player_toggle_4_pressed"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/GAME/MarginContainer/VBoxContainer/SaveAndExitButton" to="." method="_on_save_and_exit_button_pressed"]
 [connection signal="gui_input" from="VBoxContainer/TabContainer/CONTROLS/TabContainer" to="." method="_on_tab_container_gui_input"]
 [connection signal="pressed" from="VBoxContainer/ShortcutButton" to="." method="_on_button_pressed"]
+[connection signal="ready" from="VBoxContainer/ShortcutButton" to="." method="_on_shortcut_button_ready"]

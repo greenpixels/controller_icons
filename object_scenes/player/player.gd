@@ -5,12 +5,13 @@ const BASE_SPEED := 400.
 const ANIMATION_BASE_SPEED := 1.2
 const DEFAULT_BODY_TEXTURE = preload("res://resources/items/equipment/armor/_assets/default_person.png")
 
+@onready var persistance : PersistancePlayerState
+
 @onready var controller: InputController
 @onready var held_item := %Item
 @onready var interact_radius := $InteractRadius
 @onready var inventory: Storage = $Inventory
 @onready var equipment: Storage = $Equipment
-@onready var drop_table: WeightedList
 @onready var player_model: PlayerModel = %PlayerModel
 @onready var original_item_position: Vector2
 
@@ -28,9 +29,8 @@ func _ready() -> void:
 	controller.look_at_changed.connect(_on_input_controller_look_at_changed)
 	controller.toolbar_offset_changed.connect(_on_input_controller_toolbar_offset_changed)
 	held_item.item = inventory.items[controller.toolbar_offset]
-	inventory.store_item(load("res://resources/items/weapons/tools/_all/wooden_pickaxe.tres"), 1)
-	inventory.store_item(load("res://resources/items/equipment/armor/_all/ominous_cap.tres"), 1)
-	inventory.store_item(load("res://resources/items/equipment/armor/_all/ominous_robe.tres"), 1)
+	persistance.copy_state_to_player(self)
+	
 
 func _process(_delta: float) -> void:
 	player_model.scale.x = sign(controller.look_at_input.x) if abs(controller.look_at_input.x) > 0 else last_horizontal_dir

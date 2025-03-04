@@ -4,6 +4,7 @@ extends PanelContainer
 @export var shortcut_actions := ["none"]
 @onready var shortcut_icon : TextureRect = %IconTexture
 @onready var text_label : RichTextLabel = %LabelText
+@onready var button : Button = %Button
 signal pressed
 
 func _ready() -> void:
@@ -19,7 +20,7 @@ func _ready() -> void:
 		input_action.action = shortcut_action
 		shortcut.events.push_back(input_action)
 		index += 1
-	%Button.shortcut = shortcut
+	button.shortcut = shortcut
 
 func _process(_delta: float) -> void:
 	shortcut_icon.size.y = 50

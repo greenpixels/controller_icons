@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://dadj856jod22e"]
+
+[ext_resource type="Script" path="res://main_scenes/player_creation/player_creation.gd" id="1_te4ex"]
+[ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/player/player_model/player_model.tscn" id="2_c0otq"]
+[ext_resource type="PackedScene" uid="uid://bt0iwvnblvssu" path="res://addons/greenpixels-onscreen-keyboard/text_edit_with_on_screen_keyboard.tscn" id="3_wo2ur"]
+
+[node name="CharacterCreation" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_te4ex")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_left = 844.0
+offset_top = 73.0
+offset_right = 1207.0
+offset_bottom = 565.0
+
+[node name="CreateButton" type="Button" parent="Panel/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.5
+offset_top = 13.0
+offset_right = 181.5
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 0
+disabled = true
+text = "Create"
+
+[node name="PlayerModel" parent="Panel/Panel" instance=ExtResource("2_c0otq")]
+position = Vector2(186, 291)
+scale = Vector2(2.52604, 2.52604)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 74.0
+offset_right = 748.0
+offset_bottom = 376.0
+metadata/_edit_group_ = true
+
+[node name="NameInput" parent="VBoxContainer" instance=ExtResource("3_wo2ur")]
+unique_name_in_owner = true
+layout_mode = 2
+text_placeholder = "Enter character name ..."
+show_cancel_button = false
+show_submit_button = false
+
+[connection signal="pressed" from="Panel/Panel/CreateButton" to="." method="_on_create_button_pressed"]

@@ -3,6 +3,7 @@ class_name Block
 @onready var sprite := $Sprite2D
 @onready var item_pickup_scene := preload("res://object_scenes/item_pickup/item_pickup.tscn")
 
+@export_storage var persistance : PersistanceBlockInformation
 @export var key := "NO_KEY"
 @export var should_use_uuid := false
 @export var uuid : String = ""
@@ -40,9 +41,11 @@ func take_damage(amount: int):
 		queue_free()
 	
 func on_destroy():
+	WorldContext.get_current_map().remove_block(self)
 	if loot_table:
 		loot_table.create_entries()
 		if loot_table.entries.size() > 0:
+			seed(hash(WorldContext.get_current_map().uuid + persistance.chunk_key + str(persistance.position_in_chunk_grid)))
 			var loot : LootTableEntry = loot_table.pick_weighted_random()
 			var pickup : ItemPickup = item_pickup_scene.instantiate()
 			pickup.item = loot.object

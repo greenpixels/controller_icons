@@ -1,25 +1,31 @@
 extends Resource
 class_name PersistanceWorldState
-@export_storage var main_seed : int
-@export_storage var current_sub_seed : int
-@export_storage var current_map_uuid_stack : Array[String]
-@export_storage var uuid : String
+
+const WORLD_SAVE_BASE_PATH := "user://worlds/"
+
+@export_storage var name := "A new world"
+@export_storage var original_seed_text := ""
+@export_storage var main_seed : int = 0
+@export_storage var current_sub_seed : int = 0
+@export_storage var current_map_uuid_stack : Array[String] = ["main"]
+@export_storage var uuid : String = UUID.v4()
 # "UUID" : PersistanceMapState
 @export_storage var maps : Dictionary 
-
-func _init() -> void:
-	randomize()
-	uuid = UUID.v4()
-	main_seed = randi()
-	current_map_uuid_stack.push_back("main")
 
 func set_map(map : PersistanceMapState):
 	maps[map.uuid] = map
 
 func get_map(_uuid: String) -> PersistanceMapState:
 	if maps.has(_uuid):
-		return maps[_uuid]
+		return maps[_uuid] as PersistanceMapState
 	return null
 
-func save():
-	ResourceSaver.save(self, "user://worlds/" + uuid + ".tres")
+func save_to_disk():
+	if not uuid or uuid.is_empty():
+		push_error("Unable to save player state as the UUID is not set")
+		return
+	var path := WORLD_SAVE_BASE_PATH + uuid + ".tres"
+	var status = ResourceSaver.save(self, path)
+	if status != OK:
+		push_error("Failed to save player")
+		print(status)

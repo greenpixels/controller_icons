@@ -1,5 +1,5 @@
 extends CanvasLayer
-@onready var dragged_item_texture := $DraggedItemTexture
+@onready var dragged_item_texture := %DraggedItemTexture
 var drag_source: ItemSlot = null
 var drop_target: ItemSlot = null
 var item: Item = null
@@ -41,7 +41,7 @@ func _on_slot_focused(node: ItemSlot) -> void:
 			.set_ease(Tween.EASE_OUT)
 
 func _drag(slot: ItemSlot) -> void:
-	if drag_source or not slot.get_item():
+	if drag_source or slot.get_item() == null:
 		_cancel_drag()
 		return
 	drag_source = slot

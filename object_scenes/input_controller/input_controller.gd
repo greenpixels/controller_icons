@@ -72,10 +72,10 @@ func handle_look_at_input():
 		look_at_input.y = Input.get_action_strength(input_map.get_mapped_action("move_down")) - \
 						  Input.get_action_strength(input_map.get_mapped_action("move_up"))
 
-	if device == 0 and use_keyboard:
+	if PlayersContext.players.size() > 0 and device == 0 and use_keyboard:
 		# Handle mouse-based look input
 		var player = PlayersContext.players[0]
-		if player:
+		if player and player.is_inside_tree():
 			look_at_input = player.global_position.direction_to(player.get_global_mouse_position())
 			
 
