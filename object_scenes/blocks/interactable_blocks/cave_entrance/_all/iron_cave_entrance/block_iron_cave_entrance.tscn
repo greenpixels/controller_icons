@@ -5,14 +5,4 @@
 [node name="Block" instance=ExtResource("1_iro0i")]
 key = "BLOCK_IRON_CAVE_ENTRANCE"
 
-[node name="Sprite2D" parent="." index="1"]
-unique_name_in_owner = false
-self_modulate = Color(1, 1, 1, 1)
-z_index = 0
-z_as_relative = true
-material = null
-position = Vector2(0, 0)
-scale = Vector2(1, 1)
-flip_v = false
-
 [editable path="InteractArea"]
