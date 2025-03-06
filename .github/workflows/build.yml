@@ -7,7 +7,7 @@ on:
 name: "Export"
 
 env:
-  GODOT_VERSION: 4.3
+  GODOT_VERSION: 4.4
   EXPORT_NAME: Project Magus
   PROJECT_PATH: .
   ITCH_GAME_NAME: project-magus
