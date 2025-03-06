@@ -1,15 +1,16 @@
 [gd_resource type="Resource" script_class="Armor" load_steps=4 format=3 uid="uid://6ab1m8w6v30s"]
 
-[ext_resource type="Texture2D" uid="uid://ge70qicfftvq" path="res://resources/items/equipment/armor/_assets/default_mage.png" id="1_u36b6"]
 [ext_resource type="Script" uid="uid://d3sngno1fmru4" path="res://resources/items/equipment/armor/armor.gd" id="2_r8max"]
+[ext_resource type="Texture2D" uid="uid://dcbwr618x22bq" path="res://_assets/model_textures/body/body_ominous.png" id="3_msipa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ci1cs"]
-atlas = ExtResource("1_u36b6")
-region = Rect2(57, 77, 71, 59)
+atlas = ExtResource("3_msipa")
+region = Rect2(0, 0, 94, 79)
 
 [resource]
 script = ExtResource("2_r8max")
-armor_set = ExtResource("1_u36b6")
+armor_texture = ExtResource("3_msipa")
+should_show_base = false
 slot = 1
 texture = SubResource("AtlasTexture_ci1cs")
 key = "ITEM_OMINOUS_ROBE"

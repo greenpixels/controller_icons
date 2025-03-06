@@ -15,7 +15,7 @@ func _ready() -> void:
 func _on_node_added(node: Node) -> void:
 	if not node is Control:
 		return
-	if node.focus_mode != Control.FOCUS_NONE:
+	if node.focus_mode == Control.FOCUS_ALL:
 		if node is ItemSlot:
 			node.focus_entered.connect(func():
 				_on_slot_focused(node)

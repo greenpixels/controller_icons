@@ -120,7 +120,7 @@ func _load_blocks_from_persisted_chunk(chunk_node: Node2D, chunk_coord_string) -
 	for grid_pos_string in map_chunk_blocks.keys():
 		var block_info : PersistanceBlockInformation = map_chunk_blocks[grid_pos_string]
 		if blocks_in_chunk.has(grid_pos_string): continue
-		var block_scene = BlockMappings.block_key_to_block_resource_map[block_info.block_key]
+		var block_scene = load(BlockMappings.key_to_path[block_info.block_key])
 		var block : Block = block_scene.instantiate()
 		block.persistance = block_info
 		block.uuid = block_info.uuid

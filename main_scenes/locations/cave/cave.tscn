@@ -8,7 +8,7 @@
 y_sort_enabled = true
 script = ExtResource("1_7orta")
 
-[node name="Node" type="Node" parent="."]
+[node name="MapGeneration" type="Node" parent="."]
 script = ExtResource("1_km3u3")
 spawn_point_empty_padding = Vector2(2, 3)
 noise_frequency = 0.8

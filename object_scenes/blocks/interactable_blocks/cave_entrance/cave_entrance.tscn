@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dhp43ypj0qo35"]
 
 [ext_resource type="PackedScene" uid="uid://xa20ommqlb3m" path="res://object_scenes/blocks/interactable_blocks/block_interactable.tscn" id="1_0ed2b"]
-[ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://object_scenes/blocks/blocks_scaled.png" id="2_pxppf"]
+[ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_pxppf"]
 [ext_resource type="Script" uid="uid://n7fr3jhagsrr" path="res://object_scenes/blocks/interactable_blocks/cave_entrance/cave_entrance_interact_handler.gd" id="3_gbcgm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nd7xa"]

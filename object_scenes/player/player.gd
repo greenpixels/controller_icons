@@ -3,7 +3,7 @@ class_name Player
 
 const BASE_SPEED := 400.
 const ANIMATION_BASE_SPEED := 1.2
-const DEFAULT_BODY_TEXTURE = preload("res://resources/items/equipment/armor/_assets/default_person.png")
+
 
 @onready var persistance : PersistancePlayerState
 
@@ -12,7 +12,7 @@ const DEFAULT_BODY_TEXTURE = preload("res://resources/items/equipment/armor/_ass
 @onready var interact_radius := $InteractRadius
 @onready var inventory: Storage = $Inventory
 @onready var equipment: Storage = $Equipment
-@onready var player_model: PlayerModel = %PlayerModel
+@onready var player_model: HumanModel = %PlayerModel
 @onready var original_item_position: Vector2
 
 var last_horizontal_dir = 1
@@ -84,17 +84,9 @@ func _on_inventory_items_changed() -> void:
 	held_item.item = inventory.items[controller.toolbar_offset]
 	_on_input_controller_toolbar_offset_changed(controller.toolbar_offset)
 
-func _render_armor_for_slot(slot: PlayerInventory.ArmorSlotPositions, sprite_property: String) -> void:
-	if equipment.items[slot] != null:
-		(player_model[sprite_property].texture as AtlasTexture).atlas = (equipment.items[slot] as Armor).armor_set
-	else:
-		(player_model[sprite_property].texture as AtlasTexture).atlas = DEFAULT_BODY_TEXTURE
-
 func _on_equipment_items_changed() -> void:
-	_render_armor_for_slot(PlayerInventory.ArmorSlotPositions.HELMET, "head_sprite")
-	_render_armor_for_slot(PlayerInventory.ArmorSlotPositions.BODY, "torso_sprite")
-	_render_armor_for_slot(PlayerInventory.ArmorSlotPositions.SHOES, "left_foot_sprite")
-	_render_armor_for_slot(PlayerInventory.ArmorSlotPositions.SHOES, "right_foot_sprite")
+	player_model.update_sprite_from_human_style(persistance.human_style, equipment)
+	
 
 func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:

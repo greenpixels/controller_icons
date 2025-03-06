@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bci60lemrpeqb"]
 
 [ext_resource type="Script" uid="uid://bibchincne6p5" path="res://main_scenes/player_select/player_select_entry/player_select_entry.gd" id="1_fuqcy"]
-[ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/player/player_model/player_model.tscn" id="2_ban6n"]
+[ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/human_model/human_model.tscn" id="2_ban6n"]
 
 [node name="PlayerSelectEntry" type="PanelContainer"]
 offset_right = 604.0

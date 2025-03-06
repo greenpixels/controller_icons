@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bloj5uft13qv2"]
 
-[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://resources/items/_assets/items_scaled.png" id="1_3h47r"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="1_3h47r"]
 [ext_resource type="Script" uid="uid://iupriha7omns" path="res://ui/crafting_entry/crafting_entry.gd" id="1_xhmuc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4o3be"]

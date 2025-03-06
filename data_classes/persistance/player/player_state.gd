@@ -10,6 +10,7 @@ const PLAYER_SAVE_BASE_PATH := "user://players/"
 @export_storage var equipment_quantities: Array[int] = []
 @export_storage var inventory : Array[Variant] = []
 @export_storage var equipment : Array[Variant] = []
+@export_storage var human_style : PersistanceHumanStyle = PersistanceHumanStyle.new()
 
 func copy_player_to_state(player: Player):
 	inventory = []
@@ -42,6 +43,10 @@ func copy_state_to_player(player: Player):
 	
 	player.inventory.items_changed.emit()
 	player.equipment.items_changed.emit()
+
+func add_item(item_key: String, amount: int):
+	inventory.push_back(item_key)
+	inventory_quantities.push_back(amount)
 
 func save_to_disk():
 	if not uuid or uuid.is_empty():

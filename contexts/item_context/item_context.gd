@@ -23,6 +23,9 @@ func convert_item_keys_to_items(keys: Array[Variant]) -> Array[Item]:
 		if item_key == null: 
 			item_array.push_back(null)
 			continue
+		if not ItemContext.item_path_lookup.has(item_key):
+			item_array.push_back(null)
+			continue
 		var item_path : String = ItemContext.item_path_lookup[item_key]
 		if not item_path or not item_path.begins_with("res://resources/items/"): item_array.push_back(null)
 		var item : Item = load(item_path) as Item

@@ -21,7 +21,7 @@ func _enter_tree() -> void:
 				check_for_focus()	
 			)
 				
-			if node.focus_mode != Control.FOCUS_NONE:
+			if node.focus_mode == Control.FOCUS_ALL:
 				node.add_to_group("focusable")
 				node.mouse_entered.connect(node.grab_focus)
 				if not current_focus :

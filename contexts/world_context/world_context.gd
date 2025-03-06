@@ -20,8 +20,6 @@ func calculate_base_chunk_coordinate(position: Vector2i) -> Vector2i:
 
 func _enter_tree() -> void:
 	world_state = PersistanceWorldState.new()
-	for path in BlockMappings.block_path_to_block_key:
-		ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_REUSE)
 
 func get_current_map() -> PersistanceMapState:
 	return world_state.get_map(current_map_uuid_stack.back())
@@ -41,10 +39,10 @@ func leave_cave():
 	_change_location(get_current_map().location_key)
 	
 func _change_location(location_key: String):
-	var location_path = LocationMappings.location_key_to_location_path_map[location_key]
+	var location_path = LocationMappings.key_to_path[location_key]
 	var location_scene = load(location_path)
 	if location_scene:
 		get_tree().change_scene_to_packed(location_scene)
 	else:
 		push_error("Unable to find location scene")
-		get_tree().change_scene_to_packed(load(LocationMappings.location_key_to_location_path_map["LOCATION_OVERWORLD"]))
+		get_tree().change_scene_to_packed(load(LocationMappings.LOCATION_OVERWORLD))

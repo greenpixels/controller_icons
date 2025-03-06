@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://jj43pc5vnnig"]
+[gd_scene load_steps=2 format=3 uid="uid://jj43pc5vnnig"]
 
 [ext_resource type="PackedScene" uid="uid://dhp43ypj0qo35" path="res://object_scenes/blocks/interactable_blocks/cave_entrance/cave_entrance.tscn" id="1_iro0i"]
-[ext_resource type="PackedScene" uid="uid://wtcjxfyt01xl" path="res://main_scenes/locations/cave/_all/iron_cave/iron_cave.tscn" id="2_vjp81"]
 
 [node name="Block" instance=ExtResource("1_iro0i")]
 key = "BLOCK_IRON_CAVE_ENTRANCE"
 
-[node name="CaveEntranceInteractHandler" parent="." index="4"]
-cave_scene = ExtResource("2_vjp81")
+[node name="Sprite2D" parent="." index="1"]
+unique_name_in_owner = false
+self_modulate = Color(1, 1, 1, 1)
+z_index = 0
+z_as_relative = true
+material = null
+position = Vector2(0, 0)
+scale = Vector2(1, 1)
+flip_v = false
 
 [editable path="InteractArea"]

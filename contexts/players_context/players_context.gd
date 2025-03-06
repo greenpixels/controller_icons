@@ -50,8 +50,12 @@ func add_new_player(player_index: int, persistance : PersistancePlayerState) -> 
 	players_interact_focus_changed.emit()
 	players_changed.emit()
 
-func spawn_players_at(parent_node: Node, position: Vector2 = WorldContext.get_current_map().last_player_position) -> void:
-	
+func spawn_players_at(parent_node: Node, position = null) -> void:
+	if position == null:
+		if not WorldContext.get_current_map() == null and "last_player_position" in WorldContext.get_current_map():
+			position = WorldContext.get_current_map().last_player_position
+		else:
+			position = Vector2.ZERO
 	players_interact_focus= []
 	
 	for player in players:

@@ -86,9 +86,9 @@ func handle_look_at_input():
 func handle_button_input():
 	if Input.get_action_strength(input_map.get_mapped_action("attack")):
 		attack_pressed.emit()
-	if Input.get_action_strength(input_map.get_mapped_action("interact")):
+	if Input.is_action_just_pressed(input_map.get_mapped_action("interact")):
 		interact_pressed.emit()
-	if Input.get_action_strength(input_map.get_mapped_action("inventory")):
+	if Input.is_action_just_pressed(input_map.get_mapped_action("inventory")):
 		inventory_opened.emit()
 	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_left")):
 		toolbar_offset -= 1
