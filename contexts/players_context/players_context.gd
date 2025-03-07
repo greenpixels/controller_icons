@@ -1,6 +1,6 @@
 extends Node
 
-var player_scene := preload("res://object_scenes/player/player.tscn")
+var player_scene := preload("res://object_scenes/characters/player/player.tscn")
 var camera_scene := preload("res://object_scenes/main_camera/main_camera.tscn")
 
 var players: Array[Player] = []

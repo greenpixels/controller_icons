@@ -2,10 +2,65 @@ extends Node
 
 var item_path_lookup : Dictionary = {}
 var craftable_items : Array[Item] = []
-
+@onready var item_pickup_scene := preload("res://object_scenes/item_pickup/item_pickup.tscn")
 
 func _ready() -> void:
 	construct_item_lookup_resources()
+
+# In ItemContext.gd
+
+# Internal helper that contains the common logic.
+func _spawn_item_internal(item: Item, global_position: Vector2, amount: int, _chunk_node : Node2D = null, persistance: PersistanceItemPickupState = null) -> void:
+	var pickup: ItemPickup = item_pickup_scene.instantiate()
+	pickup.item = item
+	pickup.amount = amount
+	if persistance:
+		pickup.persistance = persistance
+		
+	var current_map = WorldContext.get_current_map()
+	var chunk_node: Node2D
+	# Determine the appropriate chunk node.
+	if not _chunk_node:
+		var chunk_coord = WorldContext.calculate_base_chunk_coordinate(global_position)
+		if not get_tree().current_scene is Location:
+			push_error("Unable to spawn item if not on a map")
+			return
+		var chunk_node_name = WorldContext.get_chunk_node_name(chunk_coord)
+		var location = get_tree().current_scene
+		var children = location.get_children()
+		chunk_node = location.get_node_or_null(chunk_node_name) #.find_child(chunk_node_name)
+	else:
+		chunk_node = _chunk_node
+		
+	if chunk_node == null:
+		push_error("Unable to spawn an item: chunk node not found")
+		return
+	
+	# Defer adding the pickup to the scene.
+	chunk_node.add_child.call_deferred(pickup)
+	pickup.global_position = global_position
+	current_map.add_item_pickup(pickup)
+
+
+# Function for spawning an item from direct parameters.
+func spawn_item_at(item: Item, global_position: Vector2, amount: int = 1) -> void:
+	_spawn_item_internal(item, global_position, amount)
+
+
+# Function for spawning an item from persisted data.
+func spawn_item_from_persistance(persistance: PersistanceItemPickupState) -> void:
+	if not ItemContext.item_path_lookup.has(persistance.item_key):
+		push_error("Item key '%s' not found in lookup" % persistance.item_key)
+		return
+	var item: Item = load(ItemContext.item_path_lookup[persistance.item_key])
+	_spawn_item_internal(item, persistance.position, persistance.amount, null, persistance)
+
+func spawn_item_from_persistance_with_chunk(persistance: PersistanceItemPickupState, chunk_node: Node2D) -> void:
+	if not ItemContext.item_path_lookup.has(persistance.item_key):
+		push_error("Item key '%s' not found in lookup" % persistance.item_key)
+		return
+	var item: Item = load(ItemContext.item_path_lookup[persistance.item_key])
+	_spawn_item_internal(item, persistance.position, persistance.amount, chunk_node, persistance)
 
 func construct_item_lookup_resources():
 	var start_time := Time.get_ticks_msec()

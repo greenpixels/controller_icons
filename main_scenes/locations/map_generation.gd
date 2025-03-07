@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name MapGenerator
 
 var dirt_block := preload("res://object_scenes/blocks/_all/dirt/block_dirt.tscn")
@@ -21,6 +21,7 @@ var uuid : String
 @export var block_types: Array[BlockSpawnConfiguration] = []
 var map : PersistanceMapState
 var parent_node: Node = null
+var chunk_node_positions : Array[Vector2] = []
 
 func _ready() -> void:
 	parent_node = get_parent()
@@ -76,7 +77,15 @@ func generate_chunk(chunk_coord: Vector2i) -> void:
 	else:
 		_load_blocks_from_persisted_chunk(chunk_node, chunk_coord_string)
 		_load_item_pickups_from_persisted_chunk(chunk_node, chunk_coord_string)
-		
+		_load_npcs_from_persisted_chunk(chunk_node, chunk_coord_string)
+
+func _load_npcs_from_persisted_chunk(chunk_node: Node, chunk_coord_string):
+	var map_chunk_npcs = map.chunks[chunk_coord_string].npcs
+	for npc_uuid in map_chunk_npcs.keys():
+		var npc_persistance = map_chunk_npcs[npc_uuid]
+		if npc_persistance is PersistanceCharacterState:
+			NpcContext.spawn_npc_from_persistance(npc_persistance, chunk_node)
+
 func _load_item_pickups_from_persisted_chunk(chunk_node: Node, chunk_coord_string):
 	var map_chunk_item_pickups = map.chunks[chunk_coord_string].item_pickups
 	for item_pickup_uuid in map_chunk_item_pickups.keys():
@@ -86,14 +95,8 @@ func _load_item_pickups_from_persisted_chunk(chunk_node: Node, chunk_coord_strin
 		var item : Item = load(ItemContext.item_path_lookup[item_pickup_persistance.item_key])
 		if not item is Item: continue
 		if item_pickup_persistance is PersistanceItemPickupState:
-			var item_pickup : ItemPickup = load("res://object_scenes/item_pickup/item_pickup.tscn").instantiate()
-			item_pickup.amount = item_pickup_persistance.amount
-			item_pickup.item = item
-			item_pickup.persistance = item_pickup_persistance
-			chunk_node.add_child(item_pickup)
-			item_pickup.position = item_pickup_persistance.position - chunk_node.position
+			ItemContext.spawn_item_from_persistance_with_chunk(item_pickup_persistance, chunk_node)
 		
-
 func _seed_chunk(chunk_coord: Vector2) -> void:
 	var sum_ab = _calculate_sum_ab(chunk_coord)
 	var seed_value = _calculate_seed_value(sum_ab, int(chunk_coord.y))
@@ -106,9 +109,12 @@ func _calculate_seed_value(sum_ab: int, y: int) -> int:
 	var base_seed = WorldContext.world_state.main_seed if not use_sub_seed else WorldContext.world_state.current_sub_seed
 	return base_seed + int((sum_ab * (sum_ab + 1)) / 2.) + y
 
+
+
 func _create_chunk_node(chunk_coord: Vector2) -> Node2D:
 	var chunk_node = Node2D.new()
-	chunk_node.name = "Chunk_%d_%d" % [chunk_coord.x, chunk_coord.y]
+	chunk_node_positions.push_back(chunk_coord * Vector2(chunk_size) * Vector2(block_size + block_padding))
+	chunk_node.name = WorldContext.get_chunk_node_name(chunk_coord)
 	chunk_node.y_sort_enabled = true
 	parent_node.add_child.call_deferred(chunk_node)
 	return chunk_node
@@ -217,11 +223,9 @@ func _pick_block_based_on_weight(valid_blocks: Array, total_weight: float) -> Pa
 # Checks each loading trigger’s position and generates the corresponding chunk if needed.
 func update_chunks() -> void:
 	for trigger in loading_triggers:
-		var base_chunk_coord = WorldContext.calculate_base_chunk_coordinate(trigger.position)
+		var base_chunk_coord = WorldContext.calculate_base_chunk_coordinate(trigger.global_position)
 		if not trigger.is_visible_in_tree(): continue
 		_generate_surrounding_chunks(base_chunk_coord)
-
-
 
 func _generate_surrounding_chunks(base_chunk_coord: Vector2i) -> void:
 	var start_time = Time.get_ticks_msec()
@@ -235,4 +239,12 @@ func _generate_surrounding_chunks(base_chunk_coord: Vector2i) -> void:
 			generate_chunk(neighbour_chunk)
 			has_generated_chunks = true
 	if has_generated_chunks:
+		queue_redraw()
 		print("Generating took " + str(Time.get_ticks_msec() - start_time))
+
+func _draw() -> void:
+	for chunk_node_position in chunk_node_positions:
+		var chunk_offset_px = - Vector2(chunk_offset) * Vector2(block_size + block_padding) + Vector2(block_size) / 2. - Vector2(block_size)
+		var chunk_size = Vector2(chunk_size) * Vector2(block_size + block_padding)
+		draw_rect(Rect2(chunk_node_position - chunk_offset_px, chunk_size), Color.RED, false, 5)
+		

@@ -10,7 +10,7 @@ class_name ItemPickup
 @export_storage var persistance : PersistanceItemPickupState
 var original_position : Vector2
 const PULL_DELAY_MAX = 0.75
-var pull_to : Player = null :
+var pull_to : CharacterBase = null :
 	set(value):
 		if pull_to != value:
 			pull_delay = PULL_DELAY_MAX
@@ -19,7 +19,6 @@ var pull_to : Player = null :
 var pull_delay := 0.
 
 func _ready() -> void:
-	WorldContext.get_current_map().add_item_pickup(self)
 	sprite.texture = item.texture
 	original_position = sprite.position
 	label.text = item.key
@@ -44,6 +43,7 @@ func _ready() -> void:
 	.set_trans(Tween.TRANS_CIRC)
 	
 func _process(delta: float) -> void:
+	var previous_position = global_position
 	if pull_to != null and pull_delay <= 0:
 		var distance = global_position.distance_to(pull_to.global_position)
 		if distance > 400:
@@ -57,12 +57,28 @@ func _process(delta: float) -> void:
 	elif pull_delay > 0:
 		pull_delay -= delta
 	persistance.remaining_time_sec -= delta
+	
+	if previous_position != global_position:
+		_reassign_chunk_on_move()
+	
 	if persistance.remaining_time_sec <= 0:
 		WorldContext.get_current_map().remove_item_pickup(self)
 		queue_free()
 	
+func _reassign_chunk_on_move():
+	var chunk_coord = WorldContext.calculate_base_chunk_coordinate(global_position)
+	if str(chunk_coord) != persistance.chunk_key:
+		if WorldContext.get_current_map().chunks.has(str(chunk_coord)):
+			print("Removed NPC from " + persistance.chunk_key)
+			WorldContext.get_current_map().remove_item_pickup(self)
+			print("Added ItemPickup to " + str(chunk_coord))
+			WorldContext.get_current_map().chunks[str(chunk_coord)].item_pickups[persistance.uuid] = persistance
+			persistance.chunk_key = str(chunk_coord)
+		else:
+			queue_free()
+	persistance.position = global_position
 
-func on_interact(player: Player):
+func on_interact(player: CharacterBase):
 	var remaining = player.inventory.store_item(item, amount)
 	amount = remaining
 	if amount <= 0:

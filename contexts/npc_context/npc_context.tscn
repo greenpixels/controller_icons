@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg3v03b7e0y8b"]
+
+[ext_resource type="Script" uid="uid://bk0cxdhpa58bj" path="res://contexts/npc_context/npc_context.gd" id="1_dahv8"]
+
+[node name="NpcContext" type="Node"]
+script = ExtResource("1_dahv8")

@@ -12,7 +12,7 @@ func _ready() -> void:
 func _on_create_button_pressed() -> void:
 	var new_player = PersistancePlayerState.new()
 	new_player.name = player_name
-	new_player.add_item("WOODEN_PICKAXE", 1)
+	new_player.add_item("ITEM_WOODEN_PICKAXE", 1)
 	new_player.add_item("ITEM_OMINOUS_CAP", 1)
 	new_player.save_to_disk()
 	get_tree().change_scene_to_packed(load("res://main_scenes/player_select/player_select.tscn"))

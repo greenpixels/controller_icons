@@ -1,15 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://cieawynmc40kt"]
 
 [ext_resource type="Script" uid="uid://ccc3yjvt2ncy7" path="res://contexts/input_context/input_context.gd" id="1_38n7i"]
-[ext_resource type="PackedScene" uid="uid://nncdcpu4q1wl" path="res://object_scenes/input_controller/input_controller.tscn" id="2_8emoe"]
+[ext_resource type="Script" uid="uid://dvbjp0aheyjok" path="res://object_scenes/controllers/input_controller/input_controller.gd" id="2_lbonx"]
 
 [node name="InputContext" type="Node2D"]
 script = ExtResource("1_38n7i")
 
-[node name="InputController1" parent="." instance=ExtResource("2_8emoe")]
+[node name="InputController1" type="Node2D" parent="."]
+script = ExtResource("2_lbonx")
 
-[node name="InputController2" parent="." instance=ExtResource("2_8emoe")]
+[node name="InputController2" type="Node2D" parent="."]
+script = ExtResource("2_lbonx")
 
-[node name="InputController3" parent="." instance=ExtResource("2_8emoe")]
+[node name="InputController3" type="Node2D" parent="."]
+script = ExtResource("2_lbonx")
 
-[node name="InputController4" parent="." instance=ExtResource("2_8emoe")]
+[node name="InputController4" type="Node2D" parent="."]
+script = ExtResource("2_lbonx")

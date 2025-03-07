@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmtwx58oxqnwx"]
+
+[ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_3yv1p"]
+[ext_resource type="Script" uid="uid://d4ia5row8k1df" path="res://object_scenes/characters/player/player.gd" id="2_dp4t6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dp4t6"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dp4t6"]
+radius = 118.512
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pbot0"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Character" instance=ExtResource("1_3yv1p")]
+script = ExtResource("2_dp4t6")
+
+[node name="CollisionShape2D" parent="." index="0"]
+disabled = true
+
+[node name="Sprite" parent="." index="5"]
+texture = SubResource("ViewportTexture_dp4t6")
+
+[node name="InteractRadius" type="Area2D" parent="." index="6"]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractRadius" index="0"]
+position = Vector2(0, 33)
+shape = SubResource("CircleShape2D_dp4t6")
+debug_color = Color(0.835882, 0.357543, 0.416445, 0)
+
+[node name="Sprite2" parent="." index="7"]
+texture = SubResource("ViewportTexture_pbot0")
+
+[connection signal="moved" from="." to="." method="_on_moved"]
+[connection signal="area_entered" from="InteractRadius" to="." method="_on_interact_radius_area_entered"]
+[connection signal="area_exited" from="InteractRadius" to="." method="_on_interact_radius_area_exited"]

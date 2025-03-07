@@ -24,7 +24,6 @@ func _on_player_select(persistance: PersistancePlayerState):
 func _on_new_character_button_pressed() -> void:
 	get_tree().change_scene_to_packed(character_creation_scene)
 
-
 func get_player_peristances() -> Array[PersistancePlayerState]:
 	var player_persistances : Array[PersistancePlayerState]= []
 	var dir = DirAccess.open(PersistancePlayerState.PLAYER_SAVE_BASE_PATH)
@@ -45,7 +44,6 @@ func get_player_peristances() -> Array[PersistancePlayerState]:
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	return player_persistances
-
 
 func _on_player_delete(persistance: PersistancePlayerState):
 	var dir = DirAccess.open(PersistancePlayerState.PLAYER_SAVE_BASE_PATH)

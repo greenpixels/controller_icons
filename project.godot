@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [autoload]
 
+GameInit="*res://game_init.tscn"
 InputContext="*res://contexts/input_context/input_context.tscn"
 FocusContext="*res://contexts/focus_context/focus_context.tscn"
 WorldContext="*res://contexts/world_context/world_context.tscn"
@@ -25,10 +26,12 @@ DndContext="*res://contexts/dnd_context/dnd_context.tscn"
 TweenHelper="*res://utils/tween_helper/tween_helper.gd"
 TooltipOverlay="*res://ui/tooltip_component/tooltip_overlay/tooltip_overlay.tscn"
 PlayersContext="*res://contexts/players_context/players_context.tscn"
-TimeContext="*res://contexts/time_context/TimeContext.tscn"
+TimeContext="*res://contexts/time_context/time_context.tscn"
 UiLayer="*res://ui/ui_layer/ui_layer.tscn"
 OptionsContext="*res://contexts/options_context/options_context.tscn"
 ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
+LimboConsole="*res://addons/limbo_console/limbo_console.gd"
+NpcContext="*res://contexts/npc_context/npc_context.tscn"
 
 [display]
 
@@ -39,7 +42,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/controller_icons/plugin.cfg", "res://addons/greenpixels-onscreen-keyboard/plugin.cfg")
+enabled=PackedStringArray("res://addons/controller_icons/plugin.cfg", "res://addons/greenpixels-onscreen-keyboard/plugin.cfg", "res://addons/limbo_console/plugin.cfg")
 
 [file_customization]
 
@@ -230,6 +233,11 @@ drop_item={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":84,"key_label":0,"unicode":116,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":3,"pressure":0.0,"pressed":true,"script":null)
+]
+}
+limbo_console_toggle={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194332,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

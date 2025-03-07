@@ -10,7 +10,7 @@ region = Rect2(108, 312, 96, 96)
 [resource]
 script = ExtResource("1_gtxxu")
 texture = SubResource("AtlasTexture_hi268")
-key = "DRY_WOOD"
+key = "ITEM_DRY_WOOD"
 cooldown = 0.0
 rarity = 1
 max_stacks = 99

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsidwtwn5koex"]
+
+[ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_unihu"]
+[ext_resource type="Script" uid="uid://ci6k5rs4iba2" path="res://object_scenes/characters/npc/npc.gd" id="2_k7pj4"]
+[ext_resource type="Script" uid="uid://bm8pdkd4vvcya" path="res://object_scenes/controllers/human_npc_controller/human_npc_controller.gd" id="2_y7s0x"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wthus"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_k7pj4"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Character" node_paths=PackedStringArray("controller") instance=ExtResource("1_unihu")]
+script = ExtResource("2_k7pj4")
+controller = NodePath("Node")
+
+[node name="Inventory" parent="." index="1"]
+storage_view = null
+
+[node name="Sprite" parent="." index="5"]
+texture = SubResource("ViewportTexture_wthus")
+
+[node name="Node" type="Node" parent="." index="6" node_paths=PackedStringArray("raycast", "npc")]
+script = ExtResource("2_y7s0x")
+raycast = NodePath("../RayCast2D")
+npc = NodePath("..")
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="7"]
+position = Vector2(0, 33)
+target_position = Vector2(70, 0)
+
+[node name="Sprite2" parent="." index="8"]
+texture = SubResource("ViewportTexture_k7pj4")
+
+[connection signal="moved" from="." to="." method="_on_moved"]

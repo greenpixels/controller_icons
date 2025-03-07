@@ -24,7 +24,7 @@ func _on_shortcut_button_ready() -> void:
 
 func _on_save_and_exit_button_pressed() -> void:
 	for player in PlayersContext.players:
-		player.persistance.copy_player_to_state(player)
+		player.persistance.copy_character_to_state(player)
 		player.persistance.save_to_disk()
 	PlayersContext.withdraw_players_from_scene()
 	for player in PlayersContext.players:

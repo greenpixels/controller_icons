@@ -10,7 +10,7 @@ region = Rect2(6, 312, 96, 96)
 [resource]
 script = ExtResource("1_ahbdi")
 texture = SubResource("AtlasTexture_quyuh")
-key = "DIRT"
+key = "ITEM_DIRT"
 cooldown = 0.0
 rarity = 1
 max_stacks = 99

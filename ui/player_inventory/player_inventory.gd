@@ -41,14 +41,9 @@ func _input(event: InputEvent) -> void:
 		var slot = FocusContext.current_focus
 		if slot is ItemSlot:
 			if slot.get_item() == null: return
-			
-			var pickup : ItemPickup = load("res://object_scenes/item_pickup/item_pickup.tscn").instantiate()
-			pickup.item = slot.storage.items[slot.index_in_storage]
-			pickup.amount = slot.storage.quantities[slot.index_in_storage]
+			ItemContext.spawn_item_at(slot.storage.items[slot.index_in_storage], player.global_position, slot.storage.quantities[slot.index_in_storage])
 			slot.storage.items[slot.index_in_storage] = null
 			slot.storage.quantities[slot.index_in_storage] = 0
-			get_tree().current_scene.add_child.call_deferred(pickup)
-			pickup.global_position = player.global_position
 			slot.storage.items_changed.emit()
 			
 				

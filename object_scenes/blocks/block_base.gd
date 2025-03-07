@@ -47,8 +47,4 @@ func on_destroy():
 		if loot_table.entries.size() > 0:
 			seed(hash(WorldContext.get_current_map().uuid + persistance.chunk_key + str(persistance.position_in_chunk_grid)))
 			var loot : LootTableEntry = loot_table.pick_weighted_random()
-			var pickup : ItemPickup = item_pickup_scene.instantiate()
-			pickup.item = loot.object
-			pickup.amount = randi_range(loot.min_amount, loot.max_amount)
-			get_tree().current_scene.add_child.call_deferred(pickup)
-			pickup.global_position = global_position
+			ItemContext.spawn_item_at(loot.object, global_position, randi_range(loot.min_amount, loot.max_amount))

@@ -1,28 +1,17 @@
-extends Node2D
+extends Controller
 class_name InputController 
 
+signal interacted
+signal inventory_opened
+
 var device := 0
-var movement_input := Vector2(0., 0.)
-var look_at_input := Vector2.ZERO
 var deadzone_treshhold := 0.1
 var previos_mouse_position := Vector2.ZERO
 var use_keyboard = false :
 	set(value):
 		use_keyboard = value
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN if not use_keyboard else Input.MOUSE_MODE_VISIBLE)
-var toolbar_offset = 0 :
-	set(value):
-		if value < 0: value = 2
-		var new_offset = value % 3
-		if new_offset != toolbar_offset:
-			toolbar_offset = new_offset
-			toolbar_offset_changed.emit(toolbar_offset)
-		
-signal look_at_changed(look_at: Vector2)
-signal attack_pressed
-signal interact_pressed
-signal inventory_opened
-signal toolbar_offset_changed(position: int)
+
 var input_map : DeviceInputMap
 
 func init_device_map() -> void:
@@ -32,7 +21,6 @@ func _process(_delta: float) -> void:
 	handle_movement_input()
 	handle_look_at_input()
 	handle_button_input()
-
 
 func _input(event: InputEvent) -> void:
 	if device == 0:
@@ -85,15 +73,15 @@ func handle_look_at_input():
 
 func handle_button_input():
 	if Input.get_action_strength(input_map.get_mapped_action("attack")):
-		attack_pressed.emit()
+		attacked.emit()
 	if Input.is_action_just_pressed(input_map.get_mapped_action("interact")):
-		interact_pressed.emit()
+		interacted.emit()
 	if Input.is_action_just_pressed(input_map.get_mapped_action("inventory")):
 		inventory_opened.emit()
 	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_left")):
-		toolbar_offset -= 1
+		current_item_index -= 1
 	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_right")):
-		toolbar_offset += 1
+		current_item_index += 1
 
 
 

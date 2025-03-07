@@ -1,3 +1,6 @@
 [submodule "addons/greenpixels-onscreen-keyboard"]
 	path = addons/greenpixels-onscreen-keyboard
 	url = https://github.com/greenpixels/greenpixels-onscreen-keyboard.git
+[submodule "addons/limbo_console"]
+	path = addons/limbo_console
+	url = https://github.com/limbonaut/limbo_console.git

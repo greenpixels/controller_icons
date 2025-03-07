@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://bfxjfobl3sr6v"]
+
+[ext_resource type="PackedScene" uid="uid://ble70sdbknfug" path="res://object_scenes/storage/storage.tscn" id="1_hf4q0"]
+[ext_resource type="Script" uid="uid://by85hg6ecr0po" path="res://object_scenes/characters/character_base.gd" id="1_nwp7l"]
+[ext_resource type="PackedScene" uid="uid://bdd83dyudffo1" path="res://ui/player_inventory/player_inventory.tscn" id="2_nwp7l"]
+[ext_resource type="Script" uid="uid://duckcr8kjwrdv" path="res://object_scenes/storage/storage.gd" id="3_5qtnr"]
+[ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/human_model/human_model.tscn" id="4_efhyb"]
+[ext_resource type="PackedScene" uid="uid://bh3oegyqhcdj6" path="res://object_scenes/characters/held_item/held_item.tscn" id="5_4humm"]
+[ext_resource type="Shader" uid="uid://cf7o0mk1ncbj3" path="res://object_scenes/blocks/overlay.gdshader" id="7_5qtnr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijmed"]
+radius = 18.0
+height = 68.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yn45u"]
+radius = 224.27
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ov6cv"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_efhyb"]
+shader = ExtResource("7_5qtnr")
+shader_parameter/contrast = 1.5
+shader_parameter/opacity = 0.7
+
+[node name="Character" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_nwp7l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 33)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ijmed")
+
+[node name="Inventory" parent="." instance=ExtResource("1_hf4q0")]
+storage_view = ExtResource("2_nwp7l")
+
+[node name="Equipment" type="Node" parent="."]
+script = ExtResource("3_5qtnr")
+maximum_space = 5
+
+[node name="PickupRadius" type="Area2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRadius"]
+position = Vector2(0, 33)
+shape = SubResource("CircleShape2D_yn45u")
+debug_color = Color(0.454902, 0.596078, 0, 0)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(384, 384)
+
+[node name="Model" parent="SubViewport" instance=ExtResource("4_efhyb")]
+unique_name_in_owner = true
+position = Vector2(200, 200)
+
+[node name="Item" parent="SubViewport" node_paths=PackedStringArray("character") instance=ExtResource("5_4humm")]
+unique_name_in_owner = true
+position = Vector2(200, 200)
+character = NodePath("../..")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-13, -3)
+texture = SubResource("ViewportTexture_ov6cv")
+
+[node name="Sprite2" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.439216)
+material = SubResource("ShaderMaterial_efhyb")
+position = Vector2(-13, 65)
+scale = Vector2(1, 0.48)
+texture = SubResource("ViewportTexture_ov6cv")
+flip_v = true
+
+[connection signal="items_changed" from="Inventory" to="." method="_on_inventory_items_changed"]
+[connection signal="items_changed" from="Equipment" to="." method="_on_equipment_items_changed"]
+[connection signal="area_entered" from="PickupRadius" to="." method="_on_pickup_radius_area_entered"]

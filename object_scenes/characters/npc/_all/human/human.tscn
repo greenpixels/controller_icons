@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://53p50mxlkprf"]
+
+[ext_resource type="PackedScene" uid="uid://dsidwtwn5koex" path="res://object_scenes/characters/npc/npc.tscn" id="1_3md1u"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1q25e"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Character" instance=ExtResource("1_3md1u")]
+
+[node name="Sprite" parent="." index="5"]
+texture = SubResource("ViewportTexture_1q25e")

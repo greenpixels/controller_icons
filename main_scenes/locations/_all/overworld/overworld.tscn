@@ -25,7 +25,9 @@ y_sort_enabled = true
 script = ExtResource("1_7ofc1")
 key = "LOCATION_OVERWORLD"
 
-[node name="WorlGenerator" type="Node" parent="."]
+[node name="WorlGenerator" type="Node2D" parent="."]
+z_index = 100
+z_as_relative = false
 script = ExtResource("2_rsqlo")
 use_sub_seed = false
 block_types = Array[ExtResource("4_n2u0d")]([ExtResource("4_vp7f8"), ExtResource("5_846sg"), ExtResource("6_lua6l"), ExtResource("7_5ejne"), ExtResource("8_iuxym"), ExtResource("9_7o1j5"), ExtResource("10_81nse"), SubResource("Resource_2nddo")])

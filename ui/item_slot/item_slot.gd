@@ -10,7 +10,6 @@ var is_drag_source := false :
 		is_drag_source = value
 		texture_rect.modulate.a = 0.33 if is_drag_source else 1.
 
-
 func _ready() -> void:
 	setup()
 
@@ -18,8 +17,6 @@ func setup():
 	handle_storage_update()
 	if storage:
 		storage.items_changed.connect(handle_storage_update)
-
-		
 
 func handle_storage_update():
 	var item = get_item()
