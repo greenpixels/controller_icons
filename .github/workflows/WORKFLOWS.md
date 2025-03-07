@@ -8,7 +8,7 @@ Modify the top-level variables inside `build.yml` to customize the build process
 
 ```yaml
 env:
-  GODOT_VERSION: 4.3          # Specify the Godot version to use
+  GODOT_VERSION: 4.4          # Specify the Godot version to use
   EXPORT_NAME: Game Name       # Name of the exported game build
   PROJECT_PATH: .              # Path to the Godot project (default: root directory)
   ITCH_GAME_NAME: game-name    # Itch.io game slug (should match your Itch.io project)

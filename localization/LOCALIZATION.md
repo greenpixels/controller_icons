@@ -1,6 +1,6 @@
 ## Localization Directory (`/localization`)
 
-This directory is used for storing localization `.csv` files for **Godot 4.3**. Godot’s built-in localization system supports CSV-based translations, making it easy to manage and expand language support.
+This directory is used for storing localization `.csv` files for **Godot 4.4**. Godot’s built-in localization system supports CSV-based translations, making it easy to manage and expand language support.
 
 ### 📌 **How to Structure Localization Files**
 To maintain organization and improve readability, it’s recommended to categorize localization files based on their usage. Suggested file naming conventions:
@@ -9,7 +9,7 @@ To maintain organization and improve readability, it’s recommended to categori
 - `localized_hero_abilities.csv` – for ability names/descriptions
 - `localized_upgrades.csv` – for upgrade descriptions
 
-### ⚙️ **How to Use in Godot 4.3**
+### ⚙️ **How to Use in Godot 4.4**
 1. Place your `.csv` files in this folder.
 2. Open **Project Settings** → `Localization` → `Translations`.
 3. Click **"Add Translation"** and select the `.csv` files.
@@ -21,4 +21,4 @@ To maintain organization and improve readability, it’s recommended to categori
    ```
 5. Use `tr("key")` in GDScript to fetch translations dynamically.
 
-For more details, refer to the [Godot 4.3 documentation](https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_translations.html).
+For more details, refer to the [Godot 4.4 documentation](https://docs.godotengine.org/en/stable/tutorials/i18n/localization_using_translations.html).
