@@ -20,13 +20,14 @@ func _on_node_added(node: Node) -> void:
 			node.focus_entered.connect(func():
 				_on_slot_focused(node)
 			)
-			node.button_down.connect(func():
-				_drag(node)
-			)
-			node.button_up.connect(func():
-				_drop()
-			)
 			node.mouse_exited.connect(node.release_focus)
+
+func _input(event: InputEvent) -> void:
+	if FocusContext.current_focus == null or not FocusContext.current_focus is ItemSlot: return
+	if event.is_action_pressed("ui_select"):
+		_drag(FocusContext.current_focus)
+	elif event.is_action_released("ui_select"):
+		_drop()
 
 func _on_node_removed(node: Node) -> void:
 	if node is ItemSlot and (node == drag_source or node == drop_target):
