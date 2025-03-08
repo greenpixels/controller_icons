@@ -35,7 +35,3 @@ func _on_interact_radius_area_exited(area: Area2D) -> void:
 	if area is InteractArea and area == PlayersContext.players_interact_focus[player_index]:
 		PlayersContext.players_interact_focus[player_index] = null
 		PlayersContext.players_interact_focus_changed.emit()
-
-
-func _on_moved(position: Vector2) -> void:
-	print(WorldContext.calculate_base_chunk_coordinate(global_position))

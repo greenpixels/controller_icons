@@ -15,9 +15,6 @@ viewport_path = NodePath("SubViewport")
 [node name="Character" instance=ExtResource("1_3yv1p")]
 script = ExtResource("2_dp4t6")
 
-[node name="CollisionShape2D" parent="." index="0"]
-disabled = true
-
 [node name="Sprite" parent="." index="5"]
 texture = SubResource("ViewportTexture_dp4t6")
 
@@ -32,6 +29,5 @@ debug_color = Color(0.835882, 0.357543, 0.416445, 0)
 [node name="Sprite2" parent="." index="7"]
 texture = SubResource("ViewportTexture_pbot0")
 
-[connection signal="moved" from="." to="." method="_on_moved"]
 [connection signal="area_entered" from="InteractRadius" to="." method="_on_interact_radius_area_entered"]
 [connection signal="area_exited" from="InteractRadius" to="." method="_on_interact_radius_area_exited"]

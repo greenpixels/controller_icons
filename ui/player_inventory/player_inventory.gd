@@ -92,7 +92,9 @@ func on_craft_item_pressed(item : Item):
 	if not item.check_craftable_from_item_dict(item_dict): return
 	for ingredient in item.recipe.ingredients:
 		storage.remove_item(ingredient.item, ingredient.amount)
-	storage.store_item(item, 1)
+	var remaining = storage.store_item(item, 1)
+	if remaining > 0:
+		ItemContext.spawn_item_at(item, player.global_position, remaining)
 	update_crafting_entries()
 
 func _on_inventory_back_button_pressed() -> void:
