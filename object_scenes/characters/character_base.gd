@@ -64,11 +64,10 @@ func _on_look_at_changed(new_look_at: Vector2) -> void:
 	held_item.rotation = new_look_at.angle()
 	if abs(new_look_at.x) > 0:
 		last_horizontal_dir = sign(new_look_at.x)
-	#queue_redraw()
 
 
-func _on_current_item_changed(position: int) -> void:
-	if inventory.items[position] == null or not inventory.items[position] is Weapon:
+func _on_current_item_changed(_position: int) -> void:
+	if inventory.items[_position] == null or not inventory.items[_position] is Weapon:
 		for index in range(3):
 			if inventory.items[index] is Weapon:
 				controller.current_item_index = index

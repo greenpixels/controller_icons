@@ -43,5 +43,5 @@ func remove_block(block : Block):
 	if not chunk.blocks.has(block_key): return
 	chunk.blocks.erase(block_key)
 
-func add_block(block : Block):
+func add_block(_block : Block):
 	pass

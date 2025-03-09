@@ -20,7 +20,6 @@ func spawn_random_npc(global_position: Vector2, _chunk_node: Node2D = null) -> v
 			return
 		var chunk_node_name = WorldContext.get_chunk_node_name(chunk_coord)
 		var location = get_tree().current_scene
-		var children = location.get_children()
 		chunk_node = location.get_node_or_null(chunk_node_name) #.find_child(chunk_node_name)
 	else:
 		chunk_node = _chunk_node

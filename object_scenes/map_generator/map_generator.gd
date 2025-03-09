@@ -324,6 +324,5 @@ func _generate_surrounding_chunks(base_chunk_coord: Vector2i) -> void:
 func _draw() -> void:
 	if not chunk_debug_mode: return
 	for chunk_node_position in chunk_node_positions:
-		var chunk_offset_px = - Vector2(chunk_offset) * Vector2(block_size + block_padding) + Vector2(block_size) / 2. - Vector2(block_size)
-		var chunk_size = Vector2(chunk_size) * Vector2(block_size + block_padding)
-		draw_rect(Rect2(chunk_node_position, chunk_size), Color.RED, false, 5)
+		var chunk_size_px = Vector2(chunk_size) * Vector2(block_size + block_padding)
+		draw_rect(Rect2(chunk_node_position, chunk_size_px), Color.RED, false, 5)

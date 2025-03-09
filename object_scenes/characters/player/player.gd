@@ -1,8 +1,13 @@
 extends CharacterBase
 class_name Player
 
+enum State {
+	NORMAL
+}
+
 @onready var interact_radius := $InteractRadius
 var player_index := 0
+var current_state : State = State.NORMAL
 
 func _ready() -> void:
 	super()
@@ -27,6 +32,7 @@ func _on_inventory_items_changed() -> void:
 	_on_current_item_changed(controller.current_item_index)
 	
 func _on_interact_radius_area_entered(area: Area2D) -> void:
+	if not current_state == State.NORMAL: return
 	if area is InteractArea:
 		PlayersContext.players_interact_focus[player_index] = area
 		PlayersContext.players_interact_focus_changed.emit()

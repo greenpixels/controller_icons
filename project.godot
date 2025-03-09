@@ -33,6 +33,10 @@ ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 LimboConsole="*res://addons/limbo_console/limbo_console.gd"
 NpcContext="*res://contexts/npc_context/npc_context.tscn"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+
 [display]
 
 window/size/viewport_width=1280
