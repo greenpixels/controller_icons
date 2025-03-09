@@ -187,6 +187,7 @@ func _get_or_create_navigation_region(chunk_node: Node2D, nav_polygon: Navigatio
 
 func _bake_navigation_polygon(nav_region: NavigationRegion2D, chunk_node: Node2D):
 	# Wait 2 physics frames to ensure proper processing of navigation data
+	if get_tree() == null or not is_instance_valid(get_tree()): return
 	await get_tree().physics_frame
 	get_tree().physics_frame.connect(func():
 		var nav_polygon = nav_region.navigation_polygon

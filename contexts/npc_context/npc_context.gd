@@ -31,13 +31,13 @@ func spawn_random_npc(global_position: Vector2, _chunk_node: Node2D = null) -> v
 	
 	# Defer adding the pickup to the scene.
 	current_map.chunks[str(chunk_coord)].npcs[npc.persistance.uuid] = npc.persistance
-	chunk_node.add_child(npc)
-	npc.global_position = global_position
+	chunk_node.add_child.call_deferred(npc)
+	npc.set_deferred("global_position", global_position)
 	# current_map.add_item_pickup(pickup)
 
 func spawn_npc_from_persistance(persistance: PersistanceNpcState, _chunk_node: Node2D = null) -> void:
 	var npc : CharacterBase = human_npc_scene.instantiate()
 	npc.persistance = persistance
 	_chunk_node.add_child.call_deferred(npc)
-	npc.global_position = npc.persistance.position
+	npc.set_deferred("global_position", npc.persistance.position)
 	

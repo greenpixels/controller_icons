@@ -14,5 +14,6 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_exit_button_pressed() -> void:
+	if not is_instance_valid(get_tree()): return
 	await get_tree().process_frame
 	get_tree().quit.call_deferred()
