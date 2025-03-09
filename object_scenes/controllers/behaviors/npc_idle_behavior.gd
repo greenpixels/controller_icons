@@ -1,0 +1,10 @@
+class_name NPCIdleBehavior
+extends NPCBehavior
+
+func enter():
+	controller.minimum_time_before_behavior_change
+
+func physics_update(_delta: float) -> void:
+	controller.movement_input = Vector2.ZERO
+	if controller.minimum_time_before_behavior_change <= 0:
+		controller.behavior_machine.change_behavior("moving")

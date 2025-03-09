@@ -18,7 +18,7 @@ vec3 blend_screen(vec3 a, vec3 b) {
 }
 
 // Hard light blending function matching Aseprite’s logic.
-// Note: In Aseprite, the macro is defined as: 
+// Note: In Aseprite, the macro is defined as:
 //   blend_hard_light(b, s) = (s < 128 ? blend_multiply(b, s*2) : blend_screen(b, s*2-1))
 // When we convert to normalized values, we get:
 vec3 blend_hard_light(vec3 s, vec3 b) {
@@ -41,20 +41,20 @@ void fragment() {
     // Sample the backdrop (screen) and the sprite's texture.
     vec4 screen_color = texture(screen_texture, SCREEN_UV);
     vec4 sprite_color = texture(TEXTURE, UV);
-    
+
     // Apply the sprite's modulation color.
     vec4 modulated_color = sprite_color * COLOR;
-    
+
     // Apply the overlay blend using Aseprite logic:
     // Here, the screen_color is the backdrop and the modulated_color is the source.
     vec3 overlay_rgb = overlay_blend(screen_color.rgb, modulated_color.rgb);
-    
+
     // Blend with the original screen color based on the opacity (like rgba_blender_normal).
     vec3 blended_rgb = mix(screen_color.rgb, overlay_rgb, opacity);
-    
+
     // Adjust contrast: shift around 0.5, scale, then shift back.
     blended_rgb = (blended_rgb - 0.5) * contrast + 0.5;
-    
+
     // Preserve the sprite's alpha.
     COLOR = vec4(blended_rgb, modulated_color.a);
 }

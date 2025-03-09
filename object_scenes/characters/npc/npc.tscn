@@ -1,15 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsidwtwn5koex"]
+[gd_scene load_steps=10 format=3 uid="uid://dsidwtwn5koex"]
 
 [ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_unihu"]
 [ext_resource type="Script" uid="uid://ci6k5rs4iba2" path="res://object_scenes/characters/npc/npc.gd" id="2_k7pj4"]
 [ext_resource type="Script" uid="uid://bm8pdkd4vvcya" path="res://object_scenes/controllers/human_npc_controller/human_npc_controller.gd" id="2_y7s0x"]
+[ext_resource type="Script" uid="uid://bvuvo4rqunlwd" path="res://object_scenes/controllers/behavior_machine/behavior_machine.gd" id="4_10exk"]
+[ext_resource type="Script" uid="uid://dlfmdawtmua8a" path="res://object_scenes/controllers/behaviors/npc_idle_behavior.gd" id="5_10exk"]
+[ext_resource type="Script" uid="uid://dgy82q6so735x" path="res://object_scenes/controllers/behaviors/npc_moving_behavior.gd" id="6_yehrf"]
+[ext_resource type="Script" uid="uid://dr7ldq0n0lua4" path="res://object_scenes/controllers/behaviors/npc_mining_behavior.gd" id="7_7c5el"]
+[ext_resource type="Script" uid="uid://dj22ge2ybqw1g" path="res://object_scenes/controllers/behaviors/npc_fighting_behavior.gd" id="8_vk0xv"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_k7pj4"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Character" node_paths=PackedStringArray("controller") instance=ExtResource("1_unihu")]
+[node name="NPC" node_paths=PackedStringArray("controller") instance=ExtResource("1_unihu")]
 script = ExtResource("2_k7pj4")
-controller = NodePath("Node")
+controller = NodePath("NpcController")
 
 [node name="Inventory" parent="." index="1"]
 storage_view = null
@@ -20,11 +25,26 @@ texture = SubResource("ViewportTexture_k7pj4")
 [node name="Shadow" parent="SpriteContainer" index="1"]
 texture = SubResource("ViewportTexture_k7pj4")
 
-[node name="Node" type="Node" parent="." index="6" node_paths=PackedStringArray("raycast", "npc", "navigation_agent")]
+[node name="NpcController" type="Node" parent="." index="6" node_paths=PackedStringArray("raycast", "npc", "navigation_agent")]
 script = ExtResource("2_y7s0x")
 raycast = NodePath("../RayCast2D")
 npc = NodePath("..")
 navigation_agent = NodePath("../NavigationAgent2D")
+
+[node name="BehaviorMachine" type="Node" parent="NpcController" index="0"]
+script = ExtResource("4_10exk")
+
+[node name="Idle" type="Node" parent="NpcController/BehaviorMachine" index="0"]
+script = ExtResource("5_10exk")
+
+[node name="Moving" type="Node" parent="NpcController/BehaviorMachine" index="1"]
+script = ExtResource("6_yehrf")
+
+[node name="Mining" type="Node" parent="NpcController/BehaviorMachine" index="2"]
+script = ExtResource("7_7c5el")
+
+[node name="Fighting" type="Node" parent="NpcController/BehaviorMachine" index="3"]
+script = ExtResource("8_vk0xv")
 
 [node name="RayCast2D" type="RayCast2D" parent="." index="7"]
 position = Vector2(0, 33)
@@ -43,7 +63,7 @@ offset_bottom = -116.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="StateLabel" type="Label" parent="CenterContainer" index="0"]
+[node name="BehaviorLabel" type="Label" parent="CenterContainer" index="0"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "IDLE"
@@ -52,6 +72,5 @@ text = "IDLE"
 avoidance_enabled = true
 radius = 50.0
 
-[connection signal="moved" from="." to="." method="_on_moved"]
-[connection signal="on_hurt" from="." to="Node" method="_on_hurt"]
-[connection signal="state_changed" from="Node" to="." method="_on_node_state_changed"]
+[connection signal="hurt" from="." to="NpcController" method="_on_hurt"]
+[connection signal="behavior_changed" from="NpcController/BehaviorMachine" to="NpcController" method="_on_behavior_changed"]
