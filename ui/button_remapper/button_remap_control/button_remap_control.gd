@@ -41,8 +41,6 @@ func render():
 			%MouseButton.texture = icon
 			
 		elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
-			if action_name == "ui_down_1":
-				print(event.device)
 			var icon = ControllerIconTexture.new()
 			icon.force_type = ControllerIconTexture.ForceType.CONTROLLER
 			icon.path = action_name

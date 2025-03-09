@@ -70,7 +70,6 @@ func _ready() -> void:
 			slot.index_in_storage = index
 			slot.setup()
 			index += 1
-	print(ItemContext.craftable_items[0].key)
 	for item in ItemContext.craftable_items:
 		var entry = crafting_entry_scene.instantiate()
 		entry.item = item

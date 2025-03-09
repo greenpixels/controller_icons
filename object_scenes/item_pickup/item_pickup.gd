@@ -69,9 +69,7 @@ func _reassign_chunk_on_move():
 	var chunk_coord = WorldContext.calculate_base_chunk_coordinate(global_position)
 	if str(chunk_coord) != persistance.chunk_key:
 		if WorldContext.get_current_map().chunks.has(str(chunk_coord)):
-			print("Removed NPC from " + persistance.chunk_key)
 			WorldContext.get_current_map().remove_item_pickup(self)
-			print("Added ItemPickup to " + str(chunk_coord))
 			WorldContext.get_current_map().chunks[str(chunk_coord)].item_pickups[persistance.uuid] = persistance
 			persistance.chunk_key = str(chunk_coord)
 		else:

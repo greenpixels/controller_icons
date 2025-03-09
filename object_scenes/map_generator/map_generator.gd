@@ -144,7 +144,6 @@ func _create_chunk_node(chunk_coord: Vector2) -> Node2D:
 	return chunk_node
 	
 func _create_chunk_navigation_region(chunk_node: Node2D):
-	print("Called " + str(Time.get_ticks_msec()))
 	var nav_polygon = _generate_navigation_polygon()
 	var nav_region = _get_or_create_navigation_region(chunk_node, nav_polygon)
 	_bake_navigation_polygon(nav_region, chunk_node)
@@ -187,7 +186,7 @@ func _get_or_create_navigation_region(chunk_node: Node2D, nav_polygon: Navigatio
 
 func _bake_navigation_polygon(nav_region: NavigationRegion2D, chunk_node: Node2D):
 	# Wait 2 physics frames to ensure proper processing of navigation data
-	if get_tree() == null or not is_instance_valid(get_tree()): return
+	if not is_inside_tree(): return
 	await get_tree().physics_frame
 	get_tree().physics_frame.connect(func():
 		var nav_polygon = nav_region.navigation_polygon
@@ -320,7 +319,7 @@ func _generate_surrounding_chunks(base_chunk_coord: Vector2i) -> void:
 			has_generated_chunks = true
 	if has_generated_chunks:
 		queue_redraw()
-		print("Generating took " + str(Time.get_ticks_msec() - start_time))
+		print("Generating chunk took (without Navigation) " + str(Time.get_ticks_msec() - start_time))
 
 func _draw() -> void:
 	if not chunk_debug_mode: return
