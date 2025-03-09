@@ -7,6 +7,8 @@ class_name PersistanceCharacterState
 @export_storage var inventory : Array[Variant] = []
 @export_storage var equipment : Array[Variant] = []
 @export_storage var human_style : PersistanceHumanStyle = PersistanceHumanStyle.new()
+@export_storage var current_health : int = 100
+@export_storage var maximum_health : int = 100
 
 func copy_character_to_state(character: CharacterBase):
 	inventory = []

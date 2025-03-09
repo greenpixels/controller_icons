@@ -5,12 +5,14 @@ class_name HumanNpcController
 enum State {
 	IDLE,
 	MOVING,
-	MINING
+	MINING,
+	FIGHTING
 }
 
 # The raycast node that scans in the look_at_input direction.
 @export var raycast: RayCast2D
 @export var npc : Npc
+@export var navigation_agent : NavigationAgent2D
 var noise := FastNoiseLite.new()
 # NPC state and noise parameters.ds
 var current_state: int = State.IDLE :
@@ -18,13 +20,41 @@ var current_state: int = State.IDLE :
 		if current_state == value: return
 		current_state = value
 		minimum_time_before_state_change = 5.
-		
+		state_changed.emit(current_state)
+
 var noise_threshold: float = 0.025  # Minimum noise magnitude to trigger movement.
 var noise_speed: float = 0.25        # Speed factor for noise evolution.
 var noise_magnitude: float = 5.0    # Overall movement strength from noise.
 var minimum_time_before_state_change = 3.
+
 var current_block_target : Block = null
 var last_block_health : int = 0
+
+var standstill_time_after_attack := 0.
+
+var current_character_target : CharacterBase = null
+
+signal state_changed(state: HumanNpcController.State)
+
+func state_fighting():
+	if not is_instance_valid(current_character_target) or current_character_target.persistance.current_health <= 0:
+		current_character_target = null
+		current_state = State.MOVING
+		return
+
+	movement_input = Vector2.ZERO
+	navigation_agent.set_target_position(current_character_target.global_position)	
+	
+	if standstill_time_after_attack <= 0:
+		var next_position = navigation_agent.get_next_path_position()
+		movement_input = npc.global_position.direction_to(next_position)
+
+	look_at_input = npc.global_position.direction_to(current_character_target.global_position)
+
+	if npc.global_position.distance_to(current_character_target.global_position) < 110:
+		attacked.emit()
+		standstill_time_after_attack = 0.5
+		movement_input = Vector2.ZERO
 
 func _ready() -> void:
 	# Initialize FastNoise parameters.
@@ -89,7 +119,9 @@ func state_moving():
 					last_block_health = collider.current_health
 					return
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if standstill_time_after_attack > 0:
+		standstill_time_after_attack -= delta
 	if minimum_time_before_state_change > 0:
 		minimum_time_before_state_change -= delta
 		
@@ -97,5 +129,15 @@ func _process(delta: float) -> void:
 		State.MOVING: state_moving()
 		State.IDLE: state_idle()
 		State.MINING: state_mining()
+		State.FIGHTING: state_fighting()
 	
 	look_at_changed.emit(look_at_input)
+
+func _on_hurt(source: Projectile) -> void:
+	if source == null: return
+	if source.origin_node == null: return
+	if current_state == State.FIGHTING: return
+
+	if source.origin_node is CharacterBase:
+		current_character_target = source.origin_node
+		current_state = State.FIGHTING

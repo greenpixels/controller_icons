@@ -15,7 +15,12 @@ const ANIMATION_BASE_SPEED := 1.2
 var current_item_index = 0
 var last_horizontal_dir = 1
 var previous_position := Vector2.ZERO
+var invinciblity_time := 0.
+var knockback_force := Vector2.ZERO
+var shake_force := 0.
+const MAX_INVINCIBILITY_TIME := 0.15
 
+signal on_hurt(source: Projectile)
 signal moved(position: Vector2)
 
 func _ready() -> void:
@@ -28,7 +33,10 @@ func _ready() -> void:
 	if persistance:
 		persistance.copy_state_to_character(self)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	%Sprite.position = Vector2(randf() - 0.5, randf() - 0.5) * shake_force
+	if invinciblity_time > 0:
+		invinciblity_time -= delta
 	model.scale.x = sign(controller.look_at_input.x) if abs(controller.look_at_input.x) > 0 else last_horizontal_dir
 	held_item.position.x = original_item_position.x + 12 if model.scale.x < 0 else original_item_position.x - 12
 	if controller.look_at_input.length() <= 0.2:
@@ -36,7 +44,10 @@ func _process(_delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	previous_position = global_position
-	velocity = controller.movement_input * BASE_SPEED
+	velocity += knockback_force
+	if knockback_force.length() <= 0:
+		velocity = controller.movement_input * BASE_SPEED
+	
 	move_and_slide()
 	if previous_position.distance_to(global_position) > 1:
 		model.animation.play("move")
@@ -73,8 +84,20 @@ func _on_inventory_items_changed() -> void:
 func _on_equipment_items_changed() -> void:
 	model.update_sprite_from_human_style(persistance.human_style, equipment)
 	
-
 func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:
 		if area.pull_to == null:
 			area.pull_to = self
+			
+func take_damage(source: Projectile):
+	if invinciblity_time > 0: return
+	invinciblity_time = MAX_INVINCIBILITY_TIME
+	persistance.current_health -= source.damage
+	if source.origin_node:
+		knockback_force = source.origin_node.global_position.direction_to(self.global_position) * 400.
+	shake_force = 32.
+	%Sprite.modulate = Color.RED
+	TweenHelper.tween("reduce_redness", self).tween_property(%Sprite, "modulate", Color.WHITE, 0.5).set_ease(Tween.EASE_OUT)
+	TweenHelper.tween("reduce_knockback", self).tween_property(self, "knockback_force", Vector2.ZERO, 0.1)
+	TweenHelper.tween("reduce_shake", self).tween_property(self, "shake_force", 0., 0.5).set_ease(Tween.EASE_OUT)
+	on_hurt.emit(source)

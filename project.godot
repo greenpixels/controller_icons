@@ -61,6 +61,7 @@ time_blocking="Nodes in this group will pause the game when they are inside the 
 focusable=""
 freeze_during_button_remap="Disables input processing while button remapping takes place"
 popup=""
+navigation_parsing=""
 
 [input]
 

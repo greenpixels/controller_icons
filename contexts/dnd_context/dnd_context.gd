@@ -1,5 +1,5 @@
 extends CanvasLayer
-@onready var dragged_item_texture := %DraggedItemTexture
+@onready var dragged_item_texture := %DraggedItemTexture # This is a TextureRect
 var drag_source: ItemSlot = null
 var drop_target: ItemSlot = null
 var item: Item = null
@@ -23,11 +23,11 @@ func _on_node_added(node: Node) -> void:
 			node.mouse_exited.connect(node.release_focus)
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_released("ui_select"):
+		_drop()
 	if FocusContext.current_focus == null or not FocusContext.current_focus is ItemSlot: return
 	if event.is_action_pressed("ui_select"):
 		_drag(FocusContext.current_focus)
-	elif event.is_action_released("ui_select"):
-		_drop()
 
 func _on_node_removed(node: Node) -> void:
 	if node is ItemSlot and (node == drag_source or node == drop_target):

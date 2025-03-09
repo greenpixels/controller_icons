@@ -13,14 +13,17 @@ class_name Block
 @export var maximum_health := 100
 @export var loot_table : LootTable
 const SHAKE_FACTOR := 16.
+var current_health : int 
 var impact_intensity := 0. : 
 	set(value):
 		impact_intensity = value
 		sprite.position = Vector2(randf_range(-impact_intensity, impact_intensity), randf_range(-impact_intensity, impact_intensity)) * SHAKE_FACTOR
 
+signal on_added
+signal on_removed
 
-var current_health : int 
 func _ready() -> void:
+	on_added.emit()
 	current_health = maximum_health
 	%Shadow.texture = $Sprite2D.texture
 
@@ -39,12 +42,14 @@ func take_damage(amount: int):
 	if current_health <= 0:
 		on_destroy()
 		queue_free()
+		on_removed.emit()
 	
 func on_destroy():
-	WorldContext.get_current_map().remove_block(self)
+	
 	if loot_table:
 		loot_table.create_entries()
 		if loot_table.entries.size() > 0:
 			seed(hash(WorldContext.get_current_map().uuid + persistance.chunk_key + str(persistance.position_in_chunk_grid)))
 			var loot : LootTableEntry = loot_table.pick_weighted_random()
 			ItemContext.spawn_item_at(loot.object, global_position, randi_range(loot.min_amount, loot.max_amount))
+	WorldContext.get_current_map().remove_block(self)

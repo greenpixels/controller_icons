@@ -33,7 +33,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ej66"]
-size = Vector2(41, 126)
+size = Vector2(109, 126)
 
 [node name="Projectile" instance=ExtResource("1_21rkm")]
 top_level = true
@@ -46,5 +46,5 @@ sprite_frames = SubResource("SpriteFrames_267vy")
 autoplay = "default"
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(2.5, -10)
+position = Vector2(-31.5, -10)
 shape = SubResource("RectangleShape2D_5ej66")

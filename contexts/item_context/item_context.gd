@@ -38,7 +38,7 @@ func _spawn_item_internal(item: Item, global_position: Vector2, amount: int, _ch
 	
 	# Defer adding the pickup to the scene.
 	chunk_node.add_child.call_deferred(pickup)
-	pickup.global_position = global_position
+	pickup.set_deferred("global_position", global_position)
 	current_map.add_item_pickup(pickup)
 
 

@@ -1,11 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsidwtwn5koex"]
+[gd_scene load_steps=5 format=3 uid="uid://dsidwtwn5koex"]
 
 [ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_unihu"]
 [ext_resource type="Script" uid="uid://ci6k5rs4iba2" path="res://object_scenes/characters/npc/npc.gd" id="2_k7pj4"]
 [ext_resource type="Script" uid="uid://bm8pdkd4vvcya" path="res://object_scenes/controllers/human_npc_controller/human_npc_controller.gd" id="2_y7s0x"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_wthus"]
-viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_k7pj4"]
 viewport_path = NodePath("SubViewport")
@@ -17,19 +14,44 @@ controller = NodePath("Node")
 [node name="Inventory" parent="." index="1"]
 storage_view = null
 
-[node name="Sprite" parent="." index="5"]
-texture = SubResource("ViewportTexture_wthus")
+[node name="Sprite" parent="SpriteContainer" index="0"]
+texture = SubResource("ViewportTexture_k7pj4")
 
-[node name="Node" type="Node" parent="." index="6" node_paths=PackedStringArray("raycast", "npc")]
+[node name="Shadow" parent="SpriteContainer" index="1"]
+texture = SubResource("ViewportTexture_k7pj4")
+
+[node name="Node" type="Node" parent="." index="6" node_paths=PackedStringArray("raycast", "npc", "navigation_agent")]
 script = ExtResource("2_y7s0x")
 raycast = NodePath("../RayCast2D")
 npc = NodePath("..")
+navigation_agent = NodePath("../NavigationAgent2D")
 
 [node name="RayCast2D" type="RayCast2D" parent="." index="7"]
 position = Vector2(0, 33)
 target_position = Vector2(70, 0)
 
-[node name="Sprite2" parent="." index="8"]
-texture = SubResource("ViewportTexture_k7pj4")
+[node name="CenterContainer" type="CenterContainer" parent="." index="8"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -156.0
+offset_right = 98.0
+offset_bottom = -116.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StateLabel" type="Label" parent="CenterContainer" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "IDLE"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="9"]
+avoidance_enabled = true
+radius = 50.0
 
 [connection signal="moved" from="." to="." method="_on_moved"]
+[connection signal="on_hurt" from="." to="Node" method="_on_hurt"]
+[connection signal="state_changed" from="Node" to="." method="_on_node_state_changed"]

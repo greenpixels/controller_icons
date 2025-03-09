@@ -60,14 +60,17 @@ unique_name_in_owner = true
 position = Vector2(200, 200)
 character = NodePath("../..")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(-13, -3)
+[node name="SpriteContainer" type="Node2D" parent="."]
+position = Vector2(-11, -10)
+
+[node name="Sprite" type="Sprite2D" parent="SpriteContainer"]
+unique_name_in_owner = true
 texture = SubResource("ViewportTexture_ov6cv")
 
-[node name="Sprite2" type="Sprite2D" parent="."]
+[node name="Shadow" type="Sprite2D" parent="SpriteContainer"]
 self_modulate = Color(0, 0, 0, 0.439216)
 material = SubResource("ShaderMaterial_efhyb")
-position = Vector2(-13, 65)
+position = Vector2(0, 65)
 scale = Vector2(1, 0.48)
 texture = SubResource("ViewportTexture_ov6cv")
 flip_v = true

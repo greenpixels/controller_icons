@@ -61,3 +61,5 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Block:
 		if source_item and source_item is Weapon:
 			body.take_damage_from_item(source_item)
+	if body is CharacterBase and not body == origin_node:
+		body.take_damage(self)

@@ -1,6 +1,8 @@
 extends Node2D
 class_name MapGenerator
 
+var chunk_scene := preload("res://object_scenes/map_generator/chunk/chunk.tscn")
+
 var dirt_block := preload("res://object_scenes/blocks/_all/dirt/block_dirt.tscn")
 var boundary_block := preload("res://object_scenes/blocks/_all/boundary/block_boundary.tscn")
 var spawn_point := Vector2(0, 0)
@@ -11,6 +13,9 @@ var chunk_offset = WorldContext.CHUNK_OFFSET
 var noise: FastNoiseLite
 var generated_chunks := {}
 var uuid : String
+var source_geometry_data := NavigationMeshSourceGeometryData2D.new()
+
+static var chunk_debug_mode := false
 
 @export var spawn_point_empty_padding := Vector2(2, 2)
 @export var empty_area_threshold: float = -0.08
@@ -78,6 +83,25 @@ func generate_chunk(chunk_coord: Vector2i) -> void:
 		_load_blocks_from_persisted_chunk(chunk_node, chunk_coord_string)
 		_load_item_pickups_from_persisted_chunk(chunk_node, chunk_coord_string)
 		_load_npcs_from_persisted_chunk(chunk_node, chunk_coord_string)
+	get_tree().physics_frame.connect(func():
+		get_tree().physics_frame.connect(func():
+				_create_chunk_navigation_region(chunk_node)
+		,CONNECT_ONE_SHOT)
+	,CONNECT_ONE_SHOT)
+	chunk_node.child_exiting_tree.connect(func(node):
+		if node is Block:
+			
+			get_tree().physics_frame.connect(func():
+				_create_chunk_navigation_region(chunk_node)
+			,CONNECT_ONE_SHOT)
+		
+	)
+	chunk_node.child_entered_tree.connect.call_deferred(func(node):
+		if node is Block:
+			get_tree().physics_frame.connect(func():
+				_create_chunk_navigation_region(chunk_node)
+			,CONNECT_ONE_SHOT)
+	)
 
 func _load_npcs_from_persisted_chunk(chunk_node: Node, chunk_coord_string):
 	var map_chunk_npcs = map.chunks[chunk_coord_string].npcs
@@ -109,15 +133,70 @@ func _calculate_seed_value(sum_ab: int, y: int) -> int:
 	var base_seed = WorldContext.world_state.main_seed if not use_sub_seed else WorldContext.world_state.current_sub_seed
 	return base_seed + int((sum_ab * (sum_ab + 1)) / 2.) + y
 
-
-
 func _create_chunk_node(chunk_coord: Vector2) -> Node2D:
-	var chunk_node = Node2D.new()
-	chunk_node_positions.push_back(chunk_coord * Vector2(chunk_size) * Vector2(block_size + block_padding))
+	var chunk_node = chunk_scene.instantiate()
+	chunk_node.global_position = chunk_coord *  Vector2(block_size + block_padding) * Vector2(chunk_size) - Vector2(block_size + block_padding) * Vector2(chunk_offset) - Vector2(block_size)/2.
+	chunk_node_positions.push_back(chunk_node.global_position)
 	chunk_node.name = WorldContext.get_chunk_node_name(chunk_coord)
 	chunk_node.y_sort_enabled = true
 	parent_node.add_child.call_deferred(chunk_node)
+	
 	return chunk_node
+	
+func _create_chunk_navigation_region(chunk_node: Node2D):
+	print("Called " + str(Time.get_ticks_msec()))
+	var nav_polygon = _generate_navigation_polygon()
+	var nav_region = _get_or_create_navigation_region(chunk_node, nav_polygon)
+	_bake_navigation_polygon(nav_region, chunk_node)
+	
+
+func _generate_navigation_polygon() -> NavigationPolygon:
+	var chunk_size_px = Vector2(chunk_size * (block_size + block_padding))
+	var agent_radius = 54.0
+	var adjusted_chunk_size_px = chunk_size_px + Vector2(agent_radius * 2, agent_radius * 2)
+
+	var polygon_points := PackedVector2Array([
+		Vector2(0, 0),
+		Vector2(adjusted_chunk_size_px.x, 0),
+		adjusted_chunk_size_px,
+		Vector2(0, adjusted_chunk_size_px.y)
+	])
+
+	var nav_polygon := NavigationPolygon.new()
+	nav_polygon.parsed_geometry_type = NavigationPolygon.PARSED_GEOMETRY_STATIC_COLLIDERS
+	nav_polygon.agent_radius = agent_radius
+	nav_polygon.add_outline(polygon_points)
+
+	return nav_polygon
+
+func _get_or_create_navigation_region(chunk_node: Node2D, nav_polygon: NavigationPolygon) -> NavigationRegion2D:
+	var nav_region: NavigationRegion2D
+	if chunk_node.has_node("NavigationRegion2D"):
+		nav_region = chunk_node.get_node("NavigationRegion2D")
+	else:
+		nav_region = NavigationRegion2D.new()
+		nav_region.z_as_relative = true
+		nav_region.y_sort_enabled = false
+		nav_region.z_index = -100
+		NavigationServer2D.region_set_map(nav_region, get_world_2d().navigation_map)
+		nav_region.name = "NavigationRegion2D"
+		chunk_node.add_child(nav_region)
+
+	nav_region.navigation_polygon = nav_polygon
+	return nav_region
+
+func _bake_navigation_polygon(nav_region: NavigationRegion2D, chunk_node: Node2D):
+	# Wait 2 physics frames to ensure proper processing of navigation data
+	await get_tree().physics_frame
+	get_tree().physics_frame.connect(func():
+		var nav_polygon = nav_region.navigation_polygon
+		NavigationServer2D.parse_source_geometry_data(nav_polygon, source_geometry_data, chunk_node)
+		NavigationServer2D.bake_from_source_geometry_data(nav_polygon, source_geometry_data)
+		nav_region.navigation_polygon = nav_polygon
+	, CONNECT_ONE_SHOT)
+
+	
+
 
 func _load_blocks_from_persisted_chunk(chunk_node: Node2D, chunk_coord_string) -> void:
 	var blocks_in_chunk = {}
@@ -132,7 +211,8 @@ func _load_blocks_from_persisted_chunk(chunk_node: Node2D, chunk_coord_string) -
 		block.uuid = block_info.uuid
 		generated_chunks[chunk_coord_string].push_back(block_scene)
 		chunk_node.add_child.call_deferred(block)
-		block.position = block_info.position_in_chunk_grid * (block_size + block_padding)
+		
+		block.position = Vector2(block_info.position_in_chunk_grid) * Vector2(block_size + block_padding) - chunk_node.global_position
 		_update_blocks_in_chunk(block_scene, blocks_in_chunk)
 				
 			
@@ -176,7 +256,7 @@ func _choose_block_scene(grid_pos: Vector2i, blocks_in_chunk: Dictionary) -> Pac
 func _add_new_block_to_chunk(block_scene: PackedScene, grid_pos: Vector2i, chunk_node: Node2D, blocks_in_chunk: Dictionary, map_chunk_blocks: Dictionary, chunk_coord_string) -> void:
 	var block : Block = block_scene.instantiate()
 	var grid_pos_string = str(grid_pos)
-	block.position = grid_pos * (block_size + block_padding)
+	block.position = grid_pos * (block_size + block_padding) -  Vector2i(chunk_node.global_position)
 	var persistance = PersistanceBlockInformation.new()
 	persistance.init(block.key, grid_pos, chunk_coord_string)
 	block.persistance = persistance
@@ -186,7 +266,6 @@ func _add_new_block_to_chunk(block_scene: PackedScene, grid_pos: Vector2i, chunk
 	map_chunk_blocks[grid_pos_string] = persistance
 	chunk_node.add_child(block)
 	_update_blocks_in_chunk(block_scene, blocks_in_chunk)
-	
 func _update_blocks_in_chunk(block_scene: PackedScene, blocks_in_chunk: Dictionary) -> void:
 	if blocks_in_chunk.has(block_scene.resource_path):
 		blocks_in_chunk[block_scene.resource_path] += 1
@@ -243,8 +322,8 @@ func _generate_surrounding_chunks(base_chunk_coord: Vector2i) -> void:
 		print("Generating took " + str(Time.get_ticks_msec() - start_time))
 
 func _draw() -> void:
+	if not chunk_debug_mode: return
 	for chunk_node_position in chunk_node_positions:
 		var chunk_offset_px = - Vector2(chunk_offset) * Vector2(block_size + block_padding) + Vector2(block_size) / 2. - Vector2(block_size)
 		var chunk_size = Vector2(chunk_size) * Vector2(block_size + block_padding)
-		draw_rect(Rect2(chunk_node_position - chunk_offset_px, chunk_size), Color.RED, false, 5)
-		
+		draw_rect(Rect2(chunk_node_position, chunk_size), Color.RED, false, 5)
