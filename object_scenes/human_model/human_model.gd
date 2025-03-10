@@ -40,9 +40,9 @@ func update_sprite_from_human_style(human_style: PersistanceHumanStyle, equipmen
 	
 	hair_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.HELMET, equipment) as Helmet).should_show_hair if _get_armor(PlayerInventory.ArmorSlotPositions.HELMET, equipment) != null else true
 	head_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.HELMET, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.HELMET, equipment) != null else true
-	torso_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.BODY, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.BODY, equipment) != null else true
-	left_foot_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) != null else true
-	right_foot_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) != null else true
+	#torso_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.BODY, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.BODY, equipment) != null else true
+	#left_foot_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) != null else true
+	#right_foot_sprite.visible = (_get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) as Helmet).should_show_base if _get_armor(PlayerInventory.ArmorSlotPositions.SHOES, equipment) != null else true
 	
 func _get_model_texture_from_texture_key(key: String) -> Texture:
 	if key == null or key.is_empty():

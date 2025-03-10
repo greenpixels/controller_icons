@@ -32,10 +32,8 @@ OptionsContext="*res://contexts/options_context/options_context.tscn"
 ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
 LimboConsole="*res://addons/limbo_console/limbo_console.gd"
 NpcContext="*res://contexts/npc_context/npc_context.tscn"
-
-[debug]
-
-gdscript/warnings/unused_signal=0
+TransitionHandler="*res://addons/greenpixels-simple-transition/transition_handler.gd"
+Debounce="*res://utils/debounce/debounce.gd"
 
 [display]
 
@@ -43,6 +41,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/mode=2
 window/stretch/mode="canvas_items"
+
+[editor]
+
+movie_writer/movie_file="D:/Data/Programming/Godot Projects/project-magus/exports/movies/movie.avi"
 
 [editor_plugins]
 

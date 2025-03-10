@@ -1,9 +1,6 @@
 class_name NPCFightingBehavior
 extends NPCBehavior
 
-func enter():
-	controller.minimum_time_before_behavior_change
-
 func physics_update(_delta: float) -> void:
 	if not is_instance_valid(controller.current_character_target) or \
 		controller.current_character_target.persistance.current_health <= 0:

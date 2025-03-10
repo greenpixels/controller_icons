@@ -131,3 +131,10 @@ func take_damage(source: Projectile):
 	TweenHelper.tween("reduce_knockback", self).tween_property(self, "knockback_force", Vector2.ZERO, 0.1)
 	TweenHelper.tween("reduce_shake", self).tween_property(self, "shake_force", 0., 0.5).set_ease(Tween.EASE_OUT)
 	on_hurt.emit(source)
+
+
+func _on_moved(position: Vector2) -> void:
+	Debounce.debounce("player_move",
+	func():
+		print(WorldContext.calculate_base_chunk_coordinate(position))
+	, 0.1)

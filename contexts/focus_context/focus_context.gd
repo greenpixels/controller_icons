@@ -18,7 +18,7 @@ func _enter_tree() -> void:
 			node.visibility_changed.connect(func():
 				if not current_focus == null and not current_focus.is_visible_in_tree():
 					current_focus = null
-				check_for_focus()	
+				Debounce.debounce("focus_check",check_for_focus, 0.1, false)
 			)
 				
 			if node.focus_mode == Control.FOCUS_ALL:
@@ -27,7 +27,7 @@ func _enter_tree() -> void:
 				if not current_focus :
 					node.grab_focus()
 	)
-	get_tree().tree_changed.connect(check_for_focus)
+	# get_tree().tree_changed.connect(Debounce.debounce.bind("focus_check", check_for_focus, 0.1, false))
 
 
 func check_for_focus():

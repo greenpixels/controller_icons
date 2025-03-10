@@ -5,6 +5,23 @@ func _ready() -> void:
 	LimboConsole.register_command(_spawn_item, "item", "Spawns an item at the position of the first player")
 	LimboConsole.register_command(_spawn_random_npc, "npc", "Spawns a random NPC at the position of the first player")
 	LimboConsole.register_command(_toggle_chunk_debug, "DEBUG_chunk", "Toggle debugging for chunks")
+	LimboConsole.register_command(_toggle_camera_detach, "toggle_camera", "Toggles camera following the player on or off.")
+	LimboConsole.register_command(_set_camera_zoom, "zoom", "Sets the camera zoom. Automatically detached the camera.")
+	LimboConsole.register_command(_start_slow_camera_zoom_out, "start_cinematic_zoom_out", "Slowly zooms the camera out over a period of 20 seconds")
+
+func _start_slow_camera_zoom_out():
+	MainCamera.target_zoom_overwrite = 1.0
+	var tween = TweenHelper.tween("camera_zoom_out", self)
+	tween.tween_property(MainCamera, "target_zoom_overwrite", 0.1, 20).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(MainCamera, "target_zoom_overwrite", 1, 10).set_trans(Tween.TRANS_LINEAR).set_delay(6)
+
+func _toggle_camera_detach():
+	MainCamera.detached = !MainCamera.detached
+	#MainCamera.target_zoom_overwrite = 1.0
+
+func _set_camera_zoom(value: float):
+	#MainCamera.detached = true
+	MainCamera.target_zoom_overwrite = value
 
 func _list_all_items(search: String = ""):
 	var found_match = false

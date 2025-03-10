@@ -1,9 +1,6 @@
 class_name NPCMovingBehavior
 extends NPCBehavior
 
-func enter():
-	controller.minimum_time_before_behavior_change
-
 func physics_update(_delta: float) -> void:
 	var time = Time.get_ticks_msec() / 1000.0 * controller.NOISE_SETTINGS.speed
 	var noise_value = controller.noise.get_noise_1d(time) * controller.NOISE_SETTINGS.magnitude

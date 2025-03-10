@@ -72,5 +72,6 @@ func withdraw_players_from_scene() -> void:
 	if PlayersContext.players.size() > 0:
 		WorldContext.get_current_map().last_player_position = PlayersContext.players[0].position
 	for player in players:
-		player.get_parent().remove_child(player)
+		if player.is_visible_in_tree():
+			player.get_parent().remove_child(player)
 	players_despawned.emit()
