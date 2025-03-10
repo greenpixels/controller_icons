@@ -45,9 +45,9 @@ func enter_cave(block: Block, location_key: String):
 	)
 	
 func leave_cave():
-	
+	if current_map_uuid_stack.size() < 2: return
 	_change_location(
-		get_current_map().location_key,
+		world_state.get_map(current_map_uuid_stack[current_map_uuid_stack.size() - 2]).location_key,
 		func():
 			PlayersContext.withdraw_players_from_scene()
 			WorldContext.current_map_uuid_stack.pop_back()
