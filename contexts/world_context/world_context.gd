@@ -1,7 +1,7 @@
 extends Node
 const BLOCK_PADDING := Vector2i(6, 6)
 const BLOCK_SIZE := Vector2i(192, 156)
-const CHUNK_SIZE := Vector2i(15, 15)
+const CHUNK_SIZE := Vector2i(9, 6)
 const CHUNK_OFFSET := Vector2i(CHUNK_SIZE) / 2
 const DEFAULT_OVERWORLD_MAP_UUID := "main"
 

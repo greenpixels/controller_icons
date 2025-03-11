@@ -11,6 +11,10 @@ radius = 118.512
 
 [node name="Character" instance=ExtResource("1_3yv1p")]
 script = ExtResource("2_dp4t6")
+base_speed = 500.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+disabled = true
 
 [node name="Shadow" parent="SpriteContainer" index="0"]
 texture = SubResource("ViewportTexture_dp4t6")

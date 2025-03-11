@@ -8,12 +8,23 @@ func _ready() -> void:
 	LimboConsole.register_command(_toggle_camera_detach, "toggle_camera", "Toggles camera following the player on or off.")
 	LimboConsole.register_command(_set_camera_zoom, "zoom", "Sets the camera zoom. Automatically detached the camera.")
 	LimboConsole.register_command(_start_slow_camera_zoom_out, "start_cinematic_zoom_out", "Slowly zooms the camera out over a period of 20 seconds")
+	LimboConsole.register_command(_sonic, "sonic", "Go fast as f*ck")
 
 func _start_slow_camera_zoom_out():
-	MainCamera.target_zoom_overwrite = 1.0
+	MainCamera.target_zoom_overwrite = 0.6
 	var tween = TweenHelper.tween("camera_zoom_out", self)
 	tween.tween_property(MainCamera, "target_zoom_overwrite", 0.1, 20).set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(MainCamera, "target_zoom_overwrite", 1, 10).set_trans(Tween.TRANS_LINEAR).set_delay(6)
+
+func _sonic():
+	MainCamera.target_zoom_overwrite = 1.0
+	var tween = TweenHelper.tween("camera_zoom_out", self)
+	tween.tween_property(MainCamera, "target_zoom_overwrite", 0.1, 5).set_trans(Tween.TRANS_LINEAR)
+	
+	for player in PlayersContext.players:
+		var speed_tween = TweenHelper.tween("player_speed_up", player)
+		player.base_speed = 500
+		speed_tween.tween_property(player, "base_speed", 20000, 10).set_trans(Tween.TRANS_EXPO)
 
 func _toggle_camera_detach():
 	MainCamera.detached = !MainCamera.detached

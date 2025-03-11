@@ -17,7 +17,7 @@ script = ExtResource("4_n2u0d")
 scene = ExtResource("11_f6wkt")
 weight = 8.0
 min_distance = 5.0
-max_distance = 1000.0
+max_distance = -1.0
 maximum_per_chunk = 1
 
 [node name="Overworld" type="Node2D"]

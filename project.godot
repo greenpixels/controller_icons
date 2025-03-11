@@ -34,6 +34,7 @@ LimboConsole="*res://addons/limbo_console/limbo_console.gd"
 NpcContext="*res://contexts/npc_context/npc_context.tscn"
 TransitionHandler="*res://addons/greenpixels-simple-transition/transition_handler.gd"
 Debounce="*res://utils/debounce/debounce.gd"
+ObjectPool="*res://utils/object_pool/object_pool.gd"
 
 [display]
 
@@ -48,7 +49,7 @@ movie_writer/movie_file="D:/Data/Programming/Godot Projects/project-magus/export
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/controller_icons/plugin.cfg", "res://addons/greenpixels-onscreen-keyboard/plugin.cfg", "res://addons/limbo_console/plugin.cfg")
+enabled=PackedStringArray("res://addons/controller_icons/plugin.cfg", "res://addons/limbo_console/plugin.cfg")
 
 [file_customization]
 

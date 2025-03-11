@@ -8,5 +8,5 @@ script = ExtResource("1_to1e0")
 scene = ExtResource("1_ibbin")
 weight = 8.0
 min_distance = 32.0
-max_distance = 1000.0
+max_distance = -1.0
 maximum_per_chunk = -1

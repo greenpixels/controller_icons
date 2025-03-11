@@ -1,11 +1,12 @@
 extends CharacterBase
 class_name Player
 
-const BASE_SPEED := 400.
+
 const ANIMATION_BASE_SPEED := 1.2
 
 @onready var persistance : PersistanceCharacterState
 @export var controller: Controller
+@export var base_speed := 500.
 @onready var held_item : HeldItem = %Item
 @onready var inventory: Storage = $Inventory
 @onready var equipment: Storage = $Equipment
@@ -81,7 +82,7 @@ func _physics_process(_delta: float) -> void:
 	previous_position = global_position
 	velocity += knockback_force
 	if knockback_force.length() <= 0:
-		velocity = controller.movement_input * BASE_SPEED
+		velocity = controller.movement_input * base_speed
 	
 	move_and_slide()
 	if previous_position.distance_to(global_position) > 1:

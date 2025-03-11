@@ -23,10 +23,8 @@ signal on_added
 signal on_removed
 
 func _ready() -> void:
-	on_added.emit()
-	current_health = maximum_health
 	%Shadow.texture = $Sprite2D.texture
-
+	
 func take_damage_from_item(source_item: Item):
 	if minimal_axe_power >= 0 and source_item.axe_power >= minimal_axe_power and source_item.axe_power > 0:
 		take_damage(source_item.axe_power)
@@ -45,7 +43,6 @@ func take_damage(amount: int):
 		on_removed.emit()
 	
 func on_destroy():
-	
 	if loot_table:
 		loot_table.create_entries()
 		if loot_table.entries.size() > 0:
@@ -53,3 +50,13 @@ func on_destroy():
 			var loot : LootTableEntry = loot_table.pick_weighted_random()
 			ItemContext.spawn_item_at(loot.object, global_position, randi_range(loot.min_amount, loot.max_amount))
 	WorldContext.get_current_map().remove_block(self)
+
+func _on_pool_get():
+	on_added.emit()
+	current_health = maximum_health
+	
+func _on_pool_return():
+	for connection in get_signal_connection_list("on_added"):
+		on_added.disconnect(connection.callable)
+	for connection in get_signal_connection_list("on_removed"):
+		on_removed.disconnect(connection.callable)

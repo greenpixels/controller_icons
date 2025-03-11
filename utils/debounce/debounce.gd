@@ -54,6 +54,7 @@ func _execute_next_frame(key: String) -> void:
 	var call: DebouncedCall = _debounced_calls[key]
 	call.callback.callv(call.last_args)
 	call.scheduled = false
+	clear(key)
 
 func _execute_next_physics_frame(key: String) -> void:
 	await get_tree().physics_frame
@@ -61,6 +62,7 @@ func _execute_next_physics_frame(key: String) -> void:
 	var call: DebouncedCall = _debounced_calls[key]
 	call.callback.callv(call.last_args)
 	call.scheduled = false
+	clear(key)
 
 func clear(key: String) -> void:
 	if _debounced_calls.has(key):
