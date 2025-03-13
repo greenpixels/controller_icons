@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 
 	# Sum all player positions and find the maximum distance
 	for player in PlayersContext.players:
-		center += player.position
+		camera.position = player.position
 		for other_player in PlayersContext.players:
 			if player != other_player:
 				var distance = player.position.distance_to(other_player.position)

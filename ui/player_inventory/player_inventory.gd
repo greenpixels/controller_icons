@@ -70,13 +70,13 @@ func _ready() -> void:
 			slot.index_in_storage = index
 			slot.setup()
 			index += 1
-	for item in ItemContext.craftable_items:
-		var entry = crafting_entry_scene.instantiate()
-		entry.item = item
+	for item_path in ItemContext.craftable_item_paths:
+		var entry : CraftingEntry = crafting_entry_scene.instantiate()
+		crafting_list.add_child(entry)
+		entry.item = load(item_path)
 		crafting_entries.push_back(entry)
 		entry.craft_item_pressed.connect(on_craft_item_pressed)
-		crafting_list.add_child(entry)
-		print("Added child entry")
+		
 	update_crafting_entries()
 
 func update_crafting_entries():

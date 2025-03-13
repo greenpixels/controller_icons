@@ -1,7 +1,16 @@
 extends MarginContainer
+class_name CraftingEntry
 
 @export var item_dict : Dictionary
-@export var item : Item
+@export var item : Item :
+	set(value):
+		item = value
+		if not is_node_ready():
+			await ready
+		%ItemTexture.texture = item.texture
+		%ItemNameLabel.text = item.key
+
+
 const TOOLTIP_TEXT := \
 "{name}" + \
 "\n\n" + \
@@ -31,7 +40,6 @@ func open_tooltip():
 			"has": BBCodeHelper.build(str(item_dict[ingredient.item.key] if item_dict.has(ingredient.item.key) else 0)).set_color(Color.WHITE.to_html() if has_enough else Color.INDIAN_RED.to_html()).result(),
 			"needs": ingredient.amount
 		})
-	
 	
 	TooltipOverlay.describe(self,
 	TOOLTIP_TEXT.format({

@@ -36,6 +36,7 @@ func trigger():
 			projectile.origin_node = character
 			projectile.configuration = item.projectile_configuration
 			projectile.source_item = item
+			projectile.damage = randi_range(item.min_damage, item.max_damage)
 			get_tree().current_scene.add_child(projectile)
 			projectile.animated_sprite.flip_v = scale.y < 0
 			projectile.global_position = character.global_position + Vector2.from_angle(rotation) * item.projectile_configuration.projectile_spawn_offset

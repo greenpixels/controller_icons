@@ -11,8 +11,9 @@ const MAX_INVINCIBILITY_TIME: float = 0.15
 const ITEM_OFFSET: float = 12.0
 
 # Nodes
-@onready var persistance: PersistanceCharacterState
-@export var controller: Controller
+
+@onready var persistance: PersistanceNpcState
+@export var controller: HumanNpcController
 @onready var held_item: HeldItem = %Item
 @onready var inventory: Storage = $Inventory
 @onready var equipment: Storage = $Equipment
@@ -48,22 +49,17 @@ func _process(delta: float) -> void:
 	held_item.position.x = original_item_position.x + ITEM_OFFSET if model.scale.x < 0 else original_item_position.x - ITEM_OFFSET
 	if controller.look_at_input.length() <= 0.2:
 		held_item.rotation = -0.66 * PI if model.scale.x < 0 else -0.33 * PI
-
+		
 func _physics_process(_delta: float) -> void:
+	var intended_velocity = Vector2.ZERO
 	previous_position = global_position
-	velocity += knockback_force
+	intended_velocity += knockback_force
 	if knockback_force.length() <= 0:
-		velocity = controller.movement_input * BASE_SPEED
-	
+		intended_velocity = controller.movement_input * BASE_SPEED
+
+	velocity = intended_velocity
 	move_and_slide()
-	if previous_position.distance_to(global_position) > 1:
-		model.animation.play("move")
-		model.animation.speed_scale = controller.movement_input.length() * ANIMATION_BASE_SPEED
-		if abs(velocity.x) > 0:
-			last_horizontal_dir = sign(velocity.x)
-	else:
-		model.animation.play("idle")
-	model.animation.speed_scale = ANIMATION_BASE_SPEED
+
 	if global_position != previous_position:
 		position_changed.emit(global_position)
 
@@ -88,6 +84,7 @@ func _on_inventory_items_changed() -> void:
 
 func _on_equipment_items_changed() -> void:
 	model.update_sprite_from_human_style(persistance.human_style, equipment)
+	_update_health_bar(persistance)
 	
 func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:
@@ -98,15 +95,26 @@ func take_damage(source: Projectile):
 	if invinciblity_time > 0: return
 	invinciblity_time = MAX_INVINCIBILITY_TIME
 	persistance.current_health -= source.damage
-	if source.origin_node:
-		knockback_force = source.origin_node.global_position.direction_to(self.global_position) * 400.
-	shake_force = 32.
-	%Sprite.modulate = Color.RED
-	TweenHelper.tween("reduce_redness", self).tween_property(%Sprite, "modulate", Color.WHITE, 0.5).set_ease(Tween.EASE_OUT)
-	TweenHelper.tween("reduce_knockback", self).tween_property(self, "knockback_force", Vector2.ZERO, 0.1)
-	TweenHelper.tween("reduce_shake", self).tween_property(self, "shake_force", 0., 0.5).set_ease(Tween.EASE_OUT)
-	hurt.emit(source)
+	_update_health_bar(persistance)
+	FloatingText.spawn_float_text(global_position, str(source.damage), get_tree().current_scene)
+	if persistance.current_health > 0:
+		if source.origin_node:
+			knockback_force = source.origin_node.global_position.direction_to(self.global_position) * 400.
+		shake_force = 32.
+		%Sprite.modulate = Color.RED
+		TweenHelper.tween("reduce_redness", self).tween_property(%Sprite, "modulate", Color.WHITE, 0.5).set_ease(Tween.EASE_OUT)
+		TweenHelper.tween("reduce_knockback", self).tween_property(self, "knockback_force", Vector2.ZERO, 0.1)
+		TweenHelper.tween("reduce_shake", self).tween_property(self, "shake_force", 0., 0.5).set_ease(Tween.EASE_OUT)
+		hurt.emit(source)
+	else:
+		equipment.drop_all(global_position)
+		inventory.drop_all(global_position)
+		if WorldContext.get_current_map().chunks.has(persistance.chunk_key):
+			WorldContext.get_current_map().remove_npc(self)
+		queue_free()
 
+
+	
 func _on_moved(_position: Vector2) -> void:
 	var chunk_coord = WorldContext.calculate_base_chunk_coordinate(global_position)
 	if str(chunk_coord) != persistance.chunk_key:
@@ -114,6 +122,14 @@ func _on_moved(_position: Vector2) -> void:
 			WorldContext.get_current_map().remove_npc(self)
 			WorldContext.get_current_map().chunks[str(chunk_coord)].npcs[persistance.uuid] = persistance
 			persistance.chunk_key = str(chunk_coord)
+			var chunk_node = get_tree().current_scene.get_node(WorldContext.get_chunk_node_name(chunk_coord))
+			if not chunk_node:
+				persistance.position = global_position
+				queue_free()
+				return
+			else:
+				reparent(chunk_node)
 		else:
-			queue_free()
+			global_position = previous_position
 	persistance.position = global_position
+	

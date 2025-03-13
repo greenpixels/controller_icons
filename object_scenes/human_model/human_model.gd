@@ -64,9 +64,9 @@ func update_sprites(body_textures: Dictionary, equipment_textures: Dictionary) -
 		else:
 			self[key + "_sprite"].texture = null
 			match key:
-				TORSO_KEY: self[key + "_sprite"].texture = load(ModelTextureMappings.BODY_DEFAULT)
-				FACE_KEY: self[key + "_sprite"].texture = load(ModelTextureMappings.FACE_DEFAULT)
-				LEFT_FOOT_KEY, RIGHT_FOOT_KEY: self[key + "_sprite"].texture = load(ModelTextureMappings.FOOT_DEFAULT)
+				TORSO_KEY: self[key + "_sprite"].texture = load(ModelTextureMappings.BODY_DEFAULT_PATH)
+				FACE_KEY: self[key + "_sprite"].texture = load(ModelTextureMappings.FACE_DEFAULT_PATH)
+				LEFT_FOOT_KEY, RIGHT_FOOT_KEY: self[key + "_sprite"].texture = load(ModelTextureMappings.FOOT_DEFAULT_PATH)
 			
 			self[key + "_sprite"].modulate = Color.WHITE
 

@@ -19,12 +19,12 @@ func _start_slow_camera_zoom_out():
 func _sonic():
 	MainCamera.target_zoom_overwrite = 1.0
 	var tween = TweenHelper.tween("camera_zoom_out", self)
-	tween.tween_property(MainCamera, "target_zoom_overwrite", 0.1, 5).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(MainCamera, "target_zoom_overwrite", 0.2, 5).set_trans(Tween.TRANS_LINEAR)
 	
 	for player in PlayersContext.players:
 		var speed_tween = TweenHelper.tween("player_speed_up", player)
 		player.base_speed = 500
-		speed_tween.tween_property(player, "base_speed", 20000, 10).set_trans(Tween.TRANS_EXPO)
+		speed_tween.tween_property(player, "base_speed", 10000, 10).set_trans(Tween.TRANS_EXPO)
 
 func _toggle_camera_detach():
 	MainCamera.detached = !MainCamera.detached

@@ -25,9 +25,10 @@ texture = SubResource("ViewportTexture_k7pj4")
 [node name="Sprite" parent="SpriteContainer" index="1"]
 texture = SubResource("ViewportTexture_k7pj4")
 
-[node name="NpcController" type="Node" parent="." index="6" node_paths=PackedStringArray("raycast", "npc", "navigation_agent")]
+[node name="NpcController" type="Node" parent="." index="6" node_paths=PackedStringArray("mining_raycast", "fight_target_raycast", "npc", "navigation_agent")]
 script = ExtResource("2_y7s0x")
-raycast = NodePath("../RayCast2D")
+mining_raycast = NodePath("../MiningRaycast")
+fight_target_raycast = NodePath("../FightTargetRayCast")
 npc = NodePath("..")
 navigation_agent = NodePath("../NavigationAgent2D")
 
@@ -46,11 +47,17 @@ script = ExtResource("7_7c5el")
 [node name="Fighting" type="Node" parent="NpcController/BehaviorMachine" index="3"]
 script = ExtResource("8_vk0xv")
 
-[node name="RayCast2D" type="RayCast2D" parent="." index="7"]
+[node name="MiningRaycast" type="RayCast2D" parent="." index="7"]
 position = Vector2(0, 33)
 target_position = Vector2(70, 0)
 
-[node name="CenterContainer" type="CenterContainer" parent="." index="8"]
+[node name="FightTargetRayCast" type="RayCast2D" parent="." index="8"]
+position = Vector2(0, 33)
+target_position = Vector2(200, 0)
+collision_mask = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="." index="9"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -65,12 +72,22 @@ grow_vertical = 2
 
 [node name="BehaviorLabel" type="Label" parent="CenterContainer" index="0"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "IDLE"
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="9"]
-avoidance_enabled = true
-radius = 50.0
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="10"]
+unique_name_in_owner = true
+path_desired_distance = 80.0
+target_desired_distance = 50.0
+max_speed = 1000.0
+avoidance_layers = 0
+avoidance_mask = 0
+debug_use_custom = true
+
+[node name="HealthBar" parent="." index="11"]
+visible = false
 
 [connection signal="hurt" from="." to="NpcController" method="_on_hurt"]
+[connection signal="position_changed" from="." to="." method="_on_moved"]
 [connection signal="behavior_changed" from="NpcController/BehaviorMachine" to="NpcController" method="_on_behavior_changed"]

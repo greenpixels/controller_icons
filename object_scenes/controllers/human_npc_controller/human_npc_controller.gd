@@ -13,7 +13,8 @@ const NOISE_SETTINGS = {
 }
 
 # Nodes
-@export var raycast: RayCast2D
+@export var mining_raycast: RayCast2D
+@export var fight_target_raycast : RayCast2D
 @export var npc: Npc
 @export var navigation_agent : NavigationAgent2D
 
@@ -45,8 +46,17 @@ func _on_behavior_changed(behavior_name: String) -> void:
 	minimum_time_before_behavior_change = DEFAULT_BEHAVIOR_DURATION
 	%BehaviorLabel.text = behavior_name.to_upper()
 
-
 func _on_hurt(source: Projectile) -> void:
 	if not source.origin_node or not source.origin_node is CharacterBase: return
 	current_character_target = source.origin_node
 	behavior_machine.change_behavior("fighting")
+	
+func _play_move_and_idle_animation():
+	if npc.previous_position.distance_to(npc.global_position) > 1:
+		npc.model.animation.play("move")
+		npc.model.animation.speed_scale = movement_input.length() * npc.ANIMATION_BASE_SPEED
+		if abs(npc.velocity.x) > 0:
+			npc.last_horizontal_dir = sign(npc.velocity.x)
+	else:
+		npc.model.animation.play("idle")
+	npc.model.animation.speed_scale = npc.ANIMATION_BASE_SPEED

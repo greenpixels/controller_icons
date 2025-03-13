@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cyx1ilc8j63by"]
+
+[ext_resource type="Script" uid="uid://gq4od4yev4nm" path="res://resources/items/item.gd" id="1_tkbet"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_kbw55"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdeaf"]
+atlas = ExtResource("2_kbw55")
+region = Rect2(432, 324, 108, 108)
+
+[resource]
+script = ExtResource("1_tkbet")
+texture = SubResource("AtlasTexture_rdeaf")
+key = "ITEM_GOLD_BAR"
+cooldown = 0.0
+rarity = 1
+max_stacks = 99
+metadata/_custom_type_script = "uid://gq4od4yev4nm"

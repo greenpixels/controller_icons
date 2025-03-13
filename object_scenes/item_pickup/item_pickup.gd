@@ -57,10 +57,10 @@ func _process(delta: float) -> void:
 	elif pull_delay > 0:
 		pull_delay -= delta
 	persistance.remaining_time_sec -= delta
-	
+	persistance.position = global_position
 	if previous_position != global_position:
 		_reassign_chunk_on_move()
-	
+		
 	if persistance.remaining_time_sec <= 0:
 		WorldContext.get_current_map().remove_item_pickup(self)
 		queue_free()
@@ -72,10 +72,11 @@ func _reassign_chunk_on_move():
 			WorldContext.get_current_map().remove_item_pickup(self)
 			WorldContext.get_current_map().chunks[str(chunk_coord)].item_pickups[persistance.uuid] = persistance
 			persistance.chunk_key = str(chunk_coord)
+			var chunk_node = get_tree().current_scene.get_node(WorldContext.get_chunk_node_name(chunk_coord))
+			reparent(chunk_node)
 		else:
 			queue_free()
-	persistance.position = global_position
-
+	
 func on_interact(player: CharacterBase):
 	var remaining = player.inventory.store_item(item, amount)
 	amount = remaining

@@ -1,15 +1,22 @@
 extends Node
-
+## // Singleton - ItemContext
 var item_path_lookup : Dictionary = {}
-var craftable_items : Array[Item] = []
+var craftable_item_paths : Array[String] = []
 @onready var item_pickup_scene := preload("res://object_scenes/item_pickup/item_pickup.tscn")
 
 func _ready() -> void:
 	construct_item_lookup_resources()
 
-# In ItemContext.gd
+func construct_item_lookup_resources():
+	var start_time := Time.get_ticks_msec()
+	for_each_in_directory("res://resources/items/", func(item: Resource):
+		if item is Item:
+			item_path_lookup[item.key] = item.resource_path
+			if not item.recipe == null:
+				craftable_item_paths.push_back(item.resource_path)
+	)
+	print("Indexing items and recipes took {needed_time} msec".format({"needed_time" : Time.get_ticks_msec() - start_time }))
 
-# Internal helper that contains the common logic.
 func _spawn_item_internal(item: Item, global_position: Vector2, amount: int, _chunk_node : Node2D = null, persistance: PersistanceItemPickupState = null) -> void:
 	var pickup: ItemPickup = item_pickup_scene.instantiate()
 	pickup.item = item
@@ -38,7 +45,7 @@ func _spawn_item_internal(item: Item, global_position: Vector2, amount: int, _ch
 	# Defer adding the pickup to the scene.
 	chunk_node.add_child.call_deferred(pickup)
 	pickup.set_deferred("global_position", global_position)
-	current_map.add_item_pickup(pickup)
+	current_map.add_item_pickup.call_deferred(pickup)
 
 
 # Function for spawning an item from direct parameters.
@@ -61,15 +68,7 @@ func spawn_item_from_persistance_with_chunk(persistance: PersistanceItemPickupSt
 	var item: Item = load(ItemContext.item_path_lookup[persistance.item_key])
 	_spawn_item_internal(item, persistance.position, persistance.amount, chunk_node, persistance)
 
-func construct_item_lookup_resources():
-	var start_time := Time.get_ticks_msec()
-	for_each_in_directory("res://resources/items/", func(item: Resource):
-		if item is Item:
-			item_path_lookup[item.key] = item.resource_path
-			if not item.recipe == null:
-				craftable_items.push_back(item)
-	)
-	print("Indexing items and recipes took {needed_time} msec".format({"needed_time" : Time.get_ticks_msec() - start_time }))
+
 	
 func convert_item_keys_to_items(keys: Array[Variant]) -> Array[Item]:
 	var item_array : Array[Item] = []

@@ -5,7 +5,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4o3be"]
 atlas = ExtResource("1_3h47r")
-region = Rect2(6, 6, 96, 96)
+region = Rect2(0, 0, 108, 108)
 
 [node name="MarginContainer" type="MarginContainer"]
 theme_override_constants/margin_left = 8
@@ -27,21 +27,23 @@ theme_override_constants/margin_bottom = 8
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="CenterContainer2" type="CenterContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+[node name="TextureCenterContainer" type="CenterContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/CenterContainer2"]
+[node name="ItemTexture" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer/TextureCenterContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = SubResource("AtlasTexture_4o3be")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
+[node name="NameLabelCenterContainer" type="CenterContainer" parent="PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer/CenterContainer"]
+[node name="ItemNameLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer/NameLabelCenterContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 3

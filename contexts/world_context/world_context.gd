@@ -53,12 +53,13 @@ func leave_cave():
 			WorldContext.current_map_uuid_stack.pop_back()
 	)
 	
-func _change_location(location_key: String, before_change: Callable):
+func _change_location(location_key: String, before_change = func(): pass, after_change = func(): pass):
+	if not LocationMappings.key_to_path.has(location_key):
+		return
 	var location_path = LocationMappings.key_to_path[location_key]
 	var location_scene = load(location_path)
 	if location_scene:
 		TransitionHandler.transition_to(location_scene, 0.85, TransitionHandler.TransitionType.DONUT, before_change)
 	else:
 		push_error("Unable to find location scene")
-		TransitionHandler.transition_to(load(LocationMappings.LOCATION_OVERWORLD), 0.85, TransitionHandler.TransitionType.DONUT, before_change)
-		#get_tree().change_scene_to_packed()
+		TransitionHandler.transition_to(load(LocationMappings.LOCATION_OVERWORLD_PATH), 0.85, TransitionHandler.TransitionType.DONUT, before_change, after_change)

@@ -114,6 +114,7 @@ func _on_current_item_changed(_position: int) -> void:
 
 func _on_equipment_items_changed() -> void:
 	model.update_sprite_from_human_style(persistance.human_style, equipment)
+	_update_health_bar(persistance)
 	
 func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:
@@ -124,6 +125,10 @@ func take_damage(source: Projectile):
 	if invinciblity_time > 0: return
 	invinciblity_time = MAX_INVINCIBILITY_TIME
 	persistance.current_health -= source.damage
+	_update_health_bar(persistance)
+	if persistance.current_health <= 0:
+		# TODO add a state where players can gets respawned
+		PlayersContext.respawn_all_players()
 	if source.origin_node:
 		knockback_force = source.origin_node.global_position.direction_to(self.global_position) * 400.
 	shake_force = 32.

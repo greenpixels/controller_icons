@@ -6,7 +6,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nd7xa"]
 atlas = ExtResource("2_pxppf")
-region = Rect2(807, 222, 181, 150)
+region = Rect2(612, 222, 167, 157)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ixdu2"]
 radius = 48.5
@@ -22,6 +22,7 @@ should_use_uuid = true
 visible = false
 
 [node name="Sprite2D" parent="." index="1"]
+position = Vector2(0, -9)
 texture = SubResource("AtlasTexture_nd7xa")
 
 [node name="CollisionShape2D" parent="." index="2"]

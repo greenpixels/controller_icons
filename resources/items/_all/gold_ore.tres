@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://b7y0xjyaeavou"]
+
+[ext_resource type="Script" uid="uid://gq4od4yev4nm" path="res://resources/items/item.gd" id="1_2n8u4"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_ydtjp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpx64"]
+atlas = ExtResource("2_ydtjp")
+region = Rect2(324, 324, 108, 108)
+
+[resource]
+script = ExtResource("1_2n8u4")
+texture = SubResource("AtlasTexture_vpx64")
+key = "ITEM_GOLD_ORE"
+cooldown = 0.0
+rarity = 1
+max_stacks = 99
+metadata/_custom_type_script = "uid://gq4od4yev4nm"

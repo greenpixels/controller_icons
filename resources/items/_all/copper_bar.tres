@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="Item" load_steps=11 format=3 uid="uid://8scq5c5hugh5"]
+
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="1_2tlxg"]
+[ext_resource type="Script" uid="uid://gq4od4yev4nm" path="res://resources/items/item.gd" id="1_deq3h"]
+[ext_resource type="Resource" uid="uid://bby23bgx0qi2s" path="res://resources/items/_all/copper_ore.tres" id="2_2l4dg"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_04ei4"]
+[ext_resource type="Resource" uid="uid://nryn73f32psa" path="res://resources/items/_all/coal.tres" id="3_qlq0a"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_uvcei"]
+
+[sub_resource type="Resource" id="Resource_lb8l3"]
+script = ExtResource("1_2tlxg")
+item = ExtResource("2_2l4dg")
+amount = 6
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_1da6f"]
+script = ExtResource("1_2tlxg")
+item = ExtResource("3_qlq0a")
+amount = 3
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_fk2nq"]
+script = ExtResource("4_uvcei")
+ingredients = Array[ExtResource("1_2tlxg")]([SubResource("Resource_lb8l3"), SubResource("Resource_1da6f")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0ntl"]
+atlas = ExtResource("2_04ei4")
+region = Rect2(432, 108, 108, 108)
+
+[resource]
+script = ExtResource("1_deq3h")
+texture = SubResource("AtlasTexture_n0ntl")
+key = "ITEM_COPPER_BAR"
+cooldown = 0.0
+rarity = 1
+max_stacks = 99
+recipe = SubResource("Resource_fk2nq")
+metadata/_custom_type_script = "uid://gq4od4yev4nm"

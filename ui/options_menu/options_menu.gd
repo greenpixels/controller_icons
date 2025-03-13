@@ -23,6 +23,7 @@ func _on_shortcut_button_ready() -> void:
 
 
 func _on_save_and_exit_button_pressed() -> void:
+	if not get_tree().current_scene is Location: return
 	for player in PlayersContext.players:
 		player.persistance.copy_character_to_state(player)
 		player.persistance.save_to_disk()

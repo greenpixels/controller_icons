@@ -75,3 +75,11 @@ func withdraw_players_from_scene() -> void:
 		if player.is_visible_in_tree():
 			player.get_parent().remove_child(player)
 	players_despawned.emit()
+
+func respawn_all_players():
+	WorldContext.current_map_uuid_stack = [WorldContext.DEFAULT_OVERWORLD_MAP_UUID]
+	WorldContext._change_location(LocationMappings.LOCATION_OVERWORLD_KEY, func():
+		withdraw_players_from_scene()
+		if WorldContext.world_state.maps.has(WorldContext.DEFAULT_OVERWORLD_MAP_UUID):
+			(WorldContext.world_state.maps[WorldContext.DEFAULT_OVERWORLD_MAP_UUID] as PersistanceMapState).last_player_position = Vector2.ZERO
+	)

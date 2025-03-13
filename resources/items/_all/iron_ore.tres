@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://bxg7hrdehxxsb"]
+
+[ext_resource type="Script" uid="uid://gq4od4yev4nm" path="res://resources/items/item.gd" id="1_jqtce"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_b34un"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d08fg"]
+atlas = ExtResource("2_b34un")
+region = Rect2(324, 216, 108, 108)
+
+[resource]
+script = ExtResource("1_jqtce")
+texture = SubResource("AtlasTexture_d08fg")
+key = "ITEM_IRON_ORE"
+cooldown = 0.0
+rarity = 1
+max_stacks = 99
+metadata/_custom_type_script = "uid://gq4od4yev4nm"

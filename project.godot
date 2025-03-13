@@ -36,11 +36,15 @@ TransitionHandler="*res://addons/greenpixels-simple-transition/transition_handle
 Debounce="*res://utils/debounce/debounce.gd"
 ObjectPool="*res://utils/object_pool/object_pool.gd"
 
+[debug]
+
+shapes/navigation/enable_edge_lines=false
+shapes/navigation/enable_edge_lines_xray=false
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [editor]

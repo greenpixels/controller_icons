@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bfxjfobl3sr6v"]
+[gd_scene load_steps=13 format=3 uid="uid://bfxjfobl3sr6v"]
 
 [ext_resource type="PackedScene" uid="uid://ble70sdbknfug" path="res://object_scenes/storage/storage.tscn" id="1_hf4q0"]
 [ext_resource type="Script" uid="uid://by85hg6ecr0po" path="res://object_scenes/characters/character_base.gd" id="1_nwp7l"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/human_model/human_model.tscn" id="4_efhyb"]
 [ext_resource type="PackedScene" uid="uid://bh3oegyqhcdj6" path="res://object_scenes/characters/held_item/held_item.tscn" id="5_4humm"]
 [ext_resource type="Shader" uid="uid://cf7o0mk1ncbj3" path="res://object_scenes/blocks/overlay.gdshader" id="7_5qtnr"]
+[ext_resource type="PackedScene" uid="uid://c53epf7r8qhdx" path="res://ui/health_bar/health_bar.tscn" id="8_efhyb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ijmed"]
 radius = 18.0
@@ -74,6 +75,10 @@ flip_v = true
 [node name="Sprite" type="Sprite2D" parent="SpriteContainer"]
 unique_name_in_owner = true
 texture = SubResource("ViewportTexture_ov6cv")
+
+[node name="HealthBar" parent="." instance=ExtResource("8_efhyb")]
+unique_name_in_owner = true
+position = Vector2(0, 71)
 
 [connection signal="items_changed" from="Inventory" to="." method="_on_inventory_items_changed"]
 [connection signal="items_changed" from="Equipment" to="." method="_on_equipment_items_changed"]

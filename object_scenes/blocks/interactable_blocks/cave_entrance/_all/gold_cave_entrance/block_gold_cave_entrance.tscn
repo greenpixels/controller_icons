@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://edne0cb5bjoh"]
+
+[ext_resource type="PackedScene" uid="uid://dhp43ypj0qo35" path="res://object_scenes/blocks/interactable_blocks/cave_entrance/cave_entrance.tscn" id="1_buydq"]
+
+[node name="Block" instance=ExtResource("1_buydq")]
+key = "BLOCK_GOLD_CAVE_ENTRANCE"
+
+[node name="CaveEntranceInteractHandler" parent="." index="4"]
+location_key = "LOCATION_GOLD_CAVE"
+
+[connection signal="interacted" from="InteractArea" to="CaveEntranceInteractHandler" method="_on_interact_area_interacted"]
+
+[editable path="InteractArea"]

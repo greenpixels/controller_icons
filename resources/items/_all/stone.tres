@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://csp7ftq3y5sxs"]
+
+[ext_resource type="Script" uid="uid://gq4od4yev4nm" path="res://resources/items/item.gd" id="1_epbnh"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_f56jy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8riye"]
+atlas = ExtResource("2_f56jy")
+region = Rect2(540, 216, 108, 108)
+
+[resource]
+script = ExtResource("1_epbnh")
+texture = SubResource("AtlasTexture_8riye")
+key = "ITEM_STONE"
+cooldown = null
+rarity = null
+max_stacks = 99
+metadata/_custom_type_script = "uid://gq4od4yev4nm"

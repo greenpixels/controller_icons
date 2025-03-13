@@ -15,6 +15,7 @@ var _transition_drawer: TransitionDrawer
 var _resource_loader_path: String
 var _loading_status = ResourceLoader.ThreadLoadStatus.THREAD_LOAD_LOADED
 var _before_load_callable = null
+var _after_load_callable = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -46,7 +47,7 @@ func _process(delta: float) -> void:
 		_transition_drawer.transition = _current_transition
 		_transition_drawer.queue_redraw()
 
-func transition_to(target_scene: PackedScene, duration: float, transition_type: TransitionType = default_transition_type, before_loaded = null) -> void:
+func transition_to(target_scene: PackedScene, duration: float, transition_type: TransitionType = default_transition_type, before_loaded = null, after_loaded = null) -> void:
 	_target_scene = null
 	_duration = duration
 	_before_load_callable = before_loaded
@@ -69,4 +70,9 @@ func on_new_scene_loaded() -> void:
 	get_tree().paused = false
 
 func on_transition_finished() -> void:
+	if _after_load_callable != null:
+		_after_load_callable.call()
 	_transition_drawer._reset()
+	_after_load_callable = null
+	_before_load_callable = null
+	

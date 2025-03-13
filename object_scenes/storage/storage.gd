@@ -179,7 +179,6 @@ func store_item_at(item: Item, amount: int, index: int) -> int:
 	emit_signal("items_changed")
 	return remaining
 
-
 func store_item(item: Item, amount: int) -> int:
 	var remaining = amount
 
@@ -203,6 +202,13 @@ func store_item(item: Item, amount: int) -> int:
 
 	return remaining
 
+func drop_all(spawn_position: Vector2, exact = false):
+	var index = 0
+	for item in items:
+		if item != null:
+			var offset = Vector2(randf() * (WorldContext.BLOCK_SIZE.x / 2.), randf() * (WorldContext.BLOCK_SIZE.y / 2.)) if not exact else Vector2.ZERO
+			ItemContext.spawn_item_at(item, spawn_position + offset, quantities[index])
+		index += 1
 
 func remove_item(_item: Item, _amount: int) -> void:
 	var to_remove = _amount

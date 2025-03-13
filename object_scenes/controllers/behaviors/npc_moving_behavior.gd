@@ -14,12 +14,13 @@ func physics_update(_delta: float) -> void:
 	controller.movement_input = target_direction
 	if controller.movement_input != Vector2.ZERO:
 		controller.look_at_input = controller.movement_input
-		
-	controller.raycast.look_at(controller.raycast.global_position + controller.look_at_input.normalized())
-	controller.raycast.force_raycast_update()
 	
-	if controller.raycast.is_colliding():
-		var collider = controller.raycast.get_collider()
+	controller._play_move_and_idle_animation()
+	controller.mining_raycast.look_at(controller.mining_raycast.global_position + controller.look_at_input.normalized())
+	controller.mining_raycast.force_raycast_update()
+	
+	if controller.mining_raycast.is_colliding():
+		var collider = controller.mining_raycast.get_collider()
 		if _check_for_minable_block(collider):
 			controller.behavior_machine.change_behavior("mining")
 

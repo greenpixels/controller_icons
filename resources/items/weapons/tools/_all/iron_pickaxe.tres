@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="Tool" load_steps=12 format=3 uid="uid://dfoe4qckrxhvw"]
+
+[ext_resource type="Script" uid="uid://bearovpqly3s8" path="res://resources/items/weapons/tools/tool.gd" id="1_clmaa"]
+[ext_resource type="PackedScene" uid="uid://byptmxjt78a4v" path="res://object_scenes/projectile/_all/slice/projectile_slice.tscn" id="1_drg2p"]
+[ext_resource type="Script" uid="uid://ce5cb1n23qt4p" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_owg6q"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_drg2p"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="2_jei7n"]
+[ext_resource type="Resource" uid="uid://y4g2dn66gnl0" path="res://resources/items/_all/iron_bar.tres" id="3_owg6q"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_3y0m7"]
+
+[sub_resource type="Resource" id="Resource_3y0m7"]
+script = ExtResource("1_owg6q")
+projectile_speed = 0.0
+lifetime = 0.15
+should_follow_origin_node = true
+should_face_direction = true
+projectile_spawn_offset = 124.0
+scale_animation_to_lifetime = true
+metadata/_custom_type_script = "uid://ce5cb1n23qt4p"
+
+[sub_resource type="Resource" id="Resource_21mmh"]
+script = ExtResource("2_jei7n")
+item = ExtResource("3_owg6q")
+amount = 6
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_fwpw6"]
+script = ExtResource("4_3y0m7")
+ingredients = Array[ExtResource("2_jei7n")]([SubResource("Resource_21mmh")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfuxb"]
+atlas = ExtResource("2_drg2p")
+region = Rect2(108, 216, 108, 108)
+
+[resource]
+script = ExtResource("1_clmaa")
+pickaxe_power = 40
+axe_power = 0
+hammer_power = 0
+min_damage = 2
+max_damage = 4
+crit_chance = 0.0
+projectile_scene = ExtResource("1_drg2p")
+projectile_configuration = SubResource("Resource_3y0m7")
+texture = SubResource("AtlasTexture_yfuxb")
+key = "ITEM_IRON_PICKAXE"
+cooldown = 0.35
+rarity = 1
+max_stacks = 1
+recipe = SubResource("Resource_fwpw6")
+metadata/_custom_type_script = "uid://bearovpqly3s8"

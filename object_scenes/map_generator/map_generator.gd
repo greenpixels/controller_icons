@@ -15,8 +15,8 @@ var generated_chunks := {}
 var uuid : String
 var source_geometry_data := NavigationMeshSourceGeometryData2D.new()
 var chunk_size_px = Vector2(chunk_size * (block_size + block_padding))
-var agent_radius = 54.0
-var adjusted_chunk_size_px = chunk_size_px + Vector2(agent_radius * 2, agent_radius * 2)
+var agent_radius = 70
+var adjusted_chunk_size_px = chunk_size_px #+ Vector2(agent_radius * 2, agent_radius * 2)
 var chunk_polygon_points := PackedVector2Array([
 		Vector2(0, 0),
 		Vector2(adjusted_chunk_size_px.x, 0),
@@ -37,6 +37,7 @@ var parent_node: Node = null
 var chunk_node_positions : Array[Vector2] = []
 
 func _ready() -> void:
+	NavigationServer2D.map_set_edge_connection_margin(get_world_2d().navigation_map, agent_radius * 2)
 	parent_node = get_parent()
 	uuid = WorldContext.current_map_uuid_stack.back()
 	map = WorldContext.world_state.get_map(uuid)
@@ -158,6 +159,7 @@ func _generate_navigation_polygon() -> NavigationPolygon:
 	var nav_polygon := NavigationPolygon.new()
 	nav_polygon.parsed_geometry_type = NavigationPolygon.PARSED_GEOMETRY_STATIC_COLLIDERS
 	nav_polygon.agent_radius = agent_radius
+	#nav_polygon.border_size = adjusted_chunk_size_px.length()
 	nav_polygon.add_outline(chunk_polygon_points)
 	return nav_polygon
 
@@ -169,6 +171,7 @@ func _get_or_create_navigation_region(chunk_node: Node2D, nav_polygon: Navigatio
 		NavigationServer2D.region_set_map(nav_region, get_world_2d().navigation_map)
 		nav_region.name = "NavigationRegion2D"
 		chunk_node.add_child(nav_region)
+	
 	nav_region.navigation_polygon = nav_polygon
 	return nav_region
 

@@ -9,22 +9,14 @@ func map_and_save(name_of_class: String, read_path : String, write_path: String,
 	_save_mapping(mapping, name_of_class, write_path, should_load)
 
 func _scan_directory(path: String, mapping: Dictionary, file_ending : String):
-	var dir: DirAccess = DirAccess.open(path)
-	if dir:
-		dir.list_dir_begin()
-		var file_name: String = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				if file_name != "." and file_name != "..":
-					_scan_directory(path + file_name + "/", mapping, file_ending)
-			elif file_name.ends_with(file_ending):
-				if file_ending == ".tscn":
-					_process_scene_file(path + file_name, mapping)
-				else: mapping[file_name.replace(file_ending, "")] = path + file_name
-			file_name = dir.get_next()
-		dir.list_dir_end()
-	else:
-		printerr("Could not open directory: ", path)
+	var file_names = ResourceLoader.list_directory(path)
+	for file_name in file_names:
+		if DirAccess.dir_exists_absolute(path + file_name):
+			_scan_directory(path + file_name, mapping, file_ending)
+		elif file_name.ends_with(file_ending):
+			if file_ending == ".tscn":
+				_process_scene_file(path + file_name, mapping)
+			else: mapping[file_name.replace(file_ending, "")] = path + file_name
 
 func _process_scene_file(file_path: String, mapping: Dictionary):
 	var scene: PackedScene = ResourceLoader.load(file_path)
@@ -47,7 +39,8 @@ func _save_mapping(mapping: Dictionary, name_of_class: String, saving_path: Stri
 	var object_map = ""
 	object_map += "static var key_to_path: Dictionary[String, String] = {\n"
 	for key in mapping:
-		const_entries += "const " + (key as String).to_upper() + " = \"" + mapping[key] + "\"\n"
+		const_entries += "const " + (key as String).to_upper() + "_KEY" + " = \"" + key + "\"\n"
+		const_entries += "const " + (key as String).to_upper() + "_PATH" + " = \"" + mapping[key] + "\"\n"
 		object_map += "\t\"" + key + "\": \"" + mapping[key] + "\",\n"
 	object_map += "}\n\n"
 

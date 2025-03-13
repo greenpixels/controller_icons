@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Item" load_steps=9 format=3 uid="uid://nryn73f32psa"]
+
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="1_ap8ri"]
+[ext_resource type="Script" uid="uid://gq4od4yev4nm" path="res://resources/items/item.gd" id="1_atp70"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_rqggd"]
+[ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="2_vqn70"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="3_luvm3"]
+
+[sub_resource type="Resource" id="Resource_toeol"]
+script = ExtResource("1_ap8ri")
+item = ExtResource("2_vqn70")
+amount = 2
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_jha36"]
+script = ExtResource("3_luvm3")
+ingredients = Array[ExtResource("1_ap8ri")]([SubResource("Resource_toeol")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxtxq"]
+atlas = ExtResource("2_rqggd")
+region = Rect2(540, 0, 108, 108)
+
+[resource]
+script = ExtResource("1_atp70")
+texture = SubResource("AtlasTexture_qxtxq")
+key = "ITEM_COAL"
+cooldown = 0.0
+rarity = 1
+max_stacks = 99
+recipe = SubResource("Resource_jha36")
+metadata/_custom_type_script = "uid://gq4od4yev4nm"

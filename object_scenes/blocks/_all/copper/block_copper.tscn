@@ -1,7 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://cthf3hh6ue6y5"]
+[gd_scene load_steps=9 format=3 uid="uid://cthf3hh6ue6y5"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_qum04"]
+[ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_nhh38"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_xos20"]
+[ext_resource type="Script" uid="uid://b8h8wm2kenltp" path="res://data_classes/loot_table_entry.gd" id="3_hbp2s"]
+[ext_resource type="Resource" uid="uid://bby23bgx0qi2s" path="res://resources/items/_all/copper_ore.tres" id="4_ykkh2"]
+
+[sub_resource type="Resource" id="Resource_sm37d"]
+script = ExtResource("3_hbp2s")
+weight = 1
+object = ExtResource("4_ykkh2")
+min_amount = 1
+max_amount = 3
+metadata/_custom_type_script = "uid://b8h8wm2kenltp"
+
+[sub_resource type="Resource" id="Resource_fm2x1"]
+script = ExtResource("2_nhh38")
+table = Array[ExtResource("3_hbp2s")]([SubResource("Resource_sm37d")])
+metadata/_custom_type_script = "uid://dqi7e80cvul66"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5pvyb"]
 atlas = ExtResource("2_xos20")
@@ -9,6 +25,9 @@ region = Rect2(6, 204, 192, 192)
 
 [node name="Block" instance=ExtResource("1_qum04")]
 key = "BLOCK_COPPER"
+minimal_pickaxe_power = 0
+maximum_health = 150
+loot_table = SubResource("Resource_fm2x1")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_5pvyb")

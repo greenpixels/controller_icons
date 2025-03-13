@@ -7,8 +7,8 @@ viewport_path = NodePath("SubViewport")
 
 [node name="Character" instance=ExtResource("1_3md1u")]
 
-[node name="Sprite" parent="SpriteContainer" index="0"]
+[node name="Shadow" parent="SpriteContainer" index="0"]
 texture = SubResource("ViewportTexture_3md1u")
 
-[node name="Shadow" parent="SpriteContainer" index="1"]
+[node name="Sprite" parent="SpriteContainer" index="1"]
 texture = SubResource("ViewportTexture_3md1u")
