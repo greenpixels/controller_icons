@@ -17,6 +17,7 @@ region = Rect2(402, 6, 192, 192)
 size = Vector2(192, 136)
 
 [node name="Block" type="StaticBody2D" groups=["navigation_parsing"]]
+light_mask = 3
 collision_mask = 6
 script = ExtResource("1_x0ioi")
 
@@ -32,6 +33,7 @@ flip_v = true
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+use_parent_material = true
 texture = SubResource("AtlasTexture_inoac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

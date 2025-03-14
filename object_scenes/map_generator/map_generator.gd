@@ -146,14 +146,13 @@ func _create_chunk_node(chunk_coord: Vector2) -> Node2D:
 	
 func _create_chunk_navigation_region(chunk_node: Node2D):
 	# We debounce here - in case 100 blocks in a chunk are destroyed at once, we only want to bake the navigation polygon once
-	Debounce.debounce("update_nav_in_chunk_" + str(chunk_node), func(): 
-		if not is_instance_valid(chunk_node): return
-		var start_time = Time.get_ticks_usec()
-		var nav_polygon = _generate_navigation_polygon()
-		var nav_region = _get_or_create_navigation_region(chunk_node, nav_polygon)
-		_bake_navigation_polygon(nav_region, chunk_node)
-		print("Generating navigation mesh took " + str(Time.get_ticks_usec() - start_time) + " usec")
-	, 0., false, true)
+	Debounce.debounce("update_nav_in_chunk_" + str(chunk_node.name), _handle_debounced_nav_region_update, [chunk_node], 0., false, true)
+
+func _handle_debounced_nav_region_update(chunk_node: Node2D):
+	if not is_instance_valid(chunk_node): return
+	var nav_polygon = _generate_navigation_polygon()
+	var nav_region = _get_or_create_navigation_region(chunk_node, nav_polygon)
+	_bake_navigation_polygon(nav_region, chunk_node)
 
 func _generate_navigation_polygon() -> NavigationPolygon:
 	var nav_polygon := NavigationPolygon.new()

@@ -4,6 +4,8 @@ class_name InputController
 signal interacted
 signal inventory_opened
 
+var offset_change_delay := 0.
+var OFFSET_CHANGE_DELAY_MAY := 0.25
 var device := 0
 var deadzone_treshhold := 0.1
 var previos_mouse_position := Vector2.ZERO
@@ -17,10 +19,12 @@ var input_map : DeviceInputMap
 func init_device_map() -> void:
 	input_map = DeviceInputMap.new(device)
 	
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	handle_movement_input()
 	handle_look_at_input()
 	handle_button_input()
+	if offset_change_delay >= 0:
+		offset_change_delay -= delta
 
 func _input(event: InputEvent) -> void:
 	if device == 0:
@@ -78,10 +82,14 @@ func handle_button_input():
 		interacted.emit()
 	if Input.is_action_just_pressed(input_map.get_mapped_action("inventory")):
 		inventory_opened.emit()
-	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_left")):
-		current_item_index -= 1
-	if Input.get_action_strength(input_map.get_mapped_action("cycle_item_right")):
-		current_item_index += 1
+	if Input.is_action_just_pressed(input_map.get_mapped_action("cycle_item_left")):
+		if offset_change_delay <= 0:
+			current_item_index -= 1
+			offset_change_delay = OFFSET_CHANGE_DELAY_MAY
+	if Input.is_action_just_pressed(input_map.get_mapped_action("cycle_item_right")):
+		if offset_change_delay <= 0:
+			current_item_index += 1
+			offset_change_delay = OFFSET_CHANGE_DELAY_MAY
 
 
 

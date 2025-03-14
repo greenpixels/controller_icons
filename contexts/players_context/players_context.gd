@@ -63,8 +63,7 @@ func spawn_players_at(parent_node: Node, position = null) -> void:
 		parent_node.add_child(player)
 		player.position = position
 	var camera = camera_scene.instantiate()
-	camera.position = position
-	parent_node.add_child(camera)
+	get_tree().current_scene.add_child(camera)
 	players_interact_focus_changed.emit()
 	players_spawned.emit()
 

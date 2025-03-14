@@ -3,7 +3,6 @@ class_name Controller
 
 var movement_input := Vector2(0., 0.)
 var look_at_input := Vector2.ZERO
-
 var current_item_index = 0 :
 	set(value):
 		if value < 0: value = 2

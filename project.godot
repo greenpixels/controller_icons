@@ -45,6 +45,7 @@ shapes/navigation/enable_edge_lines_xray=false
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [editor]
@@ -73,6 +74,10 @@ focusable=""
 freeze_during_button_remap="Disables input processing while button remapping takes place"
 popup=""
 navigation_parsing=""
+
+[gui]
+
+theme/custom="uid://b3w3lk6imtq3t"
 
 [input]
 

@@ -8,6 +8,4 @@ key = "BLOCK_IRON_CAVE_ENTRANCE"
 [node name="CaveEntranceInteractHandler" parent="." index="4"]
 location_key = "LOCATION_IRON_CAVE"
 
-[connection signal="interacted" from="InteractArea" to="CaveEntranceInteractHandler" method="_on_interact_area_interacted"]
-
 [editable path="InteractArea"]

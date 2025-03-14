@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cthf3hh6ue6y5"]
+[gd_scene load_steps=11 format=3 uid="uid://cthf3hh6ue6y5"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_qum04"]
 [ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_nhh38"]
@@ -23,6 +23,15 @@ metadata/_custom_type_script = "uid://dqi7e80cvul66"
 atlas = ExtResource("2_xos20")
 region = Rect2(6, 204, 192, 192)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nhh38"]
+frequency = 0.0024
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nhh38"]
+width = 192
+height = 192
+noise = SubResource("FastNoiseLite_nhh38")
+
 [node name="Block" instance=ExtResource("1_qum04")]
 key = "BLOCK_COPPER"
 minimal_pickaxe_power = 0
@@ -31,3 +40,10 @@ loot_table = SubResource("Resource_fm2x1")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_5pvyb")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="3"]
+position = Vector2(0, -23.5)
+scale = Vector2(1, 0.755208)
+color = Color(1, 1, 1, 0.203922)
+energy = 0.2
+texture = SubResource("NoiseTexture2D_nhh38")

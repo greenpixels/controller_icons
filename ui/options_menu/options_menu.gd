@@ -24,12 +24,18 @@ func _on_shortcut_button_ready() -> void:
 
 func _on_save_and_exit_button_pressed() -> void:
 	if not get_tree().current_scene is Location: return
+	
 	for player in PlayersContext.players:
 		player.persistance.copy_character_to_state(player)
 		player.persistance.save_to_disk()
 	PlayersContext.withdraw_players_from_scene()
 	for player in PlayersContext.players:
 		player.queue_free()
+	for map_uuid in WorldContext.current_map_uuid_stack:
+		if WorldContext.world_state.maps.has(map_uuid):
+			if map_uuid == WorldContext.DEFAULT_OVERWORLD_MAP_UUID: continue
+			var map = WorldContext.world_state.maps[map_uuid]
+			map.last_player_position = Vector2.ZERO
 	PlayersContext.players = []
 	WorldContext.world_state.save_to_disk()
 	OptionsContext._toggle_menu()

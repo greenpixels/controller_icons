@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckbxfww17hihs"]
+[gd_scene load_steps=11 format=3 uid="uid://ckbxfww17hihs"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_loty4"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_fojnj"]
@@ -23,10 +23,27 @@ metadata/_custom_type_script = "uid://dqi7e80cvul66"
 atlas = ExtResource("2_fojnj")
 region = Rect2(402, 204, 192, 192)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6gsit"]
+frequency = 0.0024
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gqomj"]
+width = 192
+height = 192
+noise = SubResource("FastNoiseLite_6gsit")
+
 [node name="Block" instance=ExtResource("1_loty4")]
 key = "BLOCK_GOLD"
 minimal_pickaxe_power = 40
+maximum_health = 210
 loot_table = SubResource("Resource_gqomj")
 
 [node name="Sprite2D" parent="." index="1"]
 texture = SubResource("AtlasTexture_peel7")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="3"]
+position = Vector2(0, -23.5)
+scale = Vector2(1, 0.755208)
+color = Color(1, 1, 1, 0.203922)
+energy = 0.35
+texture = SubResource("NoiseTexture2D_gqomj")

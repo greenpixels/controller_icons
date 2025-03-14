@@ -293,4 +293,5 @@ deterministic = true
 libraries = {
 &"": SubResource("AnimationLibrary_tbgvu")
 }
+autoplay = "move"
 speed_scale = 1.2

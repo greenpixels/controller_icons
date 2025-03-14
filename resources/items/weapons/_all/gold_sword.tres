@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=12 format=3 uid="uid://crptcowqihf7v"]
+
+[ext_resource type="Script" uid="uid://ce5cb1n23qt4p" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_1tf0w"]
+[ext_resource type="PackedScene" uid="uid://byptmxjt78a4v" path="res://object_scenes/projectile/_all/slice/projectile_slice.tscn" id="2_1amsb"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="3_ipjir"]
+[ext_resource type="Resource" uid="uid://cyx1ilc8j63by" path="res://resources/items/_all/gold_bar.tres" id="4_1tf0w"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="5_emjoo"]
+[ext_resource type="Script" uid="uid://duahtqoc5qrto" path="res://resources/items/weapons/weapon.gd" id="6_mdxbi"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="7_idyts"]
+
+[sub_resource type="Resource" id="Resource_1tf0w"]
+script = ExtResource("1_1tf0w")
+projectile_speed = 10.0
+lifetime = 0.2
+should_follow_origin_node = true
+should_face_direction = true
+projectile_spawn_offset = 124.0
+scale_animation_to_lifetime = true
+metadata/_custom_type_script = "uid://ce5cb1n23qt4p"
+
+[sub_resource type="Resource" id="Resource_6cypm"]
+script = ExtResource("3_ipjir")
+item = ExtResource("4_1tf0w")
+amount = 7
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_l3kgl"]
+script = ExtResource("5_emjoo")
+ingredients = Array[ExtResource("3_ipjir")]([SubResource("Resource_6cypm")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tf0w"]
+atlas = ExtResource("7_idyts")
+region = Rect2(0, 324, 108, 108)
+
+[resource]
+script = ExtResource("6_mdxbi")
+min_damage = 12
+max_damage = 17
+crit_chance = 5.0
+projectile_scene = ExtResource("2_1amsb")
+projectile_configuration = SubResource("Resource_1tf0w")
+texture = SubResource("AtlasTexture_1tf0w")
+key = "ITEM_GOLD_SWORD"
+cooldown = 0.65
+rarity = 2
+max_stacks = 1
+recipe = SubResource("Resource_l3kgl")
+metadata/_custom_type_script = "uid://duahtqoc5qrto"

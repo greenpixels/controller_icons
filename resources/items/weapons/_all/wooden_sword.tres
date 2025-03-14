@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="Weapon" load_steps=12 format=3 uid="uid://bx4sjjbv57uml"]
+
+[ext_resource type="Script" uid="uid://ce5cb1n23qt4p" path="res://resources/projectile_configuration/projectile_configuration.gd" id="1_1hhg2"]
+[ext_resource type="PackedScene" uid="uid://byptmxjt78a4v" path="res://object_scenes/projectile/_all/slice/projectile_slice.tscn" id="1_ijam2"]
+[ext_resource type="Script" uid="uid://duahtqoc5qrto" path="res://resources/items/weapons/weapon.gd" id="1_mjdyr"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="3_8td28"]
+[ext_resource type="Resource" uid="uid://byby26tergt6i" path="res://resources/items/_all/dry_wood.tres" id="4_5po1a"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="4_eoxue"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="5_q8w44"]
+
+[sub_resource type="Resource" id="Resource_eoxue"]
+script = ExtResource("1_1hhg2")
+projectile_speed = 10.0
+lifetime = 0.2
+should_follow_origin_node = true
+should_face_direction = true
+projectile_spawn_offset = 124.0
+scale_animation_to_lifetime = true
+metadata/_custom_type_script = "uid://ce5cb1n23qt4p"
+
+[sub_resource type="Resource" id="Resource_6cypm"]
+script = ExtResource("3_8td28")
+item = ExtResource("4_5po1a")
+amount = 4
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_tekwh"]
+script = ExtResource("5_q8w44")
+ingredients = Array[ExtResource("3_8td28")]([SubResource("Resource_6cypm")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybnwr"]
+atlas = ExtResource("4_eoxue")
+region = Rect2(0, 0, 108, 108)
+
+[resource]
+script = ExtResource("1_mjdyr")
+min_damage = 4
+max_damage = 6
+crit_chance = 5.0
+projectile_scene = ExtResource("1_ijam2")
+projectile_configuration = SubResource("Resource_eoxue")
+texture = SubResource("AtlasTexture_ybnwr")
+key = "ITEM_WOODEN_SWORD"
+cooldown = 0.8
+rarity = 0
+max_stacks = 1
+recipe = SubResource("Resource_tekwh")
+metadata/_custom_type_script = "uid://duahtqoc5qrto"

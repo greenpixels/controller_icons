@@ -20,7 +20,7 @@ scale_animation_to_lifetime = true
 [sub_resource type="Resource" id="Resource_w30fa"]
 script = ExtResource("3_8b7hn")
 item = ExtResource("4_g6p3g")
-amount = 5
+amount = 4
 
 [sub_resource type="Resource" id="Resource_0d47v"]
 script = ExtResource("4_3xpk1")

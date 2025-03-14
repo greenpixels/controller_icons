@@ -7,12 +7,10 @@ class_name Npc
 # Constants
 const BASE_SPEED: float = 400.0
 const ANIMATION_BASE_SPEED: float = 1.2
-const MAX_INVINCIBILITY_TIME: float = 0.15
 const ITEM_OFFSET: float = 12.0
 
 # Nodes
 
-@onready var persistance: PersistanceNpcState
 @export var controller: HumanNpcController
 @onready var held_item: HeldItem = %Item
 @onready var inventory: Storage = $Inventory
@@ -23,9 +21,6 @@ const ITEM_OFFSET: float = 12.0
 var current_item_index: int = 0
 var last_horizontal_dir: float = 1.0
 var previous_position: Vector2 = Vector2.ZERO
-var invinciblity_time: float = 0.0
-var knockback_force: Vector2 = Vector2.ZERO
-var shake_force: float = 0.0
 
 # Signals - using past tense for events that happened
 signal hurt(source: Projectile)
@@ -84,7 +79,7 @@ func _on_inventory_items_changed() -> void:
 
 func _on_equipment_items_changed() -> void:
 	model.update_sprite_from_human_style(persistance.human_style, equipment)
-	_update_health_bar(persistance)
+	_update_health_bar()
 	
 func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:
@@ -92,19 +87,8 @@ func _on_pickup_radius_area_entered(area: Area2D) -> void:
 			area.pull_to = self
 			
 func take_damage(source: Projectile):
-	if invinciblity_time > 0: return
-	invinciblity_time = MAX_INVINCIBILITY_TIME
-	persistance.current_health -= source.damage
-	_update_health_bar(persistance)
-	FloatingText.spawn_float_text(global_position, str(source.damage), get_tree().current_scene)
+	super(source)
 	if persistance.current_health > 0:
-		if source.origin_node:
-			knockback_force = source.origin_node.global_position.direction_to(self.global_position) * 400.
-		shake_force = 32.
-		%Sprite.modulate = Color.RED
-		TweenHelper.tween("reduce_redness", self).tween_property(%Sprite, "modulate", Color.WHITE, 0.5).set_ease(Tween.EASE_OUT)
-		TweenHelper.tween("reduce_knockback", self).tween_property(self, "knockback_force", Vector2.ZERO, 0.1)
-		TweenHelper.tween("reduce_shake", self).tween_property(self, "shake_force", 0., 0.5).set_ease(Tween.EASE_OUT)
 		hurt.emit(source)
 	else:
 		equipment.drop_all(global_position)
@@ -113,8 +97,6 @@ func take_damage(source: Projectile):
 			WorldContext.get_current_map().remove_npc(self)
 		queue_free()
 
-
-	
 func _on_moved(_position: Vector2) -> void:
 	var chunk_coord = WorldContext.calculate_base_chunk_coordinate(global_position)
 	if str(chunk_coord) != persistance.chunk_key:
@@ -122,14 +104,14 @@ func _on_moved(_position: Vector2) -> void:
 			WorldContext.get_current_map().remove_npc(self)
 			WorldContext.get_current_map().chunks[str(chunk_coord)].npcs[persistance.uuid] = persistance
 			persistance.chunk_key = str(chunk_coord)
-			var chunk_node = get_tree().current_scene.get_node(WorldContext.get_chunk_node_name(chunk_coord))
-			if not chunk_node:
+			var has_chunk_node = get_tree().current_scene.has_node(WorldContext.get_chunk_node_name(chunk_coord))
+			if not has_chunk_node:
 				persistance.position = global_position
 				queue_free()
 				return
 			else:
+				var chunk_node = get_tree().current_scene.get_node(WorldContext.get_chunk_node_name(chunk_coord))
 				reparent(chunk_node)
 		else:
 			global_position = previous_position
 	persistance.position = global_position
-	

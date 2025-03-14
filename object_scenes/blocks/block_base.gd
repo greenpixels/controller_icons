@@ -26,6 +26,7 @@ func _ready() -> void:
 	%Shadow.texture = $Sprite2D.texture
 	
 func take_damage_from_item(source_item: Item):
+	if not source_item is Tool: return
 	if minimal_axe_power >= 0 and source_item.axe_power >= minimal_axe_power and source_item.axe_power > 0:
 		take_damage(source_item.axe_power)
 	elif minimal_pickaxe_power >= 0 and source_item.pickaxe_power >= minimal_pickaxe_power and source_item.pickaxe_power > 0:

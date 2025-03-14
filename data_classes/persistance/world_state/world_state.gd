@@ -9,7 +9,7 @@ const WORLD_SAVE_BASE_PATH := "user://worlds/"
 @export_storage var current_sub_seed : int = 0
 @export_storage var uuid : String = UUID.v4()
 # "UUID" : PersistanceMapState
-@export_storage var maps : Dictionary 
+@export_storage var maps : Dictionary[String, PersistanceMapState]
 
 func set_map(map : PersistanceMapState):
 	maps[map.uuid] = map

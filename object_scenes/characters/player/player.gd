@@ -1,10 +1,8 @@
 extends CharacterBase
 class_name Player
 
-
 const ANIMATION_BASE_SPEED := 1.2
 
-@onready var persistance : PersistanceCharacterState
 @export var controller: Controller
 @export var base_speed := 500.
 @onready var held_item : HeldItem = %Item
@@ -17,14 +15,9 @@ const ANIMATION_BASE_SPEED := 1.2
 var current_item_index = 0
 var last_horizontal_dir = 1
 var previous_position := Vector2.ZERO
-var invinciblity_time := 0.
-var knockback_force := Vector2.ZERO
-var shake_force := 0.
-const MAX_INVINCIBILITY_TIME := 0.15
 
 signal on_hurt(source: Projectile)
 signal moved(position: Vector2)
-
 
 var player_index := 0
 
@@ -39,7 +32,6 @@ func _on_input_controller_inventory_opened() -> void:
 		_inventory.player = self
 	)
 
-
 func _on_inventory_items_changed() -> void:
 	held_item.item = inventory.items[controller.current_item_index]
 	_on_current_item_changed(controller.current_item_index)
@@ -53,8 +45,6 @@ func _on_interact_radius_area_exited(area: Area2D) -> void:
 	if area is InteractArea and area == PlayersContext.players_interact_focus[player_index]:
 		PlayersContext.players_interact_focus[player_index] = null
 		PlayersContext.players_interact_focus_changed.emit()
-
-
 
 func _ready() -> void:
 	original_item_position = held_item.position
@@ -101,7 +91,6 @@ func _on_look_at_changed(new_look_at: Vector2) -> void:
 	if abs(new_look_at.x) > 0:
 		last_horizontal_dir = sign(new_look_at.x)
 
-
 func _on_current_item_changed(_position: int) -> void:
 	if inventory.items[_position] == null or not inventory.items[_position] is Weapon:
 		for index in range(3):
@@ -114,7 +103,7 @@ func _on_current_item_changed(_position: int) -> void:
 
 func _on_equipment_items_changed() -> void:
 	model.update_sprite_from_human_style(persistance.human_style, equipment)
-	_update_health_bar(persistance)
+	_update_health_bar()
 	
 func _on_pickup_radius_area_entered(area: Area2D) -> void:
 	if area is ItemPickup:
@@ -122,25 +111,14 @@ func _on_pickup_radius_area_entered(area: Area2D) -> void:
 			area.pull_to = self
 			
 func take_damage(source: Projectile):
-	if invinciblity_time > 0: return
-	invinciblity_time = MAX_INVINCIBILITY_TIME
-	persistance.current_health -= source.damage
-	_update_health_bar(persistance)
+	super(source)
 	if persistance.current_health <= 0:
-		# TODO add a state where players can gets respawned
 		PlayersContext.respawn_all_players()
-	if source.origin_node:
-		knockback_force = source.origin_node.global_position.direction_to(self.global_position) * 400.
-	shake_force = 32.
-	%Sprite.modulate = Color.RED
-	TweenHelper.tween("reduce_redness", self).tween_property(%Sprite, "modulate", Color.WHITE, 0.5).set_ease(Tween.EASE_OUT)
-	TweenHelper.tween("reduce_knockback", self).tween_property(self, "knockback_force", Vector2.ZERO, 0.1)
-	TweenHelper.tween("reduce_shake", self).tween_property(self, "shake_force", 0., 0.5).set_ease(Tween.EASE_OUT)
 	on_hurt.emit(source)
 
-
 func _on_moved(position: Vector2) -> void:
-	Debounce.debounce("player_move",
-	func():
-		print(WorldContext.calculate_base_chunk_coordinate(position))
-	, 0.1)
+	pass
+	#Debounce.debounce("player_move",
+	#func():
+		#print(WorldContext.calculate_base_chunk_coordinate(position))
+	#, 0.1)

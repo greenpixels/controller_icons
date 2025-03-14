@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b3w3lk6imtq3t"]
+
+[ext_resource type="FontFile" uid="uid://qwui4ikkro1m" path="res://SourGummy-VariableFont_wdth,wght.ttf" id="1_ch0qm"]
+
+[resource]
+default_font = ExtResource("1_ch0qm")
