@@ -1,13 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://db1jxewxygxwt"]
+[gd_scene load_steps=11 format=3 uid="uid://db1jxewxygxwt"]
 
 [ext_resource type="Script" uid="uid://btgq5hxmgomjy" path="res://object_scenes/blocks/block_base.gd" id="1_x0ioi"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_yb2ek"]
+[ext_resource type="Shader" uid="uid://bbamo38igtuc" path="res://shaders/learning/burn.gdshader" id="3_dnine"]
 [ext_resource type="Shader" uid="uid://cf7o0mk1ncbj3" path="res://object_scenes/blocks/overlay.gdshader" id="3_yh7ba"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jned0"]
 shader = ExtResource("3_yh7ba")
 shader_parameter/contrast = 1.5
 shader_parameter/opacity = 0.7
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dnine"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uwuym"]
+noise = SubResource("FastNoiseLite_dnine")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uwuym"]
+shader = ExtResource("3_dnine")
+shader_parameter/burn_pattern_noise = SubResource("NoiseTexture2D_uwuym")
+shader_parameter/progress = 0.0
+shader_parameter/burn_amount = 6.1
+shader_parameter/edge_width = 1.0
+shader_parameter/mix_amount = 0.63
+shader_parameter/smoothness = 0.032
+shader_parameter/contrast = 6.6
+shader_parameter/edge_color = Color(1, 0.741176, 0.568627, 1)
+shader_parameter/pulse_speed = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_inoac"]
 atlas = ExtResource("2_yb2ek")
@@ -33,9 +51,10 @@ flip_v = true
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-use_parent_material = true
+material = SubResource("ShaderMaterial_uwuym")
 texture = SubResource("AtlasTexture_inoac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 28)
 shape = SubResource("RectangleShape2D_bc6xl")

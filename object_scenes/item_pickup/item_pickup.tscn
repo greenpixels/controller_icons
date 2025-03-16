@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dfedc0fp4po0k" path="res://object_scenes/item_pickup/item_pickup.gd" id="1_7d5ai"]
 [ext_resource type="Resource" uid="uid://cdrp6aj8mx0gg" path="res://resources/items/weapons/tools/_all/wooden_pickaxe.tres" id="2_yp67g"]
 [ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="3_sa8cl"]
+[ext_resource type="Material" uid="uid://rgvmdgwd6api" path="res://shaders/canvas_material_add.tres" id="4_8w7sw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_auun4"]
 atlas = ExtResource("3_sa8cl")
@@ -13,9 +14,6 @@ bg_color = Color(0, 0, 0, 1)
 border_width_left = 3
 border_width_right = 3
 border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o1a0y"]
-blend_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_adbgq"]
 radius = 16.0312
@@ -64,7 +62,7 @@ autowrap_mode = 0
 
 [node name="Line2D" type="Line2D" parent="."]
 show_behind_parent = true
-material = SubResource("CanvasItemMaterial_o1a0y")
+material = ExtResource("4_8w7sw")
 position = Vector2(0, 18.2407)
 scale = Vector2(1, 0.661092)
 points = PackedVector2Array(0, -0.03, 0, -450)

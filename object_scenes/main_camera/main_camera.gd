@@ -13,10 +13,18 @@ static var target_zoom_overwrite = null :
 var original_smoothing_speed : float
 var smoothed_center := Vector2.ZERO
 var original_camera_position : Vector2
+var position_smoothing_speed := 2.
 		
 func _ready():
+	smoothed_center = camera.global_position
 	original_camera_position = camera.global_position
-	original_smoothing_speed = camera.position_smoothing_speed
+	original_smoothing_speed = position_smoothing_speed
+	PlayersContext.players_spawned.connect(func():
+		if PlayersContext.players.size() <= 0: return
+		if not PlayersContext.players[0].is_inside_tree(): return
+		camera.global_position = PlayersContext.players[0].global_position		
+		smoothed_center = camera.global_position
+	)
 		
 func _physics_process(_delta: float) -> void:
 	handle_transition_state()
@@ -28,13 +36,13 @@ func _process(delta: float) -> void:
 
 func handle_transition_state() -> void:
 	if TransitionHandler.is_transitioning:
-		camera.position_smoothing_speed = 8
+		position_smoothing_speed = 8
 		if TransitionHandler._transition_time < 0.5:
 			target_zoom_overwrite = 0.3
 		else:
 			target_zoom_overwrite = null
 	else:
-		camera.position_smoothing_speed = original_smoothing_speed
+		position_smoothing_speed = original_smoothing_speed
 
 func update_camera_position(delta: float) -> void:
 	if PlayersContext.players.size() == 0:
@@ -58,10 +66,10 @@ func update_camera_position(delta: float) -> void:
 				center = player.global_position
 				break
 	
-	smoothed_center = smoothed_center.lerp(center, delta * camera.position_smoothing_speed)
+	smoothed_center = smoothed_center.lerp(center, delta * position_smoothing_speed)
 	
 	if not MainCamera.detached:
-		camera.global_position = center
+		camera.global_position = smoothed_center
 
 func update_camera_zoom(delta: float) -> void:
 	var max_distance := 800.0

@@ -21,7 +21,7 @@ process_mode = 3
 script = ExtResource("1_xarvd")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.00751808, 0.00588355, 0.0551315, 1)
+color = Color(0.0103117, 0.0186745, 0.0315236, 1)
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 unique_name_in_owner = true
@@ -39,7 +39,6 @@ offset = Vector2(-96, -96)
 zoom = Vector2(0.6, 0.6)
 process_callback = 0
 limit_smoothed = true
-position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="MainCamera"]
