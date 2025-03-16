@@ -115,7 +115,7 @@ vec4 generate_cracks(vec2 uv) {
         U *= 1.5;
     }
     color *= crack_color;
-	
+
 	return color;
 }
 
@@ -123,11 +123,11 @@ vec4 generate_cracks(vec2 uv) {
 void fragment() {
     // Sample the original texture
     vec4 original = texture(TEXTURE, UV);
-    
+
     // Generate cracks
     vec4 cracks = generate_cracks(UV);
     vec4 adjacent_cracks = generate_cracks(UV + TEXTURE_PIXEL_SIZE * reflection_offset);
-    
+
     // Apply glass effects
     vec4 final_color;
     if (adjacent_cracks.a >= 1.0) {
@@ -135,7 +135,7 @@ void fragment() {
     } else {
         final_color = texture(SCREEN_TEXTURE, SCREEN_UV + cracks.a*(SCREEN_PIXEL_SIZE * refraction_offset));
     }
-    
+
     // Blend original texture with effects based on crack alpha
     COLOR = mix(original, final_color, cracks.a);
 }

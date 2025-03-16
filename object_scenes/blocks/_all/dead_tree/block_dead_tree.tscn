@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bgw8mcf44yq48"]
+[gd_scene load_steps=9 format=3 uid="uid://bgw8mcf44yq48"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_p6q80"]
 [ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_11u8p"]
@@ -17,65 +17,6 @@ max_amount = 4
 script = ExtResource("2_11u8p")
 table = Array[ExtResource("3_ux4gm")]([SubResource("Resource_72jk6")])
 
-[sub_resource type="Shader" id="Shader_46yhj"]
-code = "shader_type canvas_item;
-
-uniform sampler2D burn_pattern_noise;
-uniform float progress : hint_range(0.0, 1.0, 0.01) = 0.;
-uniform float burn_amount : hint_range(0.0, 30., 0.1) = 6.3;
-uniform float edge_width : hint_range(0.0, 1.0, 0.01) = 1.;
-uniform float mix_amount : hint_range(0.0, 1.0, 0.01) = 0.61;
-uniform float smoothness : hint_range(0.0, 0.99, 0.001) = 0.011;
-uniform float contrast : hint_range(0.0, 10., 0.1) = 6.9;
-uniform vec3 edge_color : source_color = vec3(1., 0.85, 0.81);
-uniform float pulse_speed : hint_range(0.1, 5.0, 0.1) = 1.4;
-
-vec3 applyBurnEffect(vec3 baseColor, float intensity, float threshold, float halfEdge, float pulse) {
-    vec3 modified = baseColor;
-    modified += vec3(pulse + 1.0) * 0.05;
-    modified = mix(edge_color, modified, mix_amount);
-    modified = mix(vec3(0.5), modified, contrast);
-    modified -= smoothstep(threshold, threshold - (edge_width * progress), intensity) * burn_amount;
-    return modified;
-}
-
-void fragment() {
-    vec4 texColor = texture(TEXTURE, UV);
-	vec3 noiseTexture = texture(burn_pattern_noise, UV).rgb;
-    float burnIntensity = (noiseTexture.r + noiseTexture.g + noiseTexture.b) / 3.;
-	
-	float threshold = 1.0 - progress;
-    float halfEdge = (edge_width * progress) * 0.5;
-    float pulse = sin(TIME * pulse_speed);
-    
-    if(burnIntensity > threshold + halfEdge) {
-        COLOR.a = 0.0;
-    }
-    else if(burnIntensity > threshold - halfEdge) {
-        COLOR.rgb = applyBurnEffect(texColor.rgb, burnIntensity, threshold, halfEdge, pulse);
-        COLOR.a = min(texColor.a, smoothstep(threshold, threshold - smoothness, burnIntensity));
-    }
-}
-
-"
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_46yhj"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mawlx"]
-noise = SubResource("FastNoiseLite_46yhj")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mawlx"]
-shader = SubResource("Shader_46yhj")
-shader_parameter/burn_pattern_noise = SubResource("NoiseTexture2D_mawlx")
-shader_parameter/progress = 0.0
-shader_parameter/burn_amount = 6.3
-shader_parameter/edge_width = 1.0
-shader_parameter/mix_amount = 0.61
-shader_parameter/smoothness = 0.011
-shader_parameter/contrast = 6.9
-shader_parameter/edge_color = Color(1, 0.85, 0.81, 1)
-shader_parameter/pulse_speed = 1.4
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_02m56"]
 atlas = ExtResource("5_cvqbu")
 region = Rect2(204, 6, 192, 192)
@@ -86,5 +27,4 @@ minimal_pickaxe_power = 0
 loot_table = SubResource("Resource_sx0aa")
 
 [node name="Sprite2D" parent="." index="1"]
-material = SubResource("ShaderMaterial_mawlx")
 texture = SubResource("AtlasTexture_02m56")

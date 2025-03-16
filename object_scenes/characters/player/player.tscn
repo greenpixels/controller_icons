@@ -29,6 +29,7 @@ shape = SubResource("CircleShape2D_dp4t6")
 debug_color = Color(0.835882, 0.357543, 0.416445, 0)
 
 [node name="FrontLight3" type="PointLight2D" parent="." index="8"]
+visible = false
 color = Color(1, 0.992, 0.76, 1)
 energy = 0.4
 blend_mode = 2
