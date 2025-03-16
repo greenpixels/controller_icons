@@ -21,7 +21,7 @@ process_mode = 3
 script = ExtResource("1_xarvd")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.0103117, 0.0186745, 0.0315236, 1)
+color = Color(0.154872, 0.190828, 0.202971, 1)
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 unique_name_in_owner = true
