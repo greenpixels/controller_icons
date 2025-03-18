@@ -28,3 +28,5 @@ key = "LOCATION_GOLD_CAVE"
 
 [node name="MapGeneration" parent="." index="0"]
 block_types = Array[ExtResource("2_igyuu")]([SubResource("Resource_aanmb"), SubResource("Resource_w7sms")])
+npc_chance = 5.0
+maximum_npcs = 2

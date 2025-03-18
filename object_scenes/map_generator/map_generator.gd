@@ -32,6 +32,9 @@ static var chunk_debug_mode := false
 @export var use_sub_seed := true
 @export var loading_triggers: Array[Node2D] = []
 @export var block_types: Array[BlockSpawnConfiguration] = []
+@export var npc_chance : float = 0.
+@export var maximum_npcs = 0
+var current_npcs = 0
 var map : PersistanceMapState
 var parent_node: Node = null
 var chunk_node_positions : Array[Vector2] = []
@@ -210,11 +213,17 @@ func _generate_blocks_in_chunk(chunk_coord: Vector2, chunk_node: Node2D, chunk_c
 			if _is_outside_max_map_size(grid_pos):
 				block_scene_path = boundary_block.resource_path
 			elif _should_skip_block(grid_pos):
+				optionally_spawn_block_alternatives(grid_pos, chunk_node)
 				continue
 			else:
 				block_scene_path = _choose_block_scene_path(grid_pos, blocks_in_chunk)
 			_add_new_block_to_chunk(block_scene_path, grid_pos, chunk_node, blocks_in_chunk, map_chunk_blocks, chunk_coord_string)
 
+func optionally_spawn_block_alternatives(grid_pos: Vector2i, chunk_node: Node2D):
+	if randf() <= npc_chance and current_npcs < maximum_npcs:
+		NpcContext.spawn_random_npc(grid_pos * (block_size + block_padding) , chunk_node)
+		current_npcs += 1
+		
 func _should_skip_block(grid_pos: Vector2i) -> bool:
 	return _is_within_spawn_padding(grid_pos) or _is_within_empty_area(grid_pos)
 

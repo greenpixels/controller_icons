@@ -38,3 +38,5 @@ key = "LOCATION_IRON_CAVE"
 
 [node name="MapGeneration" parent="." index="0"]
 block_types = Array[ExtResource("2_e2er1")]([SubResource("Resource_vral0"), SubResource("Resource_vhd21"), SubResource("Resource_2ybxe")])
+npc_chance = 5.0
+maximum_npcs = 2

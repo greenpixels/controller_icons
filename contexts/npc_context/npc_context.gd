@@ -9,7 +9,7 @@ func spawn_random_npc(global_position: Vector2, _chunk_node: Node2D = null) -> v
 	npc.persistance.add_item("ITEM_WOODEN_PICKAXE", 1)
 	npc.persistance.equip_item("ITEM_OMINOUS_CAP", PlayerInventory.ArmorSlotPositions.HELMET)
 
-	var current_map = WorldContext.get_current_map()
+	
 	var chunk_node: Node2D
 	var chunk_coord = WorldContext.calculate_base_chunk_coordinate(global_position)
 	npc.persistance.chunk_key = str(chunk_coord)
@@ -29,10 +29,14 @@ func spawn_random_npc(global_position: Vector2, _chunk_node: Node2D = null) -> v
 		return
 	
 	# Defer adding the pickup to the scene.
-	current_map.chunks[str(chunk_coord)].npcs[npc.persistance.uuid] = npc.persistance
+	persist_npc.call_deferred(str(chunk_coord), npc)
 	chunk_node.add_child.call_deferred(npc)
 	npc.set_deferred("global_position", global_position)
 	# current_map.add_item_pickup(pickup)
+
+func persist_npc(chunk_coord : String, npc: Npc):
+	var current_map = WorldContext.get_current_map()
+	current_map.chunks[str(chunk_coord)].npcs[npc.persistance.uuid] = npc.persistance
 
 func spawn_npc_from_persistance(persistance: PersistanceNpcState, _chunk_node: Node2D = null) -> void:
 	var npc : CharacterBase = human_npc_scene.instantiate()
