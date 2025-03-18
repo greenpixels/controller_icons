@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dlr8hhaw3wwou"]
+[gd_scene load_steps=13 format=3 uid="uid://dlr8hhaw3wwou"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_xxc5d"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_7nssx"]
 [ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_jkuh5"]
 [ext_resource type="Script" uid="uid://b8h8wm2kenltp" path="res://data_classes/loot_table_entry.gd" id="3_e5osr"]
 [ext_resource type="Resource" uid="uid://csp7ftq3y5sxs" path="res://resources/items/_all/stone.tres" id="4_o4lfp"]
+[ext_resource type="Shader" uid="uid://cac4hxxdnuqj4" path="res://shaders/block_break.gdshader" id="5_e5osr"]
 
 [sub_resource type="Resource" id="Resource_ff6pe"]
 script = ExtResource("3_e5osr")
@@ -19,6 +20,26 @@ script = ExtResource("2_jkuh5")
 table = Array[ExtResource("3_e5osr")]([SubResource("Resource_ff6pe")])
 metadata/_custom_type_script = "uid://dqi7e80cvul66"
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ju1cj"]
+noise_type = 2
+frequency = 0.0184
+offset = Vector3(434.34, 262.63, 0)
+fractal_type = 0
+fractal_weighted_strength = 1.0
+fractal_ping_pong_strength = -2.045
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dnine"]
+noise = SubResource("FastNoiseLite_ju1cj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4lfp"]
+resource_local_to_scene = true
+shader = ExtResource("5_e5osr")
+shader_parameter/break_intensity = 0.06
+shader_parameter/color_shift_intensity = 0.34
+shader_parameter/break_progress = 0.0
+shader_parameter/break_texture = SubResource("NoiseTexture2D_dnine")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_26b11"]
 atlas = ExtResource("2_7nssx")
 region = Rect2(402, 6, 192, 192)
@@ -30,4 +51,5 @@ maximum_health = 200
 loot_table = SubResource("Resource_5cqhe")
 
 [node name="Sprite2D" parent="." index="1"]
+material = SubResource("ShaderMaterial_o4lfp")
 texture = SubResource("AtlasTexture_26b11")

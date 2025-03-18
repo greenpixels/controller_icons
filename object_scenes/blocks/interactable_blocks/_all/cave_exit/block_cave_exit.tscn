@@ -22,6 +22,7 @@ key = "BLOCK_CAVE_EXIT"
 position = Vector2(0, 109)
 
 [node name="Sprite2D" parent="." index="1"]
+material = null
 texture = SubResource("AtlasTexture_m2yo0")
 
 [node name="CollisionShape2D" parent="." index="2"]

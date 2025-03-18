@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6l43j4dtjauv"]
+[gd_scene load_steps=13 format=3 uid="uid://b6l43j4dtjauv"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_ebwms"]
 [ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_74c3t"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_p2klo"]
 [ext_resource type="Script" uid="uid://b8h8wm2kenltp" path="res://data_classes/loot_table_entry.gd" id="3_01nu8"]
 [ext_resource type="Resource" uid="uid://diyxj2nmfpwq2" path="res://resources/items/_all/dirt.tres" id="4_gpohm"]
+[ext_resource type="Shader" uid="uid://cac4hxxdnuqj4" path="res://shaders/block_break.gdshader" id="5_g81mx"]
 
 [sub_resource type="Resource" id="Resource_wt24w"]
 script = ExtResource("3_01nu8")
@@ -17,6 +18,26 @@ max_amount = 4
 script = ExtResource("2_74c3t")
 table = Array[ExtResource("3_01nu8")]([SubResource("Resource_wt24w")])
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ju1cj"]
+noise_type = 2
+frequency = 0.0184
+offset = Vector3(434.34, 262.63, 0)
+fractal_type = 0
+fractal_weighted_strength = 1.0
+fractal_ping_pong_strength = -2.045
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dnine"]
+noise = SubResource("FastNoiseLite_ju1cj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idw2r"]
+resource_local_to_scene = true
+shader = ExtResource("5_g81mx")
+shader_parameter/break_intensity = 0.06
+shader_parameter/color_shift_intensity = 0.34
+shader_parameter/break_progress = 0.0
+shader_parameter/break_texture = SubResource("NoiseTexture2D_dnine")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcie"]
 atlas = ExtResource("2_p2klo")
 region = Rect2(6, 6, 192, 192)
@@ -27,4 +48,5 @@ minimal_pickaxe_power = 0
 loot_table = SubResource("Resource_mor58")
 
 [node name="Sprite2D" parent="." index="1"]
+material = SubResource("ShaderMaterial_idw2r")
 texture = SubResource("AtlasTexture_xfcie")

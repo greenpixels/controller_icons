@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://db1jxewxygxwt"]
+[gd_scene load_steps=8 format=3 uid="uid://db1jxewxygxwt"]
 
+[ext_resource type="Material" uid="uid://cap0emkno3i3h" path="res://shaders/break.tres" id="1_dnine"]
 [ext_resource type="Script" uid="uid://btgq5hxmgomjy" path="res://object_scenes/blocks/block_base.gd" id="1_x0ioi"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_yb2ek"]
 [ext_resource type="Shader" uid="uid://cf7o0mk1ncbj3" path="res://object_scenes/blocks/overlay.gdshader" id="3_yh7ba"]
@@ -33,6 +34,7 @@ flip_v = true
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("1_dnine")
 texture = SubResource("AtlasTexture_inoac")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,12 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://xa20ommqlb3m"]
+[gd_scene load_steps=8 format=3 uid="uid://xa20ommqlb3m"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_v03de"]
+[ext_resource type="Shader" uid="uid://cac4hxxdnuqj4" path="res://shaders/block_break.gdshader" id="2_qyxrc"]
 [ext_resource type="PackedScene" uid="uid://b15w68fe4cpnr" path="res://object_scenes/interact_area/interact_area.tscn" id="2_vmmei"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ju1cj"]
+noise_type = 2
+frequency = 0.0184
+offset = Vector3(434.34, 262.63, 0)
+fractal_type = 0
+fractal_weighted_strength = 1.0
+fractal_ping_pong_strength = -2.045
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dnine"]
+noise = SubResource("FastNoiseLite_ju1cj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k42b8"]
+resource_local_to_scene = true
+shader = ExtResource("2_qyxrc")
+shader_parameter/break_intensity = 0.06
+shader_parameter/color_shift_intensity = 0.34
+shader_parameter/break_progress = 0.0
+shader_parameter/break_texture = SubResource("NoiseTexture2D_dnine")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_08umh"]
 size = Vector2(192, 133)
 
 [node name="Block" instance=ExtResource("1_v03de")]
+
+[node name="Sprite2D" parent="." index="1"]
+material = SubResource("ShaderMaterial_k42b8")
 
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2(0, 30.5)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dr8n86upyp276"]
+[gd_scene load_steps=15 format=3 uid="uid://dr8n86upyp276"]
 
 [ext_resource type="PackedScene" uid="uid://db1jxewxygxwt" path="res://object_scenes/blocks/block_base.tscn" id="1_jxj8v"]
 [ext_resource type="Texture2D" uid="uid://b1w2c4x1lct73" path="res://_assets/blocks/blocks_scaled.png" id="2_2v13t"]
 [ext_resource type="Script" uid="uid://dqi7e80cvul66" path="res://data_classes/loot_table.gd" id="2_te7ex"]
 [ext_resource type="Script" uid="uid://b8h8wm2kenltp" path="res://data_classes/loot_table_entry.gd" id="3_w7j17"]
 [ext_resource type="Resource" uid="uid://bxg7hrdehxxsb" path="res://resources/items/_all/iron_ore.tres" id="4_ujmdu"]
+[ext_resource type="Shader" uid="uid://cac4hxxdnuqj4" path="res://shaders/block_break.gdshader" id="5_w7j17"]
 
 [sub_resource type="Resource" id="Resource_58fkk"]
 script = ExtResource("3_w7j17")
@@ -18,6 +19,26 @@ metadata/_custom_type_script = "uid://b8h8wm2kenltp"
 script = ExtResource("2_te7ex")
 table = Array[ExtResource("3_w7j17")]([SubResource("Resource_58fkk")])
 metadata/_custom_type_script = "uid://dqi7e80cvul66"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ju1cj"]
+noise_type = 2
+frequency = 0.0184
+offset = Vector3(434.34, 262.63, 0)
+fractal_type = 0
+fractal_weighted_strength = 1.0
+fractal_ping_pong_strength = -2.045
+cellular_return_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dnine"]
+noise = SubResource("FastNoiseLite_ju1cj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ujmdu"]
+resource_local_to_scene = true
+shader = ExtResource("5_w7j17")
+shader_parameter/break_intensity = 0.06
+shader_parameter/color_shift_intensity = 0.34
+shader_parameter/break_progress = 0.0
+shader_parameter/break_texture = SubResource("NoiseTexture2D_dnine")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m2uy4"]
 atlas = ExtResource("2_2v13t")
@@ -39,6 +60,7 @@ maximum_health = 180
 loot_table = SubResource("Resource_c6q5o")
 
 [node name="Sprite2D" parent="." index="1"]
+material = SubResource("ShaderMaterial_ujmdu")
 texture = SubResource("AtlasTexture_m2uy4")
 
 [node name="PointLight2D" type="PointLight2D" parent="." index="3"]

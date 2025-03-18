@@ -13,7 +13,11 @@ class_name Block
 @export var maximum_health := 100
 @export var loot_table : LootTable
 const SHAKE_FACTOR := 16.
-var current_health : int 
+var current_health : int : 
+	set(value):
+		current_health = value
+		if not is_node_ready() or not sprite.material: return
+		sprite.material.set_shader_parameter("break_progress", 1. - float(current_health) / float(maximum_health))
 var impact_intensity := 0. : 
 	set(value):
 		impact_intensity = value
@@ -23,8 +27,8 @@ signal on_added
 signal on_removed
 
 func _ready() -> void:
-	%Shadow.texture = $Sprite2D.texture
-	
+	%Shadow.texture = sprite.texture	
+
 func take_damage_from_item(source_item: Item):
 	if not source_item is Tool: return
 	if minimal_axe_power >= 0 and source_item.axe_power >= minimal_axe_power and source_item.axe_power > 0:
@@ -42,6 +46,8 @@ func take_damage(amount: int):
 		on_destroy()
 		queue_free()
 		on_removed.emit()
+	else:
+		TweenHelper.tween("health_reset", self).tween_callback(func(): current_health = maximum_health).set_delay(1.5)
 	
 func on_destroy():
 	if loot_table:
