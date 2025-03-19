@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Helmet" load_steps=10 format=3 uid="uid://ct4bfgdv52all"]
+
+[ext_resource type="Script" uid="uid://be47xnykkyo8q" path="res://resources/items/equipment/armor/helmets/helmet.gd" id="1_6clka"]
+[ext_resource type="Texture2D" uid="uid://ct8or0wqbyjic" path="res://_assets/model_textures/helmet/helmet_iron_armor.png" id="1_qql1a"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_1t6nu"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="2_j4cwe"]
+[ext_resource type="Resource" uid="uid://y4g2dn66gnl0" path="res://resources/items/_all/iron_bar.tres" id="3_c3k1i"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_afq8j"]
+
+[sub_resource type="Resource" id="Resource_16fb4"]
+script = ExtResource("2_j4cwe")
+item = ExtResource("3_c3k1i")
+amount = 7
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_lujoi"]
+script = ExtResource("4_afq8j")
+ingredients = Array[ExtResource("2_j4cwe")]([SubResource("Resource_16fb4")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qql1a"]
+atlas = ExtResource("2_1t6nu")
+region = Rect2(6, 542, 98, 104)
+
+[resource]
+script = ExtResource("1_6clka")
+should_show_hair = false
+armor_texture = ExtResource("1_qql1a")
+should_show_base = false
+slot = 0
+texture = SubResource("AtlasTexture_qql1a")
+key = "ITEM_IRON_HELMET"
+cooldown = 0.0
+rarity = 1
+max_stacks = 1
+recipe = SubResource("Resource_lujoi")
+metadata/_custom_type_script = "uid://be47xnykkyo8q"

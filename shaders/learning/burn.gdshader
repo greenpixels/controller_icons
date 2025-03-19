@@ -31,20 +31,19 @@ float computeBurnAlpha(float intensity, float threshold, float smoothFactor) {
 void fragment() {
     vec4 texColor = texture(TEXTURE, UV);
     float burnIntensity = getBurnIntensity(UV);
-    
+
     float threshold = 1.0 - progress;
     float halfEdge = (edge_width * progress) * 0.5;
     float pulse = sin(TIME * pulse_speed);
-    
+
     if(burnIntensity > threshold + halfEdge) {
         texColor.a = 0.0;
     }
-    
+
     else if(burnIntensity > threshold - halfEdge) {
         texColor.rgb = applyBurnEffect(texColor.rgb, burnIntensity, threshold, halfEdge, pulse);
         texColor.a = computeBurnAlpha(burnIntensity, threshold, smoothness);
     }
-    
+
     COLOR = texColor;
 }
-
