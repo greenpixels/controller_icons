@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Armor" load_steps=10 format=3 uid="uid://cp0ndvnvnkw65"]
+
+[ext_resource type="Script" uid="uid://d3sngno1fmru4" path="res://resources/items/equipment/armor/armor.gd" id="1_ebd3o"]
+[ext_resource type="Texture2D" uid="uid://clwntxfqw7xgt" path="res://_assets/model_textures/foot/foot_bronze_armor.png" id="1_gaohb"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="2_nf7rp"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="3_t2dup"]
+[ext_resource type="Resource" uid="uid://8scq5c5hugh5" path="res://resources/items/_all/copper_bar.tres" id="3_vf0e2"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_qo54g"]
+
+[sub_resource type="Resource" id="Resource_3u1t4"]
+script = ExtResource("2_nf7rp")
+item = ExtResource("3_vf0e2")
+amount = 5
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_0i4ot"]
+script = ExtResource("4_qo54g")
+ingredients = Array[ExtResource("2_nf7rp")]([SubResource("Resource_3u1t4")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8tnnk"]
+atlas = ExtResource("3_t2dup")
+region = Rect2(219, 434, 101, 104)
+
+[resource]
+script = ExtResource("1_ebd3o")
+armor_texture = ExtResource("1_gaohb")
+should_show_base = false
+slot = 2
+texture = SubResource("AtlasTexture_8tnnk")
+key = "ITEM_COPPER_SHOES"
+cooldown = 0.0
+rarity = 1
+max_stacks = 1
+recipe = SubResource("Resource_0i4ot")
+metadata/_custom_type_script = "uid://d3sngno1fmru4"

@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Armor" load_steps=10 format=3 uid="uid://b5s1spip1whba"]
+
+[ext_resource type="Script" uid="uid://d3sngno1fmru4" path="res://resources/items/equipment/armor/armor.gd" id="1_kst3b"]
+[ext_resource type="Texture2D" uid="uid://b5v7f5ljai0uo" path="res://_assets/model_textures/body/body_bronze_armor.png" id="1_xyjtc"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="2_2himp"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="3_2lwkt"]
+[ext_resource type="Resource" uid="uid://8scq5c5hugh5" path="res://resources/items/_all/copper_bar.tres" id="3_cf782"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_tm2dp"]
+
+[sub_resource type="Resource" id="Resource_1orlb"]
+script = ExtResource("2_2himp")
+item = ExtResource("3_cf782")
+amount = 12
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_85jeq"]
+script = ExtResource("4_tm2dp")
+ingredients = Array[ExtResource("2_2himp")]([SubResource("Resource_1orlb")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oocl6"]
+atlas = ExtResource("3_2lwkt")
+region = Rect2(111, 435, 104, 103)
+
+[resource]
+script = ExtResource("1_kst3b")
+armor_texture = ExtResource("1_xyjtc")
+should_show_base = false
+slot = 1
+texture = SubResource("AtlasTexture_oocl6")
+key = "ITEM_COPPER_BREASTPLATE"
+cooldown = 0.0
+rarity = 1
+max_stacks = 1
+recipe = SubResource("Resource_85jeq")
+metadata/_custom_type_script = "uid://d3sngno1fmru4"
