@@ -36,7 +36,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("LeftFootSprite:position")
+tracks/2/path = NodePath("LeftFootBaseScale/LeftFootSprite:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -72,7 +72,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("LeftFootSprite:rotation")
+tracks/5/path = NodePath("LeftFootBaseScale/LeftFootSprite:rotation")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -165,7 +165,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("LeftFootSprite:position")
+tracks/2/path = NodePath("LeftFootBaseScale/LeftFootSprite:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -177,7 +177,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("LeftFootSprite:rotation")
+tracks/3/path = NodePath("LeftFootBaseScale/LeftFootSprite:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -245,15 +245,18 @@ offset = Vector2(4, 8)
 [node name="UpperBodyParts" type="Node2D" parent="."]
 position = Vector2(0, 5)
 
-[node name="TorsoSprite" type="Sprite2D" parent="UpperBodyParts"]
+[node name="TorsoBaseScale" type="Node2D" parent="UpperBodyParts"]
+position = Vector2(0, -10)
+
+[node name="TorsoSprite" type="Sprite2D" parent="UpperBodyParts/TorsoBaseScale"]
 unique_name_in_owner = true
-position = Vector2(3, 24)
+position = Vector2(6, 26)
 texture = ExtResource("3_gctu8")
 offset = Vector2(-3, -24)
 
 [node name="HeadBaseScale" type="Node2D" parent="UpperBodyParts"]
-position = Vector2(-2, -2)
-scale = Vector2(1.15, 1.15)
+position = Vector2(2, -10)
+scale = Vector2(1.25, 1.25)
 
 [node name="Head" type="Node2D" parent="UpperBodyParts/HeadBaseScale"]
 position = Vector2(0, 4.3697)
@@ -282,7 +285,10 @@ position = Vector2(7.48836, -23.6054)
 scale = Vector2(1.02329, 0.890584)
 offset = Vector2(-7, -21)
 
-[node name="LeftFootSprite" type="Sprite2D" parent="."]
+[node name="LeftFootBaseScale" type="Node2D" parent="."]
+position = Vector2(3, 0)
+
+[node name="LeftFootSprite" type="Sprite2D" parent="LeftFootBaseScale"]
 unique_name_in_owner = true
 position = Vector2(-22, 16)
 scale = Vector2(1.2, 1.2)

@@ -67,7 +67,7 @@ position = Vector2(-11, -10)
 [node name="Shadow" type="Sprite2D" parent="SpriteContainer"]
 self_modulate = Color(0, 0, 0, 0.439216)
 material = SubResource("ShaderMaterial_efhyb")
-position = Vector2(0, 65)
+position = Vector2(0, 69)
 scale = Vector2(1, 0.48)
 texture = SubResource("ViewportTexture_ov6cv")
 flip_v = true
