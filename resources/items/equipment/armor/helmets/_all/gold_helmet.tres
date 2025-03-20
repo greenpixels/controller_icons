@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Helmet" load_steps=10 format=3 uid="uid://75sljletcbhv"]
+
+[ext_resource type="Texture2D" uid="uid://06327m2lt8v4" path="res://_assets/model_textures/helmet/helmet_gold_armor.png" id="1_ishox"]
+[ext_resource type="Script" uid="uid://be47xnykkyo8q" path="res://resources/items/equipment/armor/helmets/helmet.gd" id="1_pl2k5"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="2_4k6vy"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="2_h6adj"]
+[ext_resource type="Resource" uid="uid://cyx1ilc8j63by" path="res://resources/items/_all/gold_bar.tres" id="3_apby2"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_h7jkr"]
+
+[sub_resource type="Resource" id="Resource_i73w0"]
+script = ExtResource("2_4k6vy")
+item = ExtResource("3_apby2")
+amount = 7
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_4fgtq"]
+script = ExtResource("4_h7jkr")
+ingredients = Array[ExtResource("2_4k6vy")]([SubResource("Resource_i73w0")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ishox"]
+atlas = ExtResource("2_h6adj")
+region = Rect2(3, 649, 101, 103)
+
+[resource]
+script = ExtResource("1_pl2k5")
+should_show_hair = false
+armor_texture = ExtResource("1_ishox")
+should_show_base = false
+slot = 0
+texture = SubResource("AtlasTexture_ishox")
+key = "ITEM_GOLD_HELMET"
+cooldown = 0.0
+rarity = 2
+max_stacks = 1
+recipe = SubResource("Resource_4fgtq")
+metadata/_custom_type_script = "uid://be47xnykkyo8q"

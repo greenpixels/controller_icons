@@ -39,9 +39,7 @@ func conceal():
 ## @param content The text content to display in the tooltip.
 ## @param show_extra_explanation Whether to show additional explanation content.
 func describe(origin_node: Control, content: String, show_extra_explanation = false):
-	var origin_x_position = 0
-	if origin_node:
-		origin_x_position = origin_node.global_position.x
+	
 	var viewport_center_position = get_viewport().get_visible_rect().size.x / 2
 	tooltip_loading_bar.value = 0
 	TweenHelper.tween("load_progress", tooltip_loading_bar).tween_property(tooltip_loading_bar, "value", 0, 0)
@@ -54,7 +52,10 @@ func describe(origin_node: Control, content: String, show_extra_explanation = fa
 		var current_modulate = explanation.modulate
 		explanation.modulate.a = 0
 		TweenHelper.tween("fade_in", explanation).tween_property(explanation, "modulate", current_modulate, 0.15).set_delay(explanations_delay)
-
+		
+	var origin_x_position = 0
+	if origin_node:
+		origin_x_position = origin_node.global_position.x
 	if origin_x_position > viewport_center_position:
 		layout_wrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_WIDTH)
 	else:

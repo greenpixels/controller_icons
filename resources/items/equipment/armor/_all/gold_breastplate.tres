@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Armor" load_steps=10 format=3 uid="uid://cf5o8hbpd6540"]
+
+[ext_resource type="Script" uid="uid://d3sngno1fmru4" path="res://resources/items/equipment/armor/armor.gd" id="1_637fm"]
+[ext_resource type="Texture2D" uid="uid://c1n8ol73i8u2j" path="res://_assets/model_textures/body/body_gold_armor.png" id="1_cwqsw"]
+[ext_resource type="Script" uid="uid://wpktgfoyjvnv" path="res://data_classes/crafting_ingredient.gd" id="2_7jvy3"]
+[ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="3_3f74s"]
+[ext_resource type="Resource" uid="uid://cyx1ilc8j63by" path="res://resources/items/_all/gold_bar.tres" id="3_jahss"]
+[ext_resource type="Script" uid="uid://jjso001stlay" path="res://data_classes/crafting_recipe.gd" id="4_vp4gc"]
+
+[sub_resource type="Resource" id="Resource_5n6l6"]
+script = ExtResource("2_7jvy3")
+item = ExtResource("3_jahss")
+amount = 12
+metadata/_custom_type_script = "uid://wpktgfoyjvnv"
+
+[sub_resource type="Resource" id="Resource_hgsqq"]
+script = ExtResource("4_vp4gc")
+ingredients = Array[ExtResource("2_7jvy3")]([SubResource("Resource_5n6l6")])
+metadata/_custom_type_script = "uid://jjso001stlay"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sksvn"]
+atlas = ExtResource("3_3f74s")
+region = Rect2(111, 650, 104, 104)
+
+[resource]
+script = ExtResource("1_637fm")
+armor_texture = ExtResource("1_cwqsw")
+should_show_base = false
+slot = 1
+texture = SubResource("AtlasTexture_sksvn")
+key = "ITEM_GOLD_BREASTPLATE"
+cooldown = 0.0
+rarity = 2
+max_stacks = 1
+recipe = SubResource("Resource_hgsqq")
+metadata/_custom_type_script = "uid://d3sngno1fmru4"
