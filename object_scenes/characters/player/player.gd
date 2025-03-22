@@ -102,6 +102,7 @@ func _on_current_item_changed(_position: int) -> void:
 	held_item.item = inventory.items[controller.current_item_index]
 
 func _on_equipment_items_changed() -> void:
+	super()
 	model.update_sprite_from_human_style(persistance.human_style, equipment)
 	_update_health_bar()
 	

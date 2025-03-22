@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://btvmmwlhheukw"]
+
+[ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_52gkb"]
+[ext_resource type="Texture2D" uid="uid://dk3j8vq1tshgm" path="res://_assets/creatures/slime.png" id="2_dhv7k"]
+
+[node name="Character" instance=ExtResource("1_52gkb")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="5"]
+position = Vector2(-3, 0)
+texture = ExtResource("2_dhv7k")

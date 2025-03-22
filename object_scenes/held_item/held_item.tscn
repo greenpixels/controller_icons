@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bh3oegyqhcdj6"]
 
-[ext_resource type="Script" uid="uid://c3my6yk1h4u0h" path="res://object_scenes/characters/held_item/held_item.gd" id="1_gngsd"]
+[ext_resource type="Script" uid="uid://c3my6yk1h4u0h" path="res://object_scenes/held_item/held_item.gd" id="1_gngsd"]
 [ext_resource type="Resource" uid="uid://cdrp6aj8mx0gg" path="res://resources/items/weapons/tools/_all/wooden_pickaxe.tres" id="2_evlp7"]
 [ext_resource type="Texture2D" uid="uid://p16h5um7ovo2" path="res://_assets/items/items_scaled.png" id="3_4ffoj"]
 

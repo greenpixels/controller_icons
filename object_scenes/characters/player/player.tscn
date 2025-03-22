@@ -1,11 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmtwx58oxqnwx"]
+[gd_scene load_steps=11 format=3 uid="uid://dmtwx58oxqnwx"]
 
 [ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_3yv1p"]
 [ext_resource type="Script" uid="uid://d4ia5row8k1df" path="res://object_scenes/characters/player/player.gd" id="2_dp4t6"]
 [ext_resource type="Texture2D" uid="uid://la4cyjia605" path="res://light-source.png" id="3_pbot0"]
+[ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/human_model/human_model.tscn" id="4_eh2ty"]
+[ext_resource type="PackedScene" uid="uid://bh3oegyqhcdj6" path="res://object_scenes/held_item/held_item.tscn" id="5_nsahv"]
+[ext_resource type="Shader" uid="uid://cf7o0mk1ncbj3" path="res://object_scenes/blocks/overlay.gdshader" id="6_bxt4h"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_dp4t6"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_04brl"]
+shader = ExtResource("6_bxt4h")
+shader_parameter/contrast = 1.5
+shader_parameter/opacity = 0.7
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nsahv"]
+viewport_path = NodePath("SubViewport2")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_eh2ty"]
+viewport_path = NodePath("SubViewport2")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dp4t6"]
 radius = 118.512
@@ -14,11 +25,21 @@ radius = 118.512
 script = ExtResource("2_dp4t6")
 base_speed = 500.0
 
-[node name="Shadow" parent="SpriteContainer" index="0"]
-texture = SubResource("ViewportTexture_dp4t6")
+[node name="SpriteContainer2" type="Node2D" parent="." index="3"]
+position = Vector2(-11, -10)
 
-[node name="Sprite" parent="SpriteContainer" index="1"]
-texture = SubResource("ViewportTexture_dp4t6")
+[node name="Shadow" type="Sprite2D" parent="SpriteContainer2" index="0"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 0.439216)
+material = SubResource("ShaderMaterial_04brl")
+position = Vector2(0, 69)
+scale = Vector2(1, 0.48)
+texture = SubResource("ViewportTexture_nsahv")
+flip_v = true
+
+[node name="Sprite" type="Sprite2D" parent="SpriteContainer2" index="1"]
+unique_name_in_owner = true
+texture = SubResource("ViewportTexture_eh2ty")
 
 [node name="InteractRadius" type="Area2D" parent="." index="6"]
 metadata/_edit_group_ = true
@@ -28,12 +49,25 @@ position = Vector2(0, 33)
 shape = SubResource("CircleShape2D_dp4t6")
 debug_color = Color(0.835882, 0.357543, 0.416445, 0)
 
-[node name="FrontLight3" type="PointLight2D" parent="." index="8"]
+[node name="FrontLight3" type="PointLight2D" parent="." index="7"]
 color = Color(1, 0.992, 0.76, 1)
 energy = 0.4
 blend_mode = 2
 texture = ExtResource("3_pbot0")
 texture_scale = 1.7
+
+[node name="SubViewport2" type="SubViewport" parent="." index="8"]
+transparent_bg = true
+size = Vector2i(384, 384)
+
+[node name="Model" parent="SubViewport2" index="0" instance=ExtResource("4_eh2ty")]
+unique_name_in_owner = true
+position = Vector2(200, 200)
+
+[node name="Item" parent="SubViewport2" index="1" node_paths=PackedStringArray("character") instance=ExtResource("5_nsahv")]
+unique_name_in_owner = true
+position = Vector2(200, 200)
+character = NodePath("../..")
 
 [connection signal="moved" from="." to="." method="_on_moved"]
 [connection signal="area_entered" from="InteractRadius" to="." method="_on_interact_radius_area_entered"]

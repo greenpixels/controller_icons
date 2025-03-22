@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dsidwtwn5koex"]
+[gd_scene load_steps=15 format=3 uid="uid://dsidwtwn5koex"]
 
 [ext_resource type="PackedScene" uid="uid://bfxjfobl3sr6v" path="res://object_scenes/characters/character_base.tscn" id="1_unihu"]
 [ext_resource type="Script" uid="uid://ci6k5rs4iba2" path="res://object_scenes/characters/npc/npc.gd" id="2_k7pj4"]
@@ -8,9 +8,20 @@
 [ext_resource type="Script" uid="uid://dgy82q6so735x" path="res://object_scenes/controllers/behaviors/npc_moving_behavior.gd" id="6_yehrf"]
 [ext_resource type="Script" uid="uid://dr7ldq0n0lua4" path="res://object_scenes/controllers/behaviors/npc_mining_behavior.gd" id="7_7c5el"]
 [ext_resource type="Script" uid="uid://dj22ge2ybqw1g" path="res://object_scenes/controllers/behaviors/npc_fighting_behavior.gd" id="8_vk0xv"]
+[ext_resource type="PackedScene" uid="uid://cvk4q47iay47k" path="res://object_scenes/human_model/human_model.tscn" id="9_scp8m"]
+[ext_resource type="PackedScene" uid="uid://bh3oegyqhcdj6" path="res://object_scenes/held_item/held_item.tscn" id="10_pnk41"]
+[ext_resource type="Shader" uid="uid://cf7o0mk1ncbj3" path="res://object_scenes/blocks/overlay.gdshader" id="11_dsnox"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_k7pj4"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8r3t"]
+shader = ExtResource("11_dsnox")
+shader_parameter/contrast = 1.5
+shader_parameter/opacity = 0.7
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pnk41"]
+viewport_path = NodePath("SubViewport2")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_scp8m"]
+viewport_path = NodePath("SubViewport2")
 
 [node name="NPC" node_paths=PackedStringArray("controller") instance=ExtResource("1_unihu")]
 script = ExtResource("2_k7pj4")
@@ -19,11 +30,24 @@ controller = NodePath("NpcController")
 [node name="Inventory" parent="." index="1"]
 storage_view = null
 
-[node name="Shadow" parent="SpriteContainer" index="0"]
-texture = SubResource("ViewportTexture_k7pj4")
+[node name="SpriteContainer2" type="Node2D" parent="." index="3"]
+position = Vector2(-11, -10)
 
-[node name="Sprite" parent="SpriteContainer" index="1"]
-texture = SubResource("ViewportTexture_k7pj4")
+[node name="Shadow" type="Sprite2D" parent="SpriteContainer2" index="0"]
+unique_name_in_owner = true
+self_modulate = Color(0, 0, 0, 0.439216)
+material = SubResource("ShaderMaterial_f8r3t")
+position = Vector2(0, 69)
+scale = Vector2(1, 0.48)
+texture = SubResource("ViewportTexture_pnk41")
+flip_v = true
+
+[node name="Sprite" type="Sprite2D" parent="SpriteContainer2" index="1"]
+unique_name_in_owner = true
+texture = SubResource("ViewportTexture_scp8m")
+
+[node name="HealthBar" parent="." index="5"]
+visible = false
 
 [node name="NpcController" type="Node" parent="." index="6" node_paths=PackedStringArray("mining_raycast", "fight_target_raycast", "npc", "navigation_agent")]
 script = ExtResource("2_y7s0x")
@@ -85,8 +109,18 @@ avoidance_layers = 0
 avoidance_mask = 0
 debug_use_custom = true
 
-[node name="HealthBar" parent="." index="11"]
-visible = false
+[node name="SubViewport2" type="SubViewport" parent="." index="11"]
+transparent_bg = true
+size = Vector2i(384, 384)
+
+[node name="Model" parent="SubViewport2" index="0" instance=ExtResource("9_scp8m")]
+unique_name_in_owner = true
+position = Vector2(200, 200)
+
+[node name="Item" parent="SubViewport2" index="1" node_paths=PackedStringArray("character") instance=ExtResource("10_pnk41")]
+unique_name_in_owner = true
+position = Vector2(200, 200)
+character = NodePath("../..")
 
 [connection signal="hurt" from="." to="NpcController" method="_on_hurt"]
 [connection signal="position_changed" from="." to="." method="_on_moved"]

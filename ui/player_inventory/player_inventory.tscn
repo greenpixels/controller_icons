@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdd83dyudffo1"]
+[gd_scene load_steps=11 format=3 uid="uid://bdd83dyudffo1"]
 
 [ext_resource type="PackedScene" uid="uid://e6wshg1xfak2" path="res://ui/storage_view/storage_view.tscn" id="1_ou0sg"]
 [ext_resource type="Script" uid="uid://b2ocl8xrxnpy1" path="res://ui/player_inventory/player_inventory.gd" id="1_uruap"]
 [ext_resource type="PackedScene" uid="uid://ciov7ijprulpc" path="res://ui/item_slot/item_slot.tscn" id="3_kf8a3"]
 [ext_resource type="Script" uid="uid://cioh6kcrrrlp4" path="res://ui/player_inventory/crafting_panel.gd" id="4_ijqh3"]
+[ext_resource type="Texture2D" uid="uid://ctqrny4lb51ns" path="res://_assets/shield.png" id="4_is2s1"]
 [ext_resource type="PackedScene" uid="uid://bm2v03n8v0i18" path="res://ui/tab_container_navigator/tab_container_navigator.tscn" id="4_teb1e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37mtt"]
@@ -110,6 +111,62 @@ offset_top = 160.0
 offset_right = 132.0
 offset_bottom = 256.0
 
+[node name="ShieldValueContainer" type="Control" parent="TabContainer/Equipment"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 436.0
+offset_top = 72.0
+offset_right = 436.0
+offset_bottom = 72.0
+
+[node name="ShieldValueIcon" type="TextureRect" parent="TabContainer/Equipment/ShieldValueContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -49.0
+offset_right = 49.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_is2s1")
+
+[node name="ShieldIconInformationButton" type="Button" parent="TabContainer/Equipment/ShieldValueContainer/ShieldValueIcon" groups=["tooltip_trigger"]]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="CenterContainer" type="CenterContainer" parent="TabContainer/Equipment/ShieldValueContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -30.0
+offset_right = 18.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ShieldValueLabel" type="RichTextLabel" parent="TabContainer/Equipment/ShieldValueContainer/CenterContainer"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 2
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/normal_font_size = 43
+text = "12"
+fit_content = true
+autowrap_mode = 0
+
 [node name="Crafting" type="PanelContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
@@ -129,5 +186,6 @@ size_flags_vertical = 3
 tab_containers = [NodePath("../TabContainer")]
 
 [connection signal="back_button_pressed" from="Inventory" to="." method="_on_inventory_back_button_pressed"]
+[connection signal="focus_entered" from="TabContainer/Equipment/ShieldValueContainer/ShieldValueIcon/ShieldIconInformationButton" to="." method="_on_shield_icon_information_button_focus_entered"]
 
 [editable path="Inventory"]

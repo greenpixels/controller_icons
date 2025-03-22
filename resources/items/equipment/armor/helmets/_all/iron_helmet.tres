@@ -27,6 +27,7 @@ script = ExtResource("1_6clka")
 should_show_hair = false
 armor_texture = ExtResource("1_qql1a")
 should_show_base = false
+armor_value = 4
 slot = 0
 texture = SubResource("AtlasTexture_qql1a")
 key = "ITEM_IRON_HELMET"

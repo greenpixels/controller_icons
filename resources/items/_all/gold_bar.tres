@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_6u63h"]
 script = ExtResource("1_wki8p")
 item = ExtResource("2_qevk0")
-amount = 6
+amount = 3
 metadata/_custom_type_script = "uid://wpktgfoyjvnv"
 
 [sub_resource type="Resource" id="Resource_85jjd"]

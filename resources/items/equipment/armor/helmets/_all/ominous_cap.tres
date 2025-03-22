@@ -12,6 +12,7 @@ script = ExtResource("1_bjkw8")
 should_show_hair = false
 armor_texture = ExtResource("1_huwbv")
 should_show_base = false
+armor_value = 3
 slot = 0
 texture = SubResource("AtlasTexture_uc4po")
 key = "ITEM_OMINOUS_CAP"

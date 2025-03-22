@@ -27,6 +27,7 @@ script = ExtResource("1_givmp")
 should_show_hair = false
 armor_texture = ExtResource("1_i3e7d")
 should_show_base = false
+armor_value = 3
 slot = 0
 texture = SubResource("AtlasTexture_ioapn")
 key = "ITEM_BRONZE_HELMET"

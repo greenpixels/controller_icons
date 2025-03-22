@@ -20,6 +20,13 @@ var before_move_checks: Array[Callable] = []
 signal items_changed
 
 
+func for_each_slot(callback : Callable) -> void: 
+	var index = 0
+	for item in items:
+		var quantity = quantities[index]
+		callback.call(item, quantity)
+		index += 1
+	
 ## -----------------------------
 ## UI / View
 ## -----------------------------

@@ -26,6 +26,7 @@ region = Rect2(219, 542, 101, 101)
 script = ExtResource("1_i5hev")
 armor_texture = ExtResource("1_5gx1j")
 should_show_base = false
+armor_value = 3
 slot = 2
 texture = SubResource("AtlasTexture_g1w0b")
 key = "ITEM_IRON_SHOES"

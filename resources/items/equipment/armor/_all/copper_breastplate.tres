@@ -26,6 +26,7 @@ region = Rect2(111, 435, 104, 103)
 script = ExtResource("1_kst3b")
 armor_texture = ExtResource("1_xyjtc")
 should_show_base = false
+armor_value = 4
 slot = 1
 texture = SubResource("AtlasTexture_oocl6")
 key = "ITEM_COPPER_BREASTPLATE"

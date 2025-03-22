@@ -11,6 +11,7 @@ region = Rect2(0, 0, 94, 79)
 script = ExtResource("2_r8max")
 armor_texture = ExtResource("3_msipa")
 should_show_base = false
+armor_value = 6
 slot = 1
 texture = SubResource("AtlasTexture_ci1cs")
 key = "ITEM_OMINOUS_ROBE"

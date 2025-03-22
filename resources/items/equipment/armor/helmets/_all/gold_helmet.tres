@@ -27,6 +27,7 @@ script = ExtResource("1_pl2k5")
 should_show_hair = false
 armor_texture = ExtResource("1_ishox")
 should_show_base = false
+armor_value = 6
 slot = 0
 texture = SubResource("AtlasTexture_ishox")
 key = "ITEM_GOLD_HELMET"

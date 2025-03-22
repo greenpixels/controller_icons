@@ -16,6 +16,7 @@ enum ArmorSlotPositions {
 @onready var equipment_slots : Array[ItemSlot] =  [%HelmetSlot, %BodySlot, %ShoesSlot, %RightRing, %LeftRing]
 @onready var crafting_entry_scene := preload("res://ui/crafting_entry/crafting_entry.tscn")
 @onready var crafting_list := %CraftingList
+@onready var shield_value_label = %ShieldValueLabel
 var crafting_entries : Array = []
 
 func _input(event: InputEvent) -> void:
@@ -48,6 +49,8 @@ func _input(event: InputEvent) -> void:
 			
 				
 func _ready() -> void:
+	update_defense_value_label(player.current_defense)
+	player.defense_changed.connect(update_defense_value_label)
 	if storage:
 		inventory.storage = storage
 		inventory.render_items()
@@ -79,10 +82,15 @@ func _ready() -> void:
 		
 	update_crafting_entries()
 
+func update_defense_value_label(value: int):
+	shield_value_label.text = str(value)
+
 func update_crafting_entries():
 	var item_dict = storage.to_dict() 
 	for entry in crafting_entries:
-		entry.set_disabled(!entry.item.check_craftable_from_item_dict(item_dict))
+		var can_craft = entry.item.check_craftable_from_item_dict(item_dict)
+		entry.visible = can_craft
+		entry.set_disabled(!can_craft)
 		entry.item_dict = item_dict
 
 func on_craft_item_pressed(item : Item):
@@ -98,3 +106,7 @@ func on_craft_item_pressed(item : Item):
 
 func _on_inventory_back_button_pressed() -> void:
 	queue_free()
+
+
+func _on_shield_icon_information_button_focus_entered() -> void:
+	TooltipOverlay.describe(self, tr("DEFENSE_DESCRIPTION"))
