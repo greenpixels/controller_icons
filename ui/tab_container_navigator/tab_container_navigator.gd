@@ -56,7 +56,7 @@ func change_tab_index(amount: int) -> void:
 			continue
 
 		var old_index = container.current_tab
-		container.current_tab += amount
+		container.current_tab = clamp(container.current_tab + amount, 0, container.get_tab_count() - 1)
 
 		# If the TabContainer actually changed its current_tab, break out
 		if container.current_tab != old_index:

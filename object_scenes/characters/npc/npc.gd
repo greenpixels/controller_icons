@@ -62,20 +62,45 @@ func _on_look_at_changed(new_look_at: Vector2) -> void:
 	held_item.rotation = new_look_at.angle()
 	if abs(new_look_at.x) > 0:
 		last_horizontal_dir = sign(new_look_at.x)
-
-func _on_current_item_changed(_position: int) -> void:
+func _on_current_item_changed(_position: int, previous: int) -> void:
 	if inventory.items[_position] == null or not inventory.items[_position] is Weapon:
-		for index in range(3):
-			if inventory.items[index] is Weapon:
-				controller.current_item_index = index
+		const HOTBAR_SIZE = 3
+		var incrementor = sign(_position - previous)
+		
+		if _position == HOTBAR_SIZE - 1 and previous == 0:
+			incrementor = -1
+		
+		if _position == 0 and previous == HOTBAR_SIZE - 1:
+			incrementor = 1
+		
+		if incrementor == 0:
+			incrementor = 1
+		
+		
+		var search_pos = _position + incrementor
+		
+		if search_pos >= HOTBAR_SIZE:
+			search_pos = 0
+		if search_pos < 0:
+			search_pos = HOTBAR_SIZE - 1
+			
+		while search_pos != _position:
+			print(search_pos)
+			if inventory.items[abs(search_pos)] is Weapon:
+				controller.current_item_index = search_pos
 				return
+			search_pos += incrementor
+			if search_pos >= HOTBAR_SIZE:
+				search_pos = 0
+			if search_pos < 0:
+				search_pos = HOTBAR_SIZE - 1
 		held_item.item = null
 		return
 	held_item.item = inventory.items[controller.current_item_index]
 
 func _on_inventory_items_changed() -> void:
 	held_item.item = inventory.items[current_item_index]
-	_on_current_item_changed(current_item_index)
+	_on_current_item_changed(current_item_index, current_item_index)
 
 func _on_equipment_items_changed() -> void:
 	model.update_sprite_from_human_style(persistance.human_style, equipment)

@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 		var speed = clamp(150. / distance, .25, 200.)
 		global_position = global_position.move_toward(pull_to.global_position, speed)
 		
-		if distance < 5:
+		if distance < 32:
 			on_interact(pull_to)
 	elif pull_delay > 0:
 		pull_delay -= delta

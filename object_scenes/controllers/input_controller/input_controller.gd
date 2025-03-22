@@ -9,6 +9,7 @@ var OFFSET_CHANGE_DELAY_MAY := 0.25
 var device := 0
 var deadzone_treshhold := 0.1
 var previos_mouse_position := Vector2.ZERO
+var locked_look_at_from_attacking = null
 var use_keyboard = false :
 	set(value):
 		use_keyboard = value
@@ -49,6 +50,7 @@ func handle_movement_input():
 	
 func handle_look_at_input():
 	var previous_look_at := look_at_input
+	
 	if Input.get_action_strength(input_map.get_mapped_action("look_right")) or \
 	   Input.get_action_strength(input_map.get_mapped_action("look_left")) or \
 	   Input.get_action_strength(input_map.get_mapped_action("look_up")) or \
@@ -63,13 +65,14 @@ func handle_look_at_input():
 						  Input.get_action_strength(input_map.get_mapped_action("move_left"))
 		look_at_input.y = Input.get_action_strength(input_map.get_mapped_action("move_down")) - \
 						  Input.get_action_strength(input_map.get_mapped_action("move_up"))
-
+		if look_at_input == Vector2.ZERO and locked_look_at_from_attacking:
+			look_at_input = locked_look_at_from_attacking
 	if PlayersContext.players.size() > 0 and device == 0 and use_keyboard:
 		# Handle mouse-based look input
 		var player = PlayersContext.players[0]
 		if player and player.is_inside_tree():
 			look_at_input = player.global_position.direction_to(player.get_global_mouse_position())
-			
+	
 
 	# Emit signal if the look input has changed
 	if previous_look_at != look_at_input:
@@ -77,7 +80,10 @@ func handle_look_at_input():
 
 func handle_button_input():
 	if Input.get_action_strength(input_map.get_mapped_action("attack")):
+		if look_at_input.length() >=0.4: locked_look_at_from_attacking = look_at_input
 		attacked.emit()
+	else:
+		locked_look_at_from_attacking = null
 	if Input.is_action_just_pressed(input_map.get_mapped_action("interact")):
 		interacted.emit()
 	if Input.is_action_just_pressed(input_map.get_mapped_action("inventory")):

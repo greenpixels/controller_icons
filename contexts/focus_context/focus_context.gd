@@ -1,6 +1,10 @@
 extends Node
 
-var current_focus : Control = null 
+var current_focus : Control = null :
+	set(value):
+		current_focus = value
+		if current_focus != null:
+			current_focus.grab_focus()
 
 signal focus_changed(node: Control)
 
@@ -16,18 +20,27 @@ func _enter_tree() -> void:
 					current_focus = null
 			)
 			node.visibility_changed.connect(func():
-				if not current_focus == null and not current_focus.is_visible_in_tree():
+				if current_focus and not node.visible and node == current_focus:
 					current_focus = null
-				Debounce.debounce("focus_check",check_for_focus, [], 0.1, false)
+				check_for_focus()
 			)
 				
 			if node.focus_mode == Control.FOCUS_ALL:
 				node.add_to_group("focusable")
 				node.mouse_entered.connect(node.grab_focus)
-				if not current_focus :
+				if current_focus == null and node.is_visible_in_tree():
 					node.grab_focus()
+			
+			if not current_focus:
+				check_for_focus()
 	)
-	# get_tree().tree_changed.connect(Debounce.debounce.bind("focus_check", check_for_focus, 0.1, false))
+	
+	get_tree().node_removed.connect(func(node):
+		if node == current_focus:
+			current_focus = null
+		check_for_focus()
+	)
+	
 
 
 func check_for_focus():

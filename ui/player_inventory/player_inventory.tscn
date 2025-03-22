@@ -175,6 +175,7 @@ metadata/_tab_index = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Crafting"]
 layout_mode = 2
+follow_focus = true
 
 [node name="CraftingList" type="VBoxContainer" parent="TabContainer/Crafting/ScrollContainer"]
 unique_name_in_owner = true
